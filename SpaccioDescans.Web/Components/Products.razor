@@ -1,0 +1,48 @@
+﻿@using Radzen
+@using SpaccioDescans.Web.ViewModels
+@inherits ProductsBase
+
+<h3>Products</h3>
+
+<Condition Evaluation="ProductViewModelsCollection is null">
+    <Match>
+        <div>
+            <h3>Loading...</h3>
+        </div>
+    </Match>
+    <NotMatch>
+                <RadzenButton Id="add-product" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add New Product"
+                      Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" />
+        <RadzenDataGrid @ref="ProductViewModelsGrid"
+                        AllowFiltering="true"
+                        AllowColumnResize="true"
+                        FilterMode="FilterMode.Advanced"
+                        PageSize="5"
+                        AllowPaging="true"
+                        AllowSorting="true"
+                        Data="ProductViewModelsCollection"
+                        TItem="ProductViewModel"
+                        LogicalFilterOperator="LogicalFilterOperator.Or"
+                        EditMode="DataGridEditMode.Single">
+            <Columns>
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Name" Title="Name" TextAlign="TextAlign.Center">
+                    <EditTemplate Context="product">
+                        <RadzenTextBox @bind-Value="product.Name" Class="grid-textbox" Name="Name" />
+                        <RadzenRequiredValidator Text="Product Name is required" Component="Name" Popup="true" />
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Description" Title="Description" TextAlign="TextAlign.Center">
+                    <EditTemplate Context="product">
+                        <RadzenTextBox @bind-Value="product.Description" Class="grid-textbox" Name="Description" />
+                        <RadzenRequiredValidator Text="Product Description is required" Component="Description" Popup="true" />
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Price" TextAlign="TextAlign.Center">
+                    <EditTemplate Context="product">
+                        <RadzenNumeric Name="Price" TValue="decimal" Step="0.5" @bind-Value="product.Price" Style="width:100%" />
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </NotMatch>
+</Condition>
