@@ -25,9 +25,35 @@ public class ProductsBase : ComponentBase
         this.ProductViewModelsCollection = new Collection<ProductViewModel>(viewModels);
     }
 
+    protected async Task SaveProductAsync(ProductViewModel product)
+    {
+        if (product == this.NewlyProduct)
+        {
+            this.NewlyProduct = null;
+        }
+
+        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
+    }
+
+    protected void CancelEdit(ProductViewModel product)
+    {
+        if (product == this.NewlyProduct)
+        {
+            this.NewlyProduct = null;
+        }
+
+        this.ProductViewModelsGrid.CancelEditRow(product);
+    }
+
     protected async Task AddProductAsync()
     {
         this.NewlyProduct = new ProductViewModel();
         await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct).ConfigureAwait(true);
+    }
+
+    protected async Task OnProductAddAsync(ProductViewModel product)
+    {
+        var command = (CreateProductCommand)product;
+        _ = await this.Mediator.Send(command);
     }
 }

@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Radzen;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application;
 using SpaccioDescans.Infrastructure;
@@ -16,9 +17,11 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 
+// UI
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<DialogService>();
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);

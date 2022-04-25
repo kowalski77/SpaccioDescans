@@ -15,5 +15,12 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
             y.Property(z => z.Value).HasColumnName(nameof(Product.NetPrice));
             y.Property(z => z.Value).HasPrecision(10, 2);
         });
+
+        builder.OwnsOne(x => x.Quantity, y =>
+        {
+            y.Property(z => z.Value).HasColumnName(nameof(Product.Quantity));
+        });
+
+        builder.Property(x => x.Code).ValueGeneratedOnAdd();
     }
 }
