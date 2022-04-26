@@ -54,6 +54,9 @@ public class ProductsBase : ComponentBase
     protected async Task OnProductAddAsync(ProductViewModel product)
     {
         var command = (CreateProductCommand)product;
-        _ = await this.Mediator.Send(command);
+        var result = await this.Mediator.Send(command);
+
+        product.Code = result.Value;
+        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
     }
 }

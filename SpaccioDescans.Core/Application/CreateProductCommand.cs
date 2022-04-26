@@ -4,9 +4,9 @@ using SpaccioDescans.SharedKernel.Results;
 
 namespace SpaccioDescans.Core.Application;
 
-public sealed record CreateProductCommand(Guid Id, string Name, string Description, string Measures, decimal NetPrice, int Quantity) : IRequest<Result<Guid>>;
+public sealed record CreateProductCommand(Guid Id, string Name, string Description, string Measures, decimal NetPrice, int Quantity) : IRequest<Result<int>>;
 
-public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand, Result<Guid>>
+public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand, Result<int>>
 {
     private readonly IProductRepository productRepository;
 
@@ -16,7 +16,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
         this.productRepository = productRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -28,7 +28,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
             .OnSuccess(async () => await this.CreateProductAsync(request, netPrice.Value, quantity.Value, cancellationToken).ConfigureAwait(true))
             .ConfigureAwait(true);
 
-        return result.Value.Id;
+        return result.Value.Code;
     }
 
     private async Task<Result<Product>> CreateProductAsync(CreateProductCommand request, Price price,  Quantity quantity, CancellationToken cancellationToken)
