@@ -1,5 +1,4 @@
 ﻿using SpaccioDescans.SharedKernel.DDD;
-using SpaccioDescans.SharedKernel.Results;
 
 namespace SpaccioDescans.Core.Products;
 
@@ -12,9 +11,14 @@ public sealed class Price : ValueObject
         this.Value = value;
     }
 
-    public static Result<Price> CreateInstance(decimal value)
+    public static Price CreateInstance(decimal value)
     {
-        return value <= 0 ? PriceShouldBeGreaterThanZero : Result.Ok(new Price(value));
+        if (value <= 0)
+        {
+            throw new InvalidOperationException(PriceShouldBeGreaterThanZero);
+        }
+
+        return new Price(value);
     }
 
     public decimal Value { get; private set; }
