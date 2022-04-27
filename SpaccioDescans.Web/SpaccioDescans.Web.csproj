@@ -7,13 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.4" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Radzen.Blazor" Version="3.18.4" />
+	  <PackageReference Include="Radzen.Blazor" Version="3.18.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\Products.razor" />
+    <_ContentIncludedByDefault Remove="Components\Store.razor" />
     <_ContentIncludedByDefault Remove="Shared\Condition.razor" />
   </ItemGroup>
 
@@ -36,6 +38,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Shared\Condition.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Store.razor" />
   </ItemGroup>
 
 </Project>

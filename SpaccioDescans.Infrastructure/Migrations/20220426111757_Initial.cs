@@ -21,6 +21,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

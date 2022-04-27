@@ -9,7 +9,7 @@
         </div>
     </Match>
     <NotMatch>
-                <RadzenButton Id="add-product" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add New Product"
+                <RadzenButton Id="add-product" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Nuevo"
                       Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" />
         <RadzenDataGrid @ref="ProductViewModelsGrid"
                         AllowFiltering="true"

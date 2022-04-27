@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpaccioDescans.Infrastructure;
+using SpaccioDescans.Infrastructure.Persistence;
 
 #nullable disable
 
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220425145115_Initial")]
+    [Migration("20220426111757_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

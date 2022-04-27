@@ -8,6 +8,8 @@ public abstract class Entity
 
     public IEnumerable<INotification> DomainEvents => this.domainEvents;
 
+    public int TenantId { get; set; }
+
     public bool SoftDeleted { get; protected set; }
 
     protected void AddDomainEvent(INotification eventItem)

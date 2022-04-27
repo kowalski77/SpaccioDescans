@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Infrastructure;
+namespace SpaccioDescans.Infrastructure.Persistence;
 
 public sealed class ProductReadRepository : IProductReadRepository
 {

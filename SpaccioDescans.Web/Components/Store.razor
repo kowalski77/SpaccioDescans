@@ -1,0 +1,53 @@
+﻿@using SpaccioDescans.Infrastructure.Persistence
+@using SpaccioDescans.Web.Services
+
+<select id="select-store" @onchange="OnChange" value="@SelectedValue">
+    @for (var i = 0; i < this.tenants.Count; i++)
+    {
+        <option value="@i">@this.tenants[i].Name</option>
+    }
+</select>
+
+@code {
+    [Inject]
+    private IStoreSelector StoreSelector { get; set; } = default!;
+
+    private int SelectedValue { get; set; }
+
+    private readonly IReadOnlyList<Tenant> tenants = new[]
+        {
+        new Tenant
+        {
+            Id = 0,
+            Name = "Terrassa"
+        }, new Tenant
+        {
+            Id = 1,
+            Name = "Matadepera"
+        }
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        this.SelectedValue = await this.StoreSelector.RetrieveAsync();
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public class Tenant
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = default!;
+    }
+
+    private async Task OnChange(ChangeEventArgs e)
+    {
+        this.SelectedValue = Convert.ToInt32(e.Value);
+        await this.StoreSelector.SetAsync(this.SelectedValue);
+    }
+}

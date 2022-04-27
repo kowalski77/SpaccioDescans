@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Infrastructure;
+namespace SpaccioDescans.Infrastructure.Persistence;
 
 public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
 {

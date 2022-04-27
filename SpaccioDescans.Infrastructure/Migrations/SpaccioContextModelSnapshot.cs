@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpaccioDescans.Infrastructure;
+using SpaccioDescans.Infrastructure.Persistence;
 
 #nullable disable
 
@@ -48,6 +48,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

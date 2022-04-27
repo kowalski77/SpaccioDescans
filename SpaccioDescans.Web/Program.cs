@@ -1,10 +1,12 @@
+using Blazored.LocalStorage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Radzen;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application;
 using SpaccioDescans.Infrastructure;
-using SpaccioDescans.Web.Data;
+using SpaccioDescans.Infrastructure.Persistence;
+using SpaccioDescans.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +22,12 @@ builder.Services.AddAuthorization(options =>
 // UI
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<DialogService>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<IStoreSelector, StoreSelector>();
+builder.Services.AddScoped<ITenantService, TenantService>();
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);
