@@ -7,9 +7,10 @@ public sealed class Product : Entity, IAggregateRoot
 {
     private Product() { }
 
-    public Product(Guid id,  string name, string description, string measures, Price netPrice, Quantity quantity)
+    public Product(Guid id,  string vendor, string name, string description, string measures, Price netPrice, Quantity quantity)
     {
         this.Id = id;
+        this.Vendor = vendor;
         this.Name = name;
         this.Description = description;
         this.Measures = measures;
@@ -18,6 +19,8 @@ public sealed class Product : Entity, IAggregateRoot
     }
 
     public Guid Id { get; private set; } = Guid.NewGuid();
+
+    public string Vendor { get; private set; }
 
     public string Name { get; private set; }
 

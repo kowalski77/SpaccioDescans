@@ -3,7 +3,7 @@ using SpaccioDescans.Core.Products;
 
 namespace SpaccioDescans.Core.Application;
 
-public sealed record CreateProductCommand(Guid Id, string Name, string Description, string Measures, decimal NetPrice, int Quantity) : IRequest<int>;
+public sealed record CreateProductCommand(Guid Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, int Quantity) : IRequest<int>;
 
 public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
 {
@@ -22,7 +22,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
         var netPrice = Price.CreateInstance(request.NetPrice);
         var quantity = Quantity.CreateInstance(request.Quantity);
 
-        var product = new Product(request.Id, request.Name, request.Description, request.Measures, netPrice, quantity);
+        var product = new Product(request.Id, request.Vendor, request.Name, request.Description, request.Measures, netPrice, quantity);
         var newlyProduct = this.productRepository.Add(product);
 
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken).ConfigureAwait(true);

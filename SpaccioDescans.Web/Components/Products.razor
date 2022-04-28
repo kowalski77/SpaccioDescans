@@ -26,22 +26,28 @@
             <Columns>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Code" Title="Código" TextAlign="TextAlign.Center">
                 </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
+                    <EditTemplate Context="product">
+                        <RadzenTextBox @bind-Value="product.Vendor" Class="grid-textbox" Name="Vendor"/>
+                        <RadzenRequiredValidator Text="Fabricante requerido" Component="Vendor" Popup="true"/>
+                    </EditTemplate>
+                </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Name" Title="Nombre" TextAlign="TextAlign.Center">
                     <EditTemplate Context="product">
                         <RadzenTextBox @bind-Value="product.Name" Class="grid-textbox" Name="Name"/>
-                        <RadzenRequiredValidator Text="Product Name is required" Component="Name" Popup="true"/>
+                        <RadzenRequiredValidator Text="Producto requerido" Component="Name" Popup="true"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Description" Title="Descripcion" TextAlign="TextAlign.Center">
                     <EditTemplate Context="product">
                         <RadzenTextBox @bind-Value="product.Description" Class="grid-textbox" Name="Description"/>
-                        <RadzenRequiredValidator Text="Product Description is required" Component="Description" Popup="true"/>
+                        <RadzenRequiredValidator Text="Descripción requerida" Component="Description" Popup="true"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Measures" Title="Medidas" TextAlign="TextAlign.Center">
                     <EditTemplate Context="product">
                         <RadzenTextBox @bind-Value="product.Measures" Class="grid-textbox" Name="Description"/>
-                        <RadzenRequiredValidator Text="Measure is required" Component="Description" Popup="true"/>
+                        <RadzenRequiredValidator Text="Medida requerida" Component="Description" Popup="true"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center">

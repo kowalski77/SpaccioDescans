@@ -10,6 +10,8 @@ public class ProductViewModel
 
     public int Code { get; set; }
 
+    [Required] public string Vendor { get; set; } = string.Empty;
+
     [Required] public string Name { get; set; } = string.Empty;
 
     [Required] public string Description { get; set; } = string.Empty;
@@ -25,13 +27,14 @@ public class ProductViewModel
         return new ProductViewModel
         {
             Id = productDto.Id,  Code = productDto.Code, 
-            Name = productDto.Name, Description = productDto.Description, 
+            Vendor = productDto.Vendor, Name = productDto.Name, Description = productDto.Description, 
             Measures = productDto.Measures, Price = productDto.NetPrice, Quantity = productDto.Quantity
         };
     }
 
     public static explicit operator CreateProductCommand(ProductViewModel viewModel)
     {
-        return new CreateProductCommand(viewModel.Id, viewModel.Name, viewModel.Description, viewModel.Measures, viewModel.Price, viewModel.Quantity);
+        return new CreateProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name, 
+            viewModel.Description, viewModel.Measures, viewModel.Price, viewModel.Quantity);
     }
 }
