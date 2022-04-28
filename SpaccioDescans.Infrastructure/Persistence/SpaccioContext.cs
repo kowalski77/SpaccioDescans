@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence;
 
-public class SpaccioContext : DbContext, IUnitOfWork
+public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
 {
-    private readonly ITenantService tenantService;
-
-    public SpaccioContext(DbContextOptions options, ITenantService tenantService) 
+    public SpaccioContext(DbContextOptions options) 
         : base(options)
     {
-        this.tenantService = tenantService ?? throw new ArgumentNullException(nameof(tenantService));
     }
 
     public DbSet<Product> Products { get; set; } = default!;
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        ArgumentNullException.ThrowIfNull(modelBuilder);
+        ArgumentNullException.ThrowIfNull(builder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductEntityTypeConfiguration).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(ProductEntityTypeConfiguration).Assembly);
 
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
     }
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
@@ -31,7 +30,7 @@ public class SpaccioContext : DbContext, IUnitOfWork
         {
             entry.Entity.TenantId = entry.State switch
             {
-                EntityState.Added => this.tenantService.Tenant,
+                //EntityState.Added => this.tenantService.Tenant,
                 _ => entry.Entity.TenantId
             };
         }
