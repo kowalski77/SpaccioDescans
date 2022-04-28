@@ -1,12 +1,21 @@
 ﻿@using SpaccioDescans.Infrastructure.Persistence
 
 <RadzenCard>
-    <RadzenPanelMenu Style="width: 100%">
-        <RadzenPanelMenuItem id="inventory-link" Text="Products" Path="inventory" Icon="dashboard" />
-    </RadzenPanelMenu>
-    <RadzenPanelMenu Style="width: 100%">
-        <RadzenPanelMenuItem id="login-link" Text="Login" Path="identity/account/login" Icon="account_circle" />
-    </RadzenPanelMenu>
+    <AuthorizeView>
+        <Authorized>
+            <RadzenPanelMenu Style="width: 100%">
+                <RadzenPanelMenuItem id="inventory-link" Text="Products" Path="inventory" Icon="dashboard" />
+            </RadzenPanelMenu>
+            <RadzenPanelMenu Style="width: 100%">
+                <RadzenPanelMenuItem id="login-link" Text="Logout" Path="identity/account/logout" Icon="account_circle" />
+            </RadzenPanelMenu>
+        </Authorized>
+        <NotAuthorized>
+            <RadzenPanelMenu Style="width: 100%">
+                <RadzenPanelMenuItem id="login-link" Text="Login" Path="identity/account/login" Icon="account_circle" />
+            </RadzenPanelMenu>
+        </NotAuthorized>
+    </AuthorizeView>
 </RadzenCard>
 
 @code {
