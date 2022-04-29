@@ -84,13 +84,7 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
             var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, false);
             if (result.Succeeded)
             {
-                var user = await this.userManager.FindByEmailAsync(this.Input.Email);
-                var claim = new Claim("store", this.Input.SelectedStore);
-                var res = await this.userManager.AddClaimAsync(user, claim);
-                if (!res.Succeeded)
-                {
-                    return this.Page();
-                }
+                await this.UpdateStoreClaimsAsync();
 
                 this.logger.LogInformation("User logged in.");
                 return this.LocalRedirect(returnUrl);
@@ -104,6 +98,20 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 
             this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return this.Page();
+        }
+
+        private async Task UpdateStoreClaimsAsync()
+        {
+            const string store = "store";
+
+            var user = await this.userManager.FindByEmailAsync(this.Input.Email);
+
+            var userClaims = await this.userManager.GetClaimsAsync(user);
+            var storeClaims = userClaims.Where(c => c.Type == store);
+            await this.userManager.RemoveClaimsAsync(user, storeClaims);
+
+            var claim = new Claim(store, this.Input.SelectedStore);
+            _ = await this.userManager.AddClaimAsync(user, claim);
         }
 
         /// <summary>
@@ -142,8 +150,8 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 
             public IEnumerable<SelectListItem> Stores { get; set; } = new List<SelectListItem>(new[]
             {
-                new SelectListItem("Terrassa", "1"),
-                new SelectListItem("Matadepera", "2")
+                new SelectListItem("1", "Terrassa"),
+                new SelectListItem("2", "Matadepera")
             });
         }
     }
