@@ -14,12 +14,10 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
     {
         private readonly ILogger<LoginModel> logger;
         private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
             this.signInManager = signInManager;
-            this.userManager = userManager;
             this.logger = logger;
         }
 
@@ -84,8 +82,6 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
             var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, false);
             if (result.Succeeded)
             {
-                await this.UpdateStoreClaimsAsync();
-
                 this.logger.LogInformation("User logged in.");
                 return this.LocalRedirect(returnUrl);
             }
@@ -98,20 +94,6 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 
             this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return this.Page();
-        }
-
-        private async Task UpdateStoreClaimsAsync()
-        {
-            const string store = "store";
-
-            var user = await this.userManager.FindByEmailAsync(this.Input.Email);
-
-            var userClaims = await this.userManager.GetClaimsAsync(user);
-            var storeClaims = userClaims.Where(c => c.Type == store);
-            await this.userManager.RemoveClaimsAsync(user, storeClaims);
-
-            var claim = new Claim(store, this.Input.SelectedStore);
-            _ = await this.userManager.AddClaimAsync(user, claim);
         }
 
         /// <summary>
@@ -142,17 +124,6 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
             /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
-
-
-            [Required] 
-            [Display(Name = "Selecciona una tienda")]
-            public string SelectedStore { get; set; }
-
-            public IEnumerable<SelectListItem> Stores { get; set; } = new List<SelectListItem>(new[]
-            {
-                new SelectListItem("1", "Terrassa"),
-                new SelectListItem("2", "Matadepera")
-            });
         }
     }
 }

@@ -8,8 +8,15 @@
 <div class="row">
     <div class="col-md-4">
         <section>
-            <h3>Login</h3>
+            <h3>Entrar</h3>
             <form id="account" method="post">
+                <hr/>
+                <section>
+                    <select class="form-select" aria-label="Default select example">
+                        <option value="1">Terrassa</option>
+                        <option value="2">Matadepera</option>
+                    </select>
+                </section>
                 <hr/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
@@ -34,13 +41,6 @@
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
                 <br/>
-                <div class="form-group">
-                    @Html.LabelFor(x => Model.Input.SelectedStore, htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(x => Model.Input.SelectedStore, new SelectList(Model.Input.Stores, "Text", "Value"), htmlAttributes: new { @class = "form-control", id = "Country" })
-                        @Html.ValidationMessageFor(x => x.Input.SelectedStore, "", new { @class = "text-danger" })
-                    </div>
-                </div>
             </form>
         </section>
     </div>
