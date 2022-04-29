@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Products;
@@ -8,9 +9,12 @@ namespace SpaccioDescans.Infrastructure.Persistence;
 
 public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
 {
-    public SpaccioContext(DbContextOptions options) 
+    private readonly IHttpContextAccessor httpContextAccessor;
+
+    public SpaccioContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) 
         : base(options)
     {
+        this.httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }
 
     public DbSet<Product> Products { get; set; } = default!;
@@ -26,6 +30,8 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
     {
+        var user = this.httpContextAccessor.HttpContext.User.Claims.ToList();
+
         foreach (var entry in this.ChangeTracker.Entries<Entity>())
         {
             entry.Entity.TenantId = entry.State switch

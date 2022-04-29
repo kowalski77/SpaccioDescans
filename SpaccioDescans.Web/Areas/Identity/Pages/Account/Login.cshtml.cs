@@ -1,10 +1,12 @@
 ﻿#nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 {
@@ -12,10 +14,12 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
     {
         private readonly ILogger<LoginModel> logger;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ILogger<LoginModel> logger)
         {
             this.signInManager = signInManager;
+            this.userManager = userManager;
             this.logger = logger;
         }
 
@@ -24,7 +28,7 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new();
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -75,16 +79,21 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+
             var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, false);
             if (result.Succeeded)
             {
+                var user = await this.userManager.FindByEmailAsync(this.Input.Email);
+                var claim = new Claim("store", this.Input.SelectedStore);
+                var res = await this.userManager.AddClaimAsync(user, claim);
+                if (!res.Succeeded)
+                {
+                    return this.Page();
+                }
+
                 this.logger.LogInformation("User logged in.");
                 return this.LocalRedirect(returnUrl);
-            }
-
-            if (result.RequiresTwoFactor)
-            {
-                return this.RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, this.Input.RememberMe });
             }
 
             if (result.IsLockedOut)
@@ -95,8 +104,6 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
 
             this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return this.Page();
-
-            // If we got this far, something failed, redisplay form
         }
 
         /// <summary>
@@ -127,6 +134,17 @@ namespace SpaccioDescans.Web.Areas.Identity.Pages.Account
             /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+
+            [Required] 
+            [Display(Name = "Selecciona una tienda")]
+            public string SelectedStore { get; set; }
+
+            public IEnumerable<SelectListItem> Stores { get; set; } = new List<SelectListItem>(new[]
+            {
+                new SelectListItem("Terrassa", "1"),
+                new SelectListItem("Matadepera", "2")
+            });
         }
     }
 }
