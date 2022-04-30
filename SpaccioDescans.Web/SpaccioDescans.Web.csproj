@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Components\Products.razor" />
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
+		<_ContentIncludedByDefault Remove="Shared\User.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -38,6 +39,10 @@
 
 	<ItemGroup>
 		<UpToDateCheckInput Remove="Shared\Condition.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Shared\User.razor" />
 	</ItemGroup>
 
 </Project>

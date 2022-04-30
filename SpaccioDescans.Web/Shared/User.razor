@@ -1,0 +1,32 @@
+﻿@using SpaccioDescans.Infrastructure.Persistence
+
+<RadzenCard Style="margin-bottom: 50px; width: fit-content; min-width: 200px;" Class="mt-3 mx-auto">
+    <AuthorizeView>
+        <Authorized>
+            <RadzenMenu>
+                <RadzenMenuItem Text="@this.storeName"></RadzenMenuItem>
+                <RadzenMenuItem Text="@context.User.Identity?.Name" Icon="account_circle">
+                    <RadzenMenuItem Text="Salir" Icon="input" Path="identity/account/logout"></RadzenMenuItem>
+                </RadzenMenuItem>
+            </RadzenMenu>
+        </Authorized>
+        <NotAuthorized>
+            <RadzenMenu>
+                <RadzenMenuItem Text="Entrar" Icon="account_circle" Path="identity/account/login"></RadzenMenuItem>
+            </RadzenMenu>
+        </NotAuthorized>
+    </AuthorizeView>
+</RadzenCard>
+
+@code{
+
+    private string storeName = string.Empty;
+
+    [Inject]
+    private TenantConfiguration TenantConfiguration { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        this.storeName = TenantConfiguration.StoreName;
+    }
+}

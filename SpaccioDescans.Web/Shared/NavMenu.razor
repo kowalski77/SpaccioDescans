@@ -1,23 +1,24 @@
 ﻿@using SpaccioDescans.Infrastructure.Persistence
+@using Radzen
 
-<RadzenCard>
+<RadzenCard Style="margin-bottom: 50px; width: fit-content; min-width: 200px;" Class="mt-3 mx-auto">
     <AuthorizeView>
         <Authorized>
-            <RadzenPanelMenu Style="width: 100%">
-                <RadzenPanelMenuItem id="inventory-link" Text="Products" Path="inventory" Icon="dashboard" />
-            </RadzenPanelMenu>
-            <RadzenPanelMenu Style="width: 100%">
-                <RadzenPanelMenuItem id="login-link" Text="Logout" Path="identity/account/logout" Icon="account_circle" />
-            </RadzenPanelMenu>
+            <RadzenMenu>
+                <RadzenMenuItem Text="Inventario" Icon="dashboard">
+                    <RadzenMenuItem id="inventory-link" Text="Productos" Path="inventory" Icon="list" />
+                </RadzenMenuItem>
+                <RadzenMenuItem Text="Facturación" Icon="payment">
+                    <RadzenMenuItem Text="CheckBox" Path="checkbox" Icon="check_circle"></RadzenMenuItem>
+                    <RadzenMenuItem Text="TextBox" Path="textbox" Icon="input"></RadzenMenuItem>
+                    <RadzenMenuItem Text="TextArea" Path="textarea" Icon="description"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Password" Path="password" Icon="payment"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Numeric" Path="numeric" Icon="aspect_ratio"></RadzenMenuItem>
+                    <RadzenMenuItem Text="DatePicker" Path="datepicker" Icon="date_range"></RadzenMenuItem>
+                </RadzenMenuItem>
+            </RadzenMenu>
         </Authorized>
-        <NotAuthorized>
-            <RadzenPanelMenu Style="width: 100%">
-                <RadzenPanelMenuItem id="login-link" Text="Login" Path="identity/account/login" Icon="account_circle" />
-            </RadzenPanelMenu>
-        </NotAuthorized>
     </AuthorizeView>
 </RadzenCard>
 
-@code {
 
-}
