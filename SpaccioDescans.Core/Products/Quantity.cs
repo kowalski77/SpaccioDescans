@@ -4,7 +4,7 @@ namespace SpaccioDescans.Core.Products;
 
 public class Quantity : ValueObject
 {
-    private const string QuantityShouldBeGreaterThanZero = "Quantity should be greater than 0";
+    private const string QuantityShouldBePositive = "Quantity should be positive";
 
     private Quantity(int value)
     {
@@ -13,9 +13,9 @@ public class Quantity : ValueObject
 
     public static Quantity CreateInstance(int value)
     {
-        if (value <= 0)
+        if (value < 0)
         {
-            throw new InvalidOperationException(QuantityShouldBeGreaterThanZero);
+            throw new InvalidOperationException(QuantityShouldBePositive);
         }
 
         return new Quantity(value);

@@ -10,7 +10,7 @@ public sealed class Product : Entity, IAggregateRoot
 
     private Product() { }
 
-    public Product(Guid id,  string vendor, string name, string description, string measures, Price netPrice, Quantity quantity)
+    public Product(Guid id,  string vendor, string name, string description, string measures, Price netPrice)
     {
         this.Id = id;
         this.Vendor = vendor;

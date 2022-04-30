@@ -69,7 +69,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Store",
+                name: "Stores",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -81,7 +81,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Store", x => x.Id);
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,21 +207,21 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProductStore_Store_StoreId",
+                        name: "FK_ProductStore_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "Store",
+                        principalTable: "Stores",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
-                table: "Store",
+                table: "Stores",
                 columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("78f0d283-49d3-4f0f-bf4e-8f11e8734ca8"), "Carretera de Terrassa", 1, "Tienda 1", false, 0 });
+                values: new object[] { new Guid("0646cff4-e0e2-44e3-b288-62f0984d1e43"), "Avenida de Matadepera", 2, "Tienda 2", false, 0 });
 
             migrationBuilder.InsertData(
-                table: "Store",
+                table: "Stores",
                 columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("c29d8cac-0147-4f6b-ad13-ea059b46cdd5"), "Avenida de Matadepera", 2, "Tienda 2", false, 0 });
+                values: new object[] { new Guid("a9656f93-0e4f-4c97-b2c9-e08e667d90ac"), "Carretera de Terrassa", 1, "Tienda 1", false, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -298,7 +298,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Store");
+                name: "Stores");
         }
     }
 }

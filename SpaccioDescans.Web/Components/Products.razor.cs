@@ -49,7 +49,7 @@ public class ProductsBase : ComponentBase
         var command = (CreateProductCommand)product;
         var code = await this.Mediator.Send(command);
 
-        product.Code = code;
+        product.ProductCode = code;
         await this.ProductViewModelsGrid.UpdateRow(product);
     }
 

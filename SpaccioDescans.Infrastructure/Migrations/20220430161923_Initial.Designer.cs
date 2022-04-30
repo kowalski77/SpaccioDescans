@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220430153108_Initial")]
+    [Migration("20220430161923_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -305,12 +305,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Store");
+                    b.ToTable("Stores");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("78f0d283-49d3-4f0f-bf4e-8f11e8734ca8"),
+                            Id = new Guid("a9656f93-0e4f-4c97-b2c9-e08e667d90ac"),
                             Address = "Carretera de Terrassa",
                             Code = 1,
                             Name = "Tienda 1",
@@ -319,7 +319,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c29d8cac-0147-4f6b-ad13-ea059b46cdd5"),
+                            Id = new Guid("0646cff4-e0e2-44e3-b288-62f0984d1e43"),
                             Address = "Avenida de Matadepera",
                             Code = 2,
                             Name = "Tienda 2",

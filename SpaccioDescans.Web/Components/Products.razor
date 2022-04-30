@@ -25,7 +25,7 @@
                         RowCreate="@this.OnProductAddAsync"
                         RowUpdate="@this.OnProductEditAsync">
             <Columns>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Code" Title="Código" TextAlign="TextAlign.Center">
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="ProductCode" Title="Código" TextAlign="TextAlign.Center">
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
                     <EditTemplate Context="product">
@@ -56,9 +56,14 @@
                         <RadzenNumeric Name="Price" TValue="decimal" Step="0.1" @bind-Value="product.Price" Style="width: 100%"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Quantity" Title="Cantidad" TextAlign="TextAlign.Center" Filterable="false">
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreOne" Title="Tienda 1: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
                     <EditTemplate Context="product">
-                        <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.Quantity" Style="width: 100%"/>
+                        <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreOne" Style="width: 100%"/>
+                    </EditTemplate>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreTwo" Title="Tienda 2: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
+                    <EditTemplate Context="product">
+                        <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">

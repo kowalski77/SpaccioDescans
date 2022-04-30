@@ -1,17 +1,20 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Stores;
 
 namespace SpaccioDescans.Core.Application;
 
-public sealed record EditProductCommand(Guid Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, int Quantity) : IRequest;
+public sealed record EditProductCommand(Guid Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest;
 
 public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 {
     private readonly IProductRepository productRepository;
+    private readonly IStoreRepository storeRepository;
 
-    public EditProductHandler(IProductRepository productRepository)
+    public EditProductHandler(IProductRepository productRepository, IStoreRepository storeRepository)
     {
         this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+        this.storeRepository = storeRepository ?? throw new ArgumentNullException(nameof(storeRepository));
     }
 
     public async Task<Unit> Handle(EditProductCommand request, CancellationToken cancellationToken)
@@ -19,8 +22,6 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         ArgumentNullException.ThrowIfNull(request);
 
         var netPrice = Price.CreateInstance(request.NetPrice);
-        var quantity = Quantity.CreateInstance(request.Quantity);
-
         var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
         if (product is null)
         {
@@ -32,6 +33,14 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         product.Description = request.Description;
         product.Measures = request.Measures;
         product.Vendor = request.Vendor;
+
+        foreach (var storeQuantity in request.StoreQuantities)
+        {
+            var store = await this.storeRepository.GetByCodeAsync(storeQuantity.StoreCode, cancellationToken);
+            var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
+
+            product.AddToStore(store, quantity);
+        }
 
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 

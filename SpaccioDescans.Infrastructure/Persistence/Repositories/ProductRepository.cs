@@ -1,7 +1,7 @@
 ﻿using SpaccioDescans.Core.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Infrastructure.Persistence;
+namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 
 public sealed class ProductRepository : IProductRepository
 {

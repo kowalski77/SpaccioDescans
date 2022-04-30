@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence.Configurations;
 using SpaccioDescans.SharedKernel.DDD;
 
@@ -18,6 +19,8 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
     }
 
     public DbSet<Product> Products { get; set; } = default!;
+
+    public DbSet<Store> Stores { get; set; } = default!;
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
     {
