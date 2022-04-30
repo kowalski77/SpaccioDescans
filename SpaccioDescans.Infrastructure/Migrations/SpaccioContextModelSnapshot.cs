@@ -263,6 +263,69 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductId", "StoreId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("ProductStore");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Store");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("78f0d283-49d3-4f0f-bf4e-8f11e8734ca8"),
+                            Address = "Carretera de Terrassa",
+                            Code = 1,
+                            Name = "Tienda 1",
+                            SoftDeleted = false,
+                            TenantId = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("c29d8cac-0147-4f6b-ad13-ea059b46cdd5"),
+                            Address = "Avenida de Matadepera",
+                            Code = 2,
+                            Name = "Tienda 2",
+                            SoftDeleted = false,
+                            TenantId = 0
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -334,28 +397,56 @@ namespace SpaccioDescans.Infrastructure.Migrations
                                 .HasForeignKey("ProductId");
                         });
 
+                    b.Navigation("NetPrice")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
+                {
+                    b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
+                        .WithMany("ProductStores")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SpaccioDescans.Core.Stores.Store", "Store")
+                        .WithMany("ProductStores")
+                        .HasForeignKey("StoreId");
+
                     b.OwnsOne("SpaccioDescans.Core.Products.Quantity", "Quantity", b1 =>
                         {
-                            b1.Property<Guid>("ProductId")
+                            b1.Property<Guid>("ProductStoreProductId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("ProductStoreStoreId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("int")
                                 .HasColumnName("Quantity");
 
-                            b1.HasKey("ProductId");
+                            b1.HasKey("ProductStoreProductId", "ProductStoreStoreId");
 
-                            b1.ToTable("Products");
+                            b1.ToTable("ProductStore");
 
                             b1.WithOwner()
-                                .HasForeignKey("ProductId");
+                                .HasForeignKey("ProductStoreProductId", "ProductStoreStoreId");
                         });
 
-                    b.Navigation("NetPrice")
-                        .IsRequired();
+                    b.Navigation("Product");
 
                     b.Navigation("Quantity")
                         .IsRequired();
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+                {
+                    b.Navigation("ProductStores");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
+                {
+                    b.Navigation("ProductStores");
                 });
 #pragma warning restore 612, 618
         }

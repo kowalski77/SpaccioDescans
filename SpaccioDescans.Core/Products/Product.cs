@@ -1,10 +1,13 @@
 ﻿#pragma warning disable 8618
+using SpaccioDescans.Core.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Products;
 
 public sealed class Product : Entity, IAggregateRoot
 {
+    private List<ProductStore> productStores = new();
+
     private Product() { }
 
     public Product(Guid id,  string vendor, string name, string description, string measures, Price netPrice, Quantity quantity)
@@ -15,7 +18,6 @@ public sealed class Product : Entity, IAggregateRoot
         this.Description = description;
         this.Measures = measures;
         this.NetPrice = netPrice ?? throw new ArgumentNullException(nameof(netPrice));
-        this.Quantity = quantity ?? throw new ArgumentNullException(nameof(quantity));
     }
 
     public Guid Id { get; private set; } = Guid.NewGuid();
@@ -30,7 +32,20 @@ public sealed class Product : Entity, IAggregateRoot
 
     public Price NetPrice { get; internal set; }
 
-    public Quantity Quantity { get; internal set; }
-
     public int Code { get; private set; }
+
+    public void AddToStore(Store store, Quantity quantity)
+    {
+        ArgumentNullException.ThrowIfNull(store);
+        ArgumentNullException.ThrowIfNull(quantity);
+
+        this.productStores.Add(new ProductStore
+        {
+            Product = this,
+            Store = store,
+            Quantity = quantity
+        });
+    }
+
+    public IReadOnlyList<ProductStore> ProductStores => this.productStores;
 }

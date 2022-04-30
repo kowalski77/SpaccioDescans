@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Infrastructure.Persistence;
+namespace SpaccioDescans.Infrastructure.Persistence.Configurations;
 
 public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -14,11 +14,6 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
         {
             y.Property(z => z.Value).HasColumnName(nameof(Product.NetPrice));
             y.Property(z => z.Value).HasPrecision(10, 2);
-        });
-
-        builder.OwnsOne(x => x.Quantity, y =>
-        {
-            y.Property(z => z.Value).HasColumnName(nameof(Product.Quantity));
         });
 
         builder.Property(x => x.Code).ValueGeneratedOnAdd();

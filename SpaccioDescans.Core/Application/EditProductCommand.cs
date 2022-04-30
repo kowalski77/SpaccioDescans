@@ -28,7 +28,6 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         }
 
         product.NetPrice = netPrice;
-        product.Quantity = quantity;
         product.Name = request.Name;
         product.Description = request.Description;
         product.Measures = request.Measures;
