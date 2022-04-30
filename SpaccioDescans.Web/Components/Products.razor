@@ -22,7 +22,8 @@
                         TItem="ProductViewModel"
                         LogicalFilterOperator="LogicalFilterOperator.Or"
                         EditMode="DataGridEditMode.Single"
-                        RowCreate="@this.OnProductAddAsync">
+                        RowCreate="@this.OnProductAddAsync"
+                        RowUpdate="@this.OnProductEditAsync">
             <Columns>
                 <RadzenDataGridColumn TItem="ProductViewModel" Property="Code" Title="Código" TextAlign="TextAlign.Center">
                 </RadzenDataGridColumn>
@@ -61,6 +62,10 @@
                     </EditTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                    <Template Context="product">
+                        <RadzenButton Id="edit-product" Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(async () => await EditProductAsync(product))" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                    </Template>
                     <EditTemplate Context="product">
                         <RadzenButton Name="confirm" Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(async () => await SaveProductAsync(product))">
                         </RadzenButton>

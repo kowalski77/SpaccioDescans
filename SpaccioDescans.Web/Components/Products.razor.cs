@@ -25,6 +25,32 @@ public class ProductsBase : ComponentBase
         this.ProductViewModelsCollection = new Collection<ProductViewModel>(viewModels);
     }
 
+    protected async Task AddProductAsync()
+    {
+        this.NewlyProduct = new ProductViewModel();
+        await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct).ConfigureAwait(true);
+    }
+
+    protected async Task EditProductAsync(ProductViewModel product)
+    {
+        await this.ProductViewModelsGrid.EditRow(product).ConfigureAwait(true);
+    }
+
+    protected async Task OnProductEditAsync(ProductViewModel product)
+    {
+        var command = (EditProductCommand)product;
+        _ = await this.Mediator.Send(command);
+    }
+
+    protected async Task OnProductAddAsync(ProductViewModel product)
+    {
+        var command = (CreateProductCommand)product;
+        var code = await this.Mediator.Send(command);
+
+        product.Code = code;
+        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
+    }
+
     protected async Task SaveProductAsync(ProductViewModel product)
     {
         if (product == this.NewlyProduct)
@@ -43,20 +69,5 @@ public class ProductsBase : ComponentBase
         }
 
         this.ProductViewModelsGrid.CancelEditRow(product);
-    }
-
-    protected async Task AddProductAsync()
-    {
-        this.NewlyProduct = new ProductViewModel();
-        await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct).ConfigureAwait(true);
-    }
-
-    protected async Task OnProductAddAsync(ProductViewModel product)
-    {
-        var command = (CreateProductCommand)product;
-        var code = await this.Mediator.Send(command);
-
-        product.Code = code;
-        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
     }
 }

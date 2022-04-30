@@ -37,4 +37,10 @@ public class ProductViewModel
         return new CreateProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name, 
             viewModel.Description, viewModel.Measures, viewModel.Price, viewModel.Quantity);
     }
+
+    public static explicit operator EditProductCommand(ProductViewModel viewModel)
+    {
+        return new EditProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name, 
+            viewModel.Description, viewModel.Measures, viewModel.Price, viewModel.Quantity);
+    }
 }
