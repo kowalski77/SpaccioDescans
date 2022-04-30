@@ -19,12 +19,8 @@ public sealed class DeleteProductHandler : IRequestHandler<DeleteProductCommand>
         ArgumentNullException.ThrowIfNull(request);
 
         var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
-        if (product is null)
-        {
-            throw new InvalidOperationException($"Product with id: {request.Id} not found");
-        }
+        product!.SoftDeleted = true;
 
-        product.SoftDeleted = true;
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return Unit.Value;

@@ -22,11 +22,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         ArgumentNullException.ThrowIfNull(request);
 
         var netPrice = Price.CreateInstance(request.NetPrice);
-        var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
-        if (product is null)
-        {
-            throw new InvalidOperationException($"Product with id: {request.Id} not found");
-        }
+        var product = await this.productRepository.GetByIdWithStoresAsync(request.Id, cancellationToken);
 
         product.NetPrice = netPrice;
         product.Name = request.Name;
@@ -39,7 +35,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
             var store = await this.storeRepository.GetByCodeAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
-            product.AddToStore(store, quantity);
+            product.EditInStore(store, quantity);
         }
 
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

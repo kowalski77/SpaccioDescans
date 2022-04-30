@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core.Products;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaccioDescans.Core.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
@@ -27,6 +28,14 @@ public sealed class ProductRepository : IProductRepository
 
     public async Task<Product?> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await this.context.Products.FindAsync(new object? [] { id }, cancellationToken);
+        return await this.context.Products.FirstAsync(x => x.Id == id, cancellationToken);
+    }
+
+    public async Task<Product> GetByIdWithStoresAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Products
+            .Include(x => x.ProductStores)
+            .ThenInclude(y => y.Store)
+            .FirstAsync(x => x.Id == id, cancellationToken);
     }
 }

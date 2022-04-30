@@ -47,5 +47,14 @@ public sealed class Product : Entity, IAggregateRoot
         });
     }
 
+    public void EditInStore(Store store, Quantity quantity)
+    {
+        ArgumentNullException.ThrowIfNull(store);
+        ArgumentNullException.ThrowIfNull(quantity);
+
+        var productStore = this.productStores.First(x => x.Store.Code == store.Code);
+        productStore.Quantity = quantity;
+    }
+
     public IReadOnlyList<ProductStore> ProductStores => this.productStores;
 }

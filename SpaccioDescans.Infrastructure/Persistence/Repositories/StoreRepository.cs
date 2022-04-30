@@ -13,8 +13,8 @@ public sealed class StoreRepository : IStoreRepository
         this.context = context;
     }
 
-    public async Task<Store> GetByCodeAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Store> GetByCodeAsync(int code, CancellationToken cancellationToken = default)
     {
-        return await this.context.Stores.FirstAsync(x => x.Code == id, cancellationToken: cancellationToken);
+        return await this.context.Stores.FirstAsync(x => x.Code == code, cancellationToken: cancellationToken);
     }
 }
