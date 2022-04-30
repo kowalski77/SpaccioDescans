@@ -11,7 +11,6 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 
     public EditProductHandler(IProductRepository productRepository)
     {
-        ArgumentNullException.ThrowIfNull(productRepository);
         this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
@@ -22,7 +21,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         var netPrice = Price.CreateInstance(request.NetPrice);
         var quantity = Quantity.CreateInstance(request.Quantity);
 
-        var product = await this.productRepository.GetAsync(request.Id, cancellationToken).ConfigureAwait(true);
+        var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
         if (product is null)
         {
             throw new InvalidOperationException($"Product with id: {request.Id} not found");
@@ -35,7 +34,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         product.Measures = request.Measures;
         product.Vendor = request.Vendor;
 
-        await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken).ConfigureAwait(true);
+        await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return Unit.Value;
     }

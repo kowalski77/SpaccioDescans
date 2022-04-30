@@ -73,6 +73,12 @@
                         </RadzenButton>
                     </EditTemplate>
                 </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                    <Template Context="product">
+                        <RadzenButton Id="delete-product" ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(async () =>await DeleteProductAsync(product))" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                    </Template>
+                </RadzenDataGridColumn>
             </Columns>
         </RadzenDataGrid>
     </NotMatch>

@@ -17,6 +17,6 @@ public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IRead
 
     public async Task<IReadOnlyList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        return await this.productReadRepository.GetAll(cancellationToken).ConfigureAwait(true);
+        return await this.productReadRepository.GetAll(cancellationToken);
     }
 }

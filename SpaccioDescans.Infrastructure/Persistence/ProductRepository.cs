@@ -27,6 +27,6 @@ public sealed class ProductRepository : IProductRepository
 
     public async Task<Product?> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await this.context.Products.FindAsync(new object? [] { id }, cancellationToken).ConfigureAwait(false);
+        return await this.context.Products.FindAsync(new object? [] { id }, cancellationToken);
     }
 }

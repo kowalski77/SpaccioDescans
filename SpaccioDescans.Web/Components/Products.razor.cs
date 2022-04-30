@@ -19,7 +19,7 @@ public class ProductsBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        var products = await this.Mediator.Send(new GetProductsQuery()).ConfigureAwait(true);
+        var products = await this.Mediator.Send(new GetProductsQuery());
         var viewModels = products.Select(x => (ProductViewModel)x).ToList();
 
         this.ProductViewModelsCollection = new Collection<ProductViewModel>(viewModels);
@@ -28,12 +28,12 @@ public class ProductsBase : ComponentBase
     protected async Task AddProductAsync()
     {
         this.NewlyProduct = new ProductViewModel();
-        await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct).ConfigureAwait(true);
+        await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct);
     }
 
     protected async Task EditProductAsync(ProductViewModel product)
     {
-        await this.ProductViewModelsGrid.EditRow(product).ConfigureAwait(true);
+        await this.ProductViewModelsGrid.EditRow(product);
     }
 
     protected async Task OnProductEditAsync(ProductViewModel product)
@@ -44,11 +44,29 @@ public class ProductsBase : ComponentBase
 
     protected async Task OnProductAddAsync(ProductViewModel product)
     {
+        ArgumentNullException.ThrowIfNull(product);
+
         var command = (CreateProductCommand)product;
         var code = await this.Mediator.Send(command);
 
         product.Code = code;
-        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
+        await this.ProductViewModelsGrid.UpdateRow(product);
+    }
+
+    protected async Task DeleteProductAsync(ProductViewModel product)
+    {
+        ArgumentNullException.ThrowIfNull(product);
+
+        if (product == this.NewlyProduct)
+        {
+            this.NewlyProduct = null;
+        }
+
+        var command = new DeleteProductCommand(product.Id);
+        _ = await this.Mediator.Send(command);
+
+        this.ProductViewModelsCollection?.Remove(product);
+        await this.ProductViewModelsGrid.Reload().ConfigureAwait(true);
     }
 
     protected async Task SaveProductAsync(ProductViewModel product)
@@ -58,7 +76,7 @@ public class ProductsBase : ComponentBase
             this.NewlyProduct = null;
         }
 
-        await this.ProductViewModelsGrid.UpdateRow(product).ConfigureAwait(true);
+        await this.ProductViewModelsGrid.UpdateRow(product);
     }
 
     protected void CancelEdit(ProductViewModel product)

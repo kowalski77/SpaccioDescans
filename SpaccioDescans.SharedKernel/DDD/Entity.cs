@@ -10,7 +10,7 @@ public abstract class Entity
 
     public int TenantId { get; set; }
 
-    public bool SoftDeleted { get; protected set; }
+    public bool SoftDeleted { get; set; }
 
     protected void AddDomainEvent(INotification eventItem)
     {

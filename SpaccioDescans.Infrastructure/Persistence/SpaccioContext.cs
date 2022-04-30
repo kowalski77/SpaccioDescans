@@ -30,7 +30,7 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
             };
         }
 
-        return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0;
+        return await base.SaveChangesAsync(cancellationToken) > 0;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -41,6 +41,7 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
 
         var tenantId = this.tenantProvider.GetTenantId();
         builder.Entity<Product>().HasQueryFilter(x => x.TenantId == tenantId);
+        builder.Entity<Product>().HasQueryFilter(x => !x.SoftDeleted);
 
         base.OnModelCreating(builder);
     }

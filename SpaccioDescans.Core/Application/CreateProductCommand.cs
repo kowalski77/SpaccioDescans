@@ -11,8 +11,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
 
     public CreateProductHandler(IProductRepository productRepository)
     {
-        ArgumentNullException.ThrowIfNull(productRepository);
-        this.productRepository = productRepository;
+        this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -25,7 +24,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
         var product = new Product(request.Id, request.Vendor, request.Name, request.Description, request.Measures, netPrice, quantity);
         var newlyProduct = this.productRepository.Add(product);
 
-        await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken).ConfigureAwait(true);
+        await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return newlyProduct.Code;
     }
