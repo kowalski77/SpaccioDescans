@@ -5,86 +5,95 @@
 <Condition Evaluation="ProductViewModelsCollection is null">
     <Match>
         <div>
-            <h3>Loading...</h3>
+            <h3>Cargando...</h3>
         </div>
     </Match>
     <NotMatch>
-                <RadzenButton Id="add-product" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Nuevo"
-                      Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" />
-        <RadzenDataGrid @ref="ProductViewModelsGrid"
-                        AllowFiltering="true"
-                        AllowColumnResize="true"
-                        FilterMode="FilterMode.Simple"
-                        PageSize="10"
-                        AllowPaging="true"
-                        AllowSorting="true"
-                        Data="ProductViewModelsCollection"
-                        TItem="ProductViewModel"
-                        LogicalFilterOperator="LogicalFilterOperator.Or"
-                        EditMode="DataGridEditMode.Single"
-                        RowCreate="@this.OnProductAddAsync"
-                        RowUpdate="@this.OnProductEditAsync">
-            <Columns>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="ProductCode" Title="Código" TextAlign="TextAlign.Center">
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
-                    <EditTemplate Context="product">
-                        <RadzenTextBox @bind-Value="product.Vendor" Class="grid-textbox" Name="Vendor"/>
-                        <RadzenRequiredValidator Text="Fabricante requerido" Component="Vendor" Popup="true"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Name" Title="Nombre" TextAlign="TextAlign.Center">
-                    <EditTemplate Context="product">
-                        <RadzenTextBox @bind-Value="product.Name" Class="grid-textbox" Name="Name"/>
-                        <RadzenRequiredValidator Text="Producto requerido" Component="Name" Popup="true"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Description" Title="Descripcion" TextAlign="TextAlign.Center">
-                    <EditTemplate Context="product">
-                        <RadzenTextBox @bind-Value="product.Description" Class="grid-textbox" Name="Description"/>
-                        <RadzenRequiredValidator Text="Descripción requerida" Component="Description" Popup="true"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Measures" Title="Medidas" TextAlign="TextAlign.Center">
-                    <EditTemplate Context="product">
-                        <RadzenTextBox @bind-Value="product.Measures" Class="grid-textbox" Name="Description"/>
-                        <RadzenRequiredValidator Text="Medida requerida" Component="Description" Popup="true"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center" Filterable="false">
-                    <EditTemplate Context="product">
-                        <RadzenNumeric Name="Price" TValue="decimal" Step="0.1" @bind-Value="product.Price" Style="width: 100%"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreOne" Title="Tienda 1: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
-                    <EditTemplate Context="product">
-                        <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreOne" Style="width: 100%"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreTwo" Title="Tienda 2: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
-                    <EditTemplate Context="product">
-                        <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%"/>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
-                    <Template Context="product">
-                        <RadzenButton Id="edit-product" Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(async () => await EditProductAsync(product))" @onclick:stopPropagation="true">
-                        </RadzenButton>
-                    </Template>
-                    <EditTemplate Context="product">
-                        <RadzenButton Name="confirm" Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(async () => await SaveProductAsync(product))">
-                        </RadzenButton>
-                        <RadzenButton Id="edit-cancel" Name="cancel" Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(() => CancelEdit(product))">
-                        </RadzenButton>
-                    </EditTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
-                    <Template Context="product">
-                        <RadzenButton Id="delete-product" ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(async () =>await DeleteProductAsync(product))" @onclick:stopPropagation="true">
-                        </RadzenButton>
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
+        <RadzenCard class="pb-4">
+            <RadzenBreadCrumb>
+                <RadzenBreadCrumbItem Path="/" Text="Inicio" />
+                <RadzenBreadCrumbItem Path="/inventory" Text="Inventario" />
+                <RadzenBreadCrumbItem Text="Productos" />
+            </RadzenBreadCrumb>
+        </RadzenCard>
+        <RadzenCard class="pb-4">
+            <RadzenButton Id="add-product" Icon="add_circle_outline" Text="Nuevo"
+                          Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" Style="width: 200px; margin-bottom: 10px;"/>
+            <RadzenDataGrid @ref="ProductViewModelsGrid"
+                            AllowFiltering="true"
+                            AllowColumnResize="true"
+                            FilterMode="FilterMode.Simple"
+                            PageSize="10"
+                            AllowPaging="true"
+                            AllowSorting="true"
+                            Data="ProductViewModelsCollection"
+                            TItem="ProductViewModel"
+                            LogicalFilterOperator="LogicalFilterOperator.Or"
+                            EditMode="DataGridEditMode.Single"
+                            RowCreate="@this.OnProductAddAsync"
+                            RowUpdate="@this.OnProductEditAsync">
+                <Columns>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="ProductCode" Title="Código" TextAlign="TextAlign.Center">
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
+                        <EditTemplate Context="product">
+                            <RadzenTextBox @bind-Value="product.Vendor" Class="grid-textbox" Name="Vendor" />
+                            <RadzenRequiredValidator Text="Fabricante requerido" Component="Vendor" Popup="true" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Name" Title="Nombre" TextAlign="TextAlign.Center">
+                        <EditTemplate Context="product">
+                            <RadzenTextBox @bind-Value="product.Name" Class="grid-textbox" Name="Name" />
+                            <RadzenRequiredValidator Text="Producto requerido" Component="Name" Popup="true" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Description" Title="Descripcion" TextAlign="TextAlign.Center">
+                        <EditTemplate Context="product">
+                            <RadzenTextBox @bind-Value="product.Description" Class="grid-textbox" Name="Description" />
+                            <RadzenRequiredValidator Text="Descripción requerida" Component="Description" Popup="true" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Measures" Title="Medidas" TextAlign="TextAlign.Center">
+                        <EditTemplate Context="product">
+                            <RadzenTextBox @bind-Value="product.Measures" Class="grid-textbox" Name="Description" />
+                            <RadzenRequiredValidator Text="Medida requerida" Component="Description" Popup="true" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center" Filterable="false">
+                        <EditTemplate Context="product">
+                            <RadzenNumeric Name="Price" TValue="decimal" Step="0.1" @bind-Value="product.Price" Style="width: 100%" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreOne" Title="Tienda 1: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
+                        <EditTemplate Context="product">
+                            <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreOne" Style="width: 100%" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreTwo" Title="Tienda 2: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
+                        <EditTemplate Context="product">
+                            <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="product">
+                            <RadzenButton Id="edit-product" Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(async () => await EditProductAsync(product))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                        </Template>
+                        <EditTemplate Context="product">
+                            <RadzenButton Name="confirm" Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(async () => await SaveProductAsync(product))">
+                            </RadzenButton>
+                            <RadzenButton Id="edit-cancel" Name="cancel" Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(() => CancelEdit(product))">
+                            </RadzenButton>
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="product">
+                            <RadzenButton Id="delete-product" ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" Click="@(async () => await DeleteProductAsync(product))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenCard>
     </NotMatch>
 </Condition>

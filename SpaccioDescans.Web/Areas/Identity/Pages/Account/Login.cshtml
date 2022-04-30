@@ -11,13 +11,6 @@
             <h3>Entrar</h3>
             <form id="account" method="post">
                 <hr/>
-                <section>
-                    <select class="form-select" aria-label="Default select example">
-                        <option value="1">Terrassa</option>
-                        <option value="2">Matadepera</option>
-                    </select>
-                </section>
-                <hr/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
