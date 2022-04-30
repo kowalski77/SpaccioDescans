@@ -1,11 +1,12 @@
 using MediatR;
+using Microsoft.Extensions.Options;
 using Radzen;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application;
 using SpaccioDescans.Infrastructure;
+using SpaccioDescans.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddAuthentication("Identity.Application").AddCookie();
@@ -14,8 +15,10 @@ builder.Services.AddAuthentication("Identity.Application").AddCookie();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<DialogService>();
-
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<TenantConfiguration>(builder.Configuration.GetSection(nameof(TenantConfiguration)));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantConfiguration>>().Value);
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);
