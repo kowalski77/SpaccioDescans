@@ -14,8 +14,8 @@
         <RadzenDataGrid @ref="ProductViewModelsGrid"
                         AllowFiltering="true"
                         AllowColumnResize="true"
-                        FilterMode="FilterMode.Advanced"
-                        PageSize="5"
+                        FilterMode="FilterMode.Simple"
+                        PageSize="10"
                         AllowPaging="true"
                         AllowSorting="true"
                         Data="ProductViewModelsCollection"
@@ -51,12 +51,12 @@
                         <RadzenRequiredValidator Text="Medida requerida" Component="Description" Popup="true"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center">
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center" Filterable="false">
                     <EditTemplate Context="product">
                         <RadzenNumeric Name="Price" TValue="decimal" Step="0.1" @bind-Value="product.Price" Style="width: 100%"/>
                     </EditTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="ProductViewModel" Property="Quantity" Title="Cantidad" TextAlign="TextAlign.Center">
+                <RadzenDataGridColumn TItem="ProductViewModel" Property="Quantity" Title="Cantidad" TextAlign="TextAlign.Center" Filterable="false">
                     <EditTemplate Context="product">
                         <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.Quantity" Style="width: 100%"/>
                     </EditTemplate>
