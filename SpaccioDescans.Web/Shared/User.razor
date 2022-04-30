@@ -4,7 +4,7 @@
     <AuthorizeView>
         <Authorized>
             <RadzenMenu>
-                <RadzenMenuItem Text="@this.storeName"></RadzenMenuItem>
+                <RadzenMenuItem Text="@(this.storeName)" Icon="home"></RadzenMenuItem>
                 <RadzenMenuItem Text="@context.User.Identity?.Name" Icon="account_circle">
                     <RadzenMenuItem Text="Salir" Icon="input" Path="identity/account/logout"></RadzenMenuItem>
                 </RadzenMenuItem>
