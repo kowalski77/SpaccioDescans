@@ -224,6 +224,124 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -308,7 +426,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a9656f93-0e4f-4c97-b2c9-e08e667d90ac"),
+                            Id = new Guid("8ae70528-4077-4463-8a01-d923f10d6907"),
                             Address = "Carretera de Terrassa",
                             Code = 1,
                             Name = "Tienda 1",
@@ -317,7 +435,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0646cff4-e0e2-44e3-b288-62f0984d1e43"),
+                            Id = new Guid("3e1ca593-bc9d-4cc4-abe8-a922edca9734"),
                             Address = "Avenida de Matadepera",
                             Code = 2,
                             Name = "Tienda 2",
@@ -374,6 +492,82 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+                {
+                    b.HasOne("SpaccioDescans.Core.Orders.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SpaccioDescans.Core.Stores.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
+                {
+                    b.HasOne("SpaccioDescans.Core.Orders.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("SpaccioDescans.Core.Orders.Discount", "Discount", b1 =>
+                        {
+                            b1.Property<int>("OrderDetailId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Value")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("int")
+                                .HasColumnName("Discount");
+
+                            b1.HasKey("OrderDetailId");
+
+                            b1.ToTable("OrderDetail");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderDetailId");
+                        });
+
+                    b.OwnsOne("SpaccioDescans.Core.Orders.OrderQuantity", "Quantity", b1 =>
+                        {
+                            b1.Property<int>("OrderDetailId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Value")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("int")
+                                .HasColumnName("Quantity");
+
+                            b1.HasKey("OrderDetailId");
+
+                            b1.ToTable("OrderDetail");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderDetailId");
+                        });
+
+                    b.Navigation("Discount")
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Quantity")
                         .IsRequired();
                 });
 
@@ -437,6 +631,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
