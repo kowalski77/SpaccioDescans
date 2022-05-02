@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Components
+
+
+<RadzenFieldset Text="Información del cliente">
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Nombre" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="CustomerInfoViewModel.Name" Class="w-100" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Dirección" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="CustomerInfoViewModel.Address" Class="w-100" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Ciudad" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="CustomerInfoViewModel.City" Class="w-100" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Teléfono" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="CustomerInfoViewModel.Phone" Class="w-100" />
+        </div>
+    </div>
+</RadzenFieldset>
+
+
+@code {
+    [Parameter]
+    public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
+}
+

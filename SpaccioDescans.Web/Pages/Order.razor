@@ -1,0 +1,39 @@
+﻿@page "/order"
+
+<PageTitle>Crear factura</PageTitle>
+
+<RadzenCard class="pb-4">
+    <RadzenBreadCrumb>
+        <RadzenBreadCrumbItem Path="/" Text="Inicio" />
+        <RadzenBreadCrumbItem Text="Crear factura" />
+    </RadzenBreadCrumb>
+</RadzenCard>
+<RadzenCard class="pb-4">
+    <RadzenTemplateForm Data="@orderViewModel" Submit="@((OrderViewModel order) => { Submit(order); })">
+        <div class="row">
+            <div class="col-md-6">
+                <CustomerInfo CustomerInfoViewModel="orderViewModel.CustomerInfoViewModel" />
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+</RadzenCard>
+
+@code {
+    private readonly OrderViewModel orderViewModel = new();
+
+    private void Submit(OrderViewModel arg)
+    {
+        //
+    }
+
+    private void Cancel()
+    {
+        //
+    }
+}
