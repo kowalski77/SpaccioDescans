@@ -10,7 +10,7 @@ public sealed class Order : Entity, IAggregateRoot
 
     private Order() { }
 
-    public Order(Store store, Customer customer, string remarks)
+    public Order(Store store, Customer customer)
     {
         ArgumentNullException.ThrowIfNull(store);
         ArgumentNullException.ThrowIfNull(customer);
@@ -18,7 +18,6 @@ public sealed class Order : Entity, IAggregateRoot
         this.Store = store;
         this.Customer = customer;
         this.Status = OrderStatus.Pending;
-        this.Remarks = remarks;
         this.Date = DateTime.Now;
     }
 
@@ -34,7 +33,7 @@ public sealed class Order : Entity, IAggregateRoot
 
     public OrderStatus Status { get; private set; }
 
-    public string Remarks { get; private set; }
+    public string? Remarks { get; private set; }
 
     public IReadOnlyList<OrderDetail> OrderDetails => this.orderDetails;
 
