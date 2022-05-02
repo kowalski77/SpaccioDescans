@@ -22,5 +22,8 @@ public class OrderDetailEntityTypeConfiguration : IEntityTypeConfiguration<Order
             y.Property(z => z.Value).HasPrecision(10, 2);
         });
         builder.Property(x => x.SubTotal).HasPrecision(10, 2);
+        builder.HasQueryFilter(x => !x.SoftDeleted);
+
+        builder.Ignore(x => x.SubTotal);
     }
 }

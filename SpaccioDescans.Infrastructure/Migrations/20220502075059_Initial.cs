@@ -213,6 +213,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
@@ -267,12 +269,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "OrderDetail",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
                     Discount = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
-                    SubTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -296,12 +297,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Stores",
                 columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("3e1ca593-bc9d-4cc4-abe8-a922edca9734"), "Avenida de Matadepera", 2, "Tienda 2", false, 0 });
+                values: new object[] { new Guid("a531b185-c786-4dba-980f-bc7759048827"), "Avenida de Matadepera", 2, "Tienda 2", false, 0 });
 
             migrationBuilder.InsertData(
                 table: "Stores",
                 columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("8ae70528-4077-4463-8a01-d923f10d6907"), "Carretera de Terrassa", 1, "Tienda 1", false, 0 });
+                values: new object[] { new Guid("ac51e36d-7c1a-410b-9d58-236e16bc922e"), "Carretera de Terrassa", 1, "Tienda 1", false, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -10,6 +10,7 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
     {
         ArgumentNullException.ThrowIfNull(builder);
 
+        builder.Property(x => x.OrderId).ValueGeneratedOnAdd();
         builder.Property(x => x.SubTotal).HasPrecision(10, 2);
         builder.Property(x => x.Total).HasPrecision(10, 2);
         builder.Property(x => x.Remarks).IsUnicode(false);

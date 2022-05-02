@@ -46,10 +46,6 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
 
         builder.ApplyConfigurationsFromAssembly(typeof(ProductEntityTypeConfiguration).Assembly);
 
-        var tenantId = this.tenantProvider.GetTenantId();
-        builder.Entity<Product>().HasQueryFilter(x => x.TenantId == tenantId);
-        builder.Entity<Product>().HasQueryFilter(x => !x.SoftDeleted);
-
         base.OnModelCreating(builder);
     }
 }

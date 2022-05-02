@@ -7,8 +7,6 @@ namespace SpaccioDescans.Core.Orders;
 public sealed class Order : Entity, IAggregateRoot
 {
     private readonly List<OrderDetail> orderDetails = new();
-    private decimal subTotal;
-    private decimal total;
 
     private Order() { }
 
@@ -26,6 +24,8 @@ public sealed class Order : Entity, IAggregateRoot
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
+    public long OrderId { get; private set; }
+
     public DateTime Date { get; private set; }
 
     public Store Store { get; private set; }
@@ -38,21 +38,19 @@ public sealed class Order : Entity, IAggregateRoot
 
     public IReadOnlyList<OrderDetail> OrderDetails => this.orderDetails;
 
-    public decimal SubTotal
-    {
-        get => this.subTotal;
-        private set => this.subTotal = this.orderDetails.Sum(x => x.SubTotal);
-    }
+    public decimal SubTotal { get; private set; }
 
-    public decimal Total
-    {
-        get => this.total;
-        private set => this.total = this.subTotal + (this.SubTotal * SpaccioConstants.Vat / 100);
-    }
+    public decimal Total { get; private set; }
 
     public void AddOrderDetail(OrderDetail orderDetail)
     {
         ArgumentNullException.ThrowIfNull(orderDetail);
         this.orderDetails.Add(orderDetail);
+    }
+
+    public void CalculateTotals()
+    {
+        this.SubTotal = this.orderDetails.Sum(x => x.SubTotal);
+        this.Total = this.SubTotal + (this.SubTotal * SpaccioConstants.Vat / 100);
     }
 }

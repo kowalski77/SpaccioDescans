@@ -275,6 +275,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
+
                     b.Property<string>("Remarks")
                         .IsRequired()
                         .IsUnicode(false)
@@ -311,11 +317,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
@@ -325,10 +331,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("TenantId")
                         .HasColumnType("int");
@@ -426,7 +428,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8ae70528-4077-4463-8a01-d923f10d6907"),
+                            Id = new Guid("ac51e36d-7c1a-410b-9d58-236e16bc922e"),
                             Address = "Carretera de Terrassa",
                             Code = 1,
                             Name = "Tienda 1",
@@ -435,7 +437,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3e1ca593-bc9d-4cc4-abe8-a922edca9734"),
+                            Id = new Guid("a531b185-c786-4dba-980f-bc7759048827"),
                             Address = "Avenida de Matadepera",
                             Code = 2,
                             Name = "Tienda 2",
@@ -528,8 +530,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.OwnsOne("SpaccioDescans.Core.Orders.Discount", "Discount", b1 =>
                         {
-                            b1.Property<int>("OrderDetailId")
-                                .HasColumnType("int");
+                            b1.Property<long>("OrderDetailId")
+                                .HasColumnType("bigint");
 
                             b1.Property<int>("Value")
                                 .HasPrecision(10, 2)
@@ -546,8 +548,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.OwnsOne("SpaccioDescans.Core.Orders.OrderQuantity", "Quantity", b1 =>
                         {
-                            b1.Property<int>("OrderDetailId")
-                                .HasColumnType("int");
+                            b1.Property<long>("OrderDetailId")
+                                .HasColumnType("bigint");
 
                             b1.Property<int>("Value")
                                 .HasPrecision(10, 2)

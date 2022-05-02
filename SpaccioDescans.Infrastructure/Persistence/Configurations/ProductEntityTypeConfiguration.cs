@@ -17,5 +17,6 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
         });
 
         builder.Property(x => x.Code).ValueGeneratedOnAdd();
+        builder.HasQueryFilter(x => !x.SoftDeleted);
     }
 }

@@ -6,8 +6,6 @@ namespace SpaccioDescans.Core.Orders;
 
 public class OrderDetail : Entity
 {
-    private decimal subTotal;
-
     private OrderDetail() { }
 
     public OrderDetail(Product product, OrderQuantity quantity, Discount discount)
@@ -17,7 +15,7 @@ public class OrderDetail : Entity
         this.Discount = discount;
     }
 
-    public int Id { get; private set; }
+    public long Id { get; private set; }
 
     public Product Product { get; private set; }
 
@@ -25,9 +23,5 @@ public class OrderDetail : Entity
 
     public Discount Discount { get; private set; }
 
-    public decimal SubTotal
-    {
-        get => this.subTotal;
-        private set => this.subTotal = this.Product.NetPrice.Value - (this.Product.NetPrice.Value / this.Discount.Value);
-    }
+    public decimal SubTotal =>  this.Product.NetPrice.Value - (this.Product.NetPrice.Value / this.Discount.Value);
 }
