@@ -1,0 +1,20 @@
+﻿
+<RadzenFieldset Text="Artículos">
+    <button @onclick="Refresh">Refresh</button>
+    @foreach (var orderDetail in OrderDetailViewModels)
+    {
+        <OrderDetailItem/>
+    }
+
+</RadzenFieldset>
+
+@code {
+
+    [Parameter]
+    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
+
+    private void Refresh()
+    {
+        this.OrderDetailViewModels.Add(new OrderDetailViewModel());
+    }
+}
