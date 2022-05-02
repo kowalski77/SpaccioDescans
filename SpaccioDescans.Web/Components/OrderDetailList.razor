@@ -1,9 +1,10 @@
 ﻿
 <RadzenFieldset Text="Artículos">
-    <button @onclick="Refresh">Refresh</button>
+    <button @onclick="AddProduct">Añadir</button>
+    <button @onclick="Check">Check</button>
     @foreach (var orderDetail in OrderDetailViewModels)
     {
-        <OrderDetailItem/>
+        <OrderDetailItem OrderDetailViewModel="orderDetail"/>
     }
 
 </RadzenFieldset>
@@ -13,8 +14,13 @@
     [Parameter]
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
 
-    private void Refresh()
+    private void AddProduct()
     {
         this.OrderDetailViewModels.Add(new OrderDetailViewModel());
+    }
+
+    private void Check()
+    {
+        var res = this.OrderDetailViewModels.ToList();
     }
 }

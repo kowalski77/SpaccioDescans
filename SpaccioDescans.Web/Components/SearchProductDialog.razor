@@ -61,6 +61,12 @@
                             <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%" />
                         </EditTemplate>
                     </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="product">
+                            <RadzenButton Id="select-product" ButtonStyle="ButtonStyle.Info" Icon="select" Size="ButtonSize.Small" Class="m-1" Click="@(async () => await SelectProduct(product))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
                 </Columns>
             </RadzenDataGrid>
     </NotMatch>
@@ -69,7 +75,14 @@
 @code {
     private Collection<ProductViewModel>? ProductViewModelsCollection { get; set; }
 
-    [Inject] private IMediator Mediator { get; set; } = default!;
+    [Parameter]
+    public EventCallback OnProductSelected { get; set; }
+
+    [Inject] 
+    private IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    private DialogService DialogService { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -77,5 +90,11 @@
         var viewModels = products.Select(x => (ProductViewModel)x).ToList();
 
         this.ProductViewModelsCollection = new Collection<ProductViewModel>(viewModels);
+    }
+
+    private async Task SelectProduct(ProductViewModel product)
+    {
+        await this.OnProductSelected.InvokeAsync(product);
+        this.DialogService.Close();
     }
 }

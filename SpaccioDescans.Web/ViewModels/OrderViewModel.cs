@@ -1,4 +1,6 @@
-﻿namespace SpaccioDescans.Web.ViewModels;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SpaccioDescans.Web.ViewModels;
 
 public class OrderViewModel
 {
@@ -9,6 +11,7 @@ public class OrderViewModel
 
 public class CustomerInfoViewModel
 {
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     public string Address { get; set; } = string.Empty;
