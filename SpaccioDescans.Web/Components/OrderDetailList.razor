@@ -1,11 +1,10 @@
 ﻿
 <RadzenFieldset Text="Productos">
-    <RadzenButton Click="SearchProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button" />
     @foreach (var orderDetail in OrderDetailViewModels)
     {
         <OrderDetailItem OrderDetailViewModel="orderDetail" OnRemoveOrderDetail="RemoveItem" />
     }
-
+    <RadzenButton Click="SearchProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button" />
 </RadzenFieldset>
 
 @code {
