@@ -34,7 +34,6 @@
     {
         this.OrderDetailViewModels.Add(new OrderDetailViewModel
             {
-                Order = count++,
                 Name = $"{product.Vendor} {product.Name} {product.Measures}",
                 Price = product.Price,
                 ProductCode = product.ProductCode
@@ -43,8 +42,8 @@
         return Task.CompletedTask;
     }
 
-    private void RemoveItem(int order)
+    private void RemoveItem(int productCode)
     {
-        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.Order == order));
+        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductCode == productCode));
     }
 }

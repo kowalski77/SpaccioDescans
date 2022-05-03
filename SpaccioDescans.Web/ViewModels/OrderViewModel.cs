@@ -23,8 +23,6 @@ public class CustomerInfoViewModel
 
 public class OrderDetailViewModel
 {
-    public int Order { get; set; }
-
     public int ProductCode { get; set; }
 
     public string Name { get; set; } = default!;

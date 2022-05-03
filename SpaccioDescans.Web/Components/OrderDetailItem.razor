@@ -41,6 +41,6 @@
 
     private async Task RemoveProduct()
     {
-        await this.OnRemoveOrderDetail.InvokeAsync(this.OrderDetailViewModel.Order);
+        await this.OnRemoveOrderDetail.InvokeAsync(this.OrderDetailViewModel.ProductCode);
     }
 }
