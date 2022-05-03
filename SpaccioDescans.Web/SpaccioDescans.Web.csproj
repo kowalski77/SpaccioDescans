@@ -30,6 +30,8 @@
 
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Components\CustomerInfo.razor" />
+		<_ContentIncludedByDefault Remove="Components\PaymentDetail.razor" />
+		<_ContentIncludedByDefault Remove="Components\Payments.razor" />
 		<_ContentIncludedByDefault Remove="Components\Products.razor" />
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
 		<_ContentIncludedByDefault Remove="Shared\User.razor" />
@@ -50,6 +52,14 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Components\CustomerInfo.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Components\Payments.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Components\PaymentDetail.razor" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Components
+
+<RadzenFieldset Text="Métodos de pago">
+    <RadzenNumeric TValue="decimal" Format="0.00" Class="mr-1" @bind-Value="@Amount"/>
+    <br/>
+    <PaymentDetail PaymentViewModel="new PaymentViewModel()"/>
+</RadzenFieldset>
+
+@code {
+
+    [Parameter]
+    public decimal Amount { get; set; } = default!;
+}

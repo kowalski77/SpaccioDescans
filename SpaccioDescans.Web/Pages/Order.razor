@@ -12,18 +12,21 @@
     <RadzenTemplateForm Data="@orderViewModel" Submit="@((OrderViewModel order) => { Submit(order); })">
         <div class="row">
             <div class="col-md-6">
-                <CustomerInfo CustomerInfoViewModel="orderViewModel.CustomerInfoViewModel" />
+                <CustomerInfo CustomerInfoViewModel="orderViewModel.CustomerInfoViewModel"/>
+            </div>
+            <div class="col-md-6">
+                <Payments Amount="@this.orderViewModel.TotalAmount"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <OrderDetailList OrderDetailViewModels="orderViewModel.OrderDetailViewModels"/>
+                <OrderDetailList OrderDetailViewModels="orderViewModel.OrderDetailViewModels" OnProductUpdated="UpdateTotal"/>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-end" style="margin-top: 16px;">
-                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Aceptar" />
-                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancelar" Click="@Cancel" />
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Aceptar"/>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancelar" Click="@Cancel"/>
             </div>
         </div>
     </RadzenTemplateForm>
@@ -34,11 +37,16 @@
 
     private void Submit(OrderViewModel arg)
     {
-        //
+    //
     }
 
     private void Cancel()
     {
-        //
+    //
+    }
+
+    private void UpdateTotal(decimal total)
+    {
+        this.orderViewModel.TotalAmount = total;
     }
 }

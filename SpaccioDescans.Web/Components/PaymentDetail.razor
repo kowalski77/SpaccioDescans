@@ -1,0 +1,17 @@
+﻿@using SpaccioDescans.Core.Orders
+
+<div class="row">
+    <div class="col-4">
+        <RadzenDropDown TValue="Enum" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Class="w-100"
+                        Placeholder="Selecciona..." Data="@paymentMethods" />
+    </div>
+    <div class="col-4">
+        <RadzenNumeric TValue="decimal" Format="0.00" Class="mr-1" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public PaymentViewModel PaymentViewModel { get; set; } = default!;
+
+    private readonly List<PaymentMethod> paymentMethods = Enum.GetValues(typeof(PaymentMethod)).Cast<PaymentMethod>().ToList();
+}

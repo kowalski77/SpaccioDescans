@@ -2,6 +2,7 @@
 
 public enum OrderStatus
 {
+    Proforma,
     Pending,
     Completed,
     Cancelled

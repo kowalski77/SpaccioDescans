@@ -7,18 +7,24 @@ namespace SpaccioDescans.Core.Orders;
 public sealed class Order : Entity, IAggregateRoot
 {
     private readonly List<OrderDetail> orderDetails = new();
+    private readonly List<Payment> payments = new();
 
     private Order() { }
 
-    public Order(Store store, Customer customer)
+    public Order(Store store, Customer customer, 
+        IEnumerable<OrderDetail> orderDetailList, IEnumerable<Payment> paymentList)
     {
         ArgumentNullException.ThrowIfNull(store);
         ArgumentNullException.ThrowIfNull(customer);
+        ArgumentNullException.ThrowIfNull(orderDetailList);
+        ArgumentNullException.ThrowIfNull(paymentList);
 
         this.Store = store;
         this.Customer = customer;
         this.Status = OrderStatus.Pending;
         this.Date = DateTime.Now;
+        this.orderDetails = orderDetailList.ToList();
+        this.payments = paymentList.ToList();
     }
 
     public Guid Id { get; private set; } = Guid.NewGuid();
@@ -36,6 +42,8 @@ public sealed class Order : Entity, IAggregateRoot
     public string? Remarks { get; private set; }
 
     public IReadOnlyList<OrderDetail> OrderDetails => this.orderDetails;
+
+    public IReadOnlyList<Payment> Payment => this.payments;
 
     public decimal SubTotal { get; private set; }
 

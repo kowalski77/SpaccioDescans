@@ -9,7 +9,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Orders\" />
 		<Folder Include="Shared\" />
 		<Folder Include="Stores\" />
 		<Folder Include="Products\" />

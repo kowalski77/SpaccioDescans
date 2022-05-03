@@ -8,12 +8,15 @@
 </RadzenFieldset>
 
 @code {
+    [Parameter]
+    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = default!;
 
     [Parameter]
-    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
+    public EventCallback<decimal> OnProductUpdated { get; set; }
 
     [Inject]
     private DialogService DialogService { get; set; } = default!;
+
     private int count;
 
     private async Task SearchProduct()
@@ -30,7 +33,7 @@
         await UpdateProduct(product);
     }));
 
-    private Task UpdateProduct(ProductViewModel product)
+    private async Task UpdateProduct(ProductViewModel product)
     {
         this.OrderDetailViewModels.Add(new OrderDetailViewModel
             {
@@ -39,11 +42,17 @@
                 ProductCode = product.ProductCode
             });
 
-        return Task.CompletedTask;
+        await InvokeOnProductUpdated();
     }
 
-    private void RemoveItem(int productCode)
+    private async Task RemoveItem(int productCode)
     {
         this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductCode == productCode));
+        await InvokeOnProductUpdated();
+    }
+
+    private async Task InvokeOnProductUpdated()
+    {
+        await this.OnProductUpdated.InvokeAsync(this.OrderDetailViewModels.Sum(x => x.Price));
     }
 }
