@@ -1,10 +1,9 @@
 ﻿
-<RadzenFieldset Text="Artículos">
-    <button @onclick="AddProduct">Añadir</button>
-    <button @onclick="Check">Check</button>
+<RadzenFieldset Text="Productos">
+    <RadzenButton Click="AddProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button"/>
     @foreach (var orderDetail in OrderDetailViewModels)
     {
-        <OrderDetailItem OrderDetailViewModel="orderDetail"/>
+        <OrderDetailItem OrderDetailViewModel="orderDetail" OnRemoveOrderDetail="RemoveItem"/>
     }
 
 </RadzenFieldset>
@@ -14,13 +13,18 @@
     [Parameter]
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
 
+    private int count;
+
     private void AddProduct()
     {
-        this.OrderDetailViewModels.Add(new OrderDetailViewModel());
+        this.OrderDetailViewModels.Add(new OrderDetailViewModel
+        {
+            Order = count++
+        });
     }
 
-    private void Check()
+    private void RemoveItem(int order)
     {
-        var res = this.OrderDetailViewModels.ToList();
+        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.Order == order));
     }
 }

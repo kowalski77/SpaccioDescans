@@ -6,7 +6,7 @@ public class OrderViewModel
 {
     public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
 
-    public ICollection<OrderDetailViewModel> OrderDetailViewModels  { get; set; }  = new List<OrderDetailViewModel>();
+    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
 }
 
 public class CustomerInfoViewModel
@@ -23,9 +23,11 @@ public class CustomerInfoViewModel
 
 public class OrderDetailViewModel
 {
+    public int Order { get; set; }
+
     public int ProductCode { get; set; }
 
-    public int Quantity { get; set; }
+    public int Quantity { get; set; } = 1;
 
     public decimal Discount { get; set; }
 }
