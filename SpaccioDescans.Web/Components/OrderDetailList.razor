@@ -1,9 +1,9 @@
 ﻿
 <RadzenFieldset Text="Productos">
-    <RadzenButton Click="AddProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button"/>
+    <RadzenButton Click="SearchProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button" />
     @foreach (var orderDetail in OrderDetailViewModels)
     {
-        <OrderDetailItem OrderDetailViewModel="orderDetail" OnRemoveOrderDetail="RemoveItem"/>
+        <OrderDetailItem OrderDetailViewModel="orderDetail" OnRemoveOrderDetail="RemoveItem" />
     }
 
 </RadzenFieldset>
@@ -13,14 +13,35 @@
     [Parameter]
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
 
+    [Inject]
+    private DialogService DialogService { get; set; } = default!;
     private int count;
 
-    private void AddProduct()
+    private async Task SearchProduct()
+    {
+        await DialogService.OpenAsync<SearchProductDialog>("Buscar producto", new Dictionary<string, object>
+        {
+            {"OnProductSelected", ProductSelected}
+        },
+            new DialogOptions { Width = "90%", Height = "570px", Resizable = true, Draggable = true });
+    }
+
+    private EventCallback ProductSelected => new(this, (Func<ProductViewModel, Task>)(async product =>
+    {
+        await UpdateProduct(product);
+    }));
+
+    private Task UpdateProduct(ProductViewModel product)
     {
         this.OrderDetailViewModels.Add(new OrderDetailViewModel
-        {
-            Order = count++
-        });
+            {
+                Order = count++,
+                Name = $"{product.Vendor} {product.Name} {product.Measures}",
+                Price = product.Price,
+                ProductCode = product.ProductCode
+            });
+
+        return Task.CompletedTask;
     }
 
     private void RemoveItem(int order)

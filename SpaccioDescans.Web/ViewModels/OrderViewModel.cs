@@ -27,6 +27,10 @@ public class OrderDetailViewModel
 
     public int ProductCode { get; set; }
 
+    public string Name { get; set; } = default!;
+
+    public decimal Price { get; set; }
+
     public int Quantity { get; set; } = 1;
 
     public decimal Discount { get; set; }
