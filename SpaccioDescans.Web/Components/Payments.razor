@@ -1,13 +1,26 @@
 ﻿@using Microsoft.AspNetCore.Components
-
 <RadzenFieldset Text="Métodos de pago">
-    <RadzenNumeric TValue="decimal" Format="0.00" Class="mr-1" @bind-Value="@Amount"/>
-    <br/>
-    <PaymentDetail PaymentViewModel="new PaymentViewModel()"/>
+    <Condition Evaluation="this.OrderViewModel.NetAmount != 0">
+        <Match>
+            <div class="row">
+                <div class="col-6">
+                    <PaymentDetail Text="Tarjeta" ShowUpDown="true" />
+                    <PaymentDetail Text="Efectivo" ShowUpDown="true" />
+                    <PaymentDetail Text="Financiado" ShowUpDown="true" />
+                </div>
+                <div class="col-6">
+                    <PaymentDetail Text="Neto" Amount="@this.OrderViewModel.NetAmount" ReadOnly="true" ShowUpDown="false" />
+                    <PaymentDetail Text="Total (+ 21% IVA)" Amount="@this.OrderViewModel.TotalAmount" ReadOnly="true" ShowUpDown="false" />
+                    <PaymentDetail Text="Pendiente" ReadOnly="true" ShowUpDown="false" />
+                </div>
+            </div>
+        </Match>
+    </Condition>
 </RadzenFieldset>
 
 @code {
 
     [Parameter]
-    public decimal Amount { get; set; } = default!;
+    public OrderViewModel OrderViewModel { get; set; } = default!;
+
 }

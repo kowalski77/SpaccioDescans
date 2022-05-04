@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using SpaccioDescans.Core.Orders;
+using SpaccioDescans.Core;
 
 namespace SpaccioDescans.Web.ViewModels;
 
@@ -9,9 +9,9 @@ public class OrderViewModel
 
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
 
-    public ICollection<PaymentViewModel> PaymentViewModels { get; set; } = new List<PaymentViewModel>();
+    public decimal NetAmount { get; set; }
 
-    public decimal TotalAmount { get; set; }
+    public decimal TotalAmount => this.NetAmount + (this.NetAmount * SpaccioConstants.Vat / 100);
 }
 
 public class CustomerInfoViewModel
@@ -39,11 +39,4 @@ public class OrderDetailViewModel
     public decimal Discount { get; set; }
 
     public decimal Total => (this.Price * this.Quantity) - (this.Price * this.Quantity) * (this.Discount / 100);
-}
-
-public class PaymentViewModel
-{
-    public PaymentMethod PaymentMethod { get; set; }
-
-    public decimal Amount { get; set; }
 }

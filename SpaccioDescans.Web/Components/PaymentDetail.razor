@@ -1,17 +1,27 @@
-﻿@using SpaccioDescans.Core.Orders
-
-<div class="row">
+﻿<div class="row">
     <div class="col-4">
-        <RadzenDropDown TValue="Enum" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Class="w-100"
-                        Placeholder="Selecciona..." Data="@paymentMethods" />
+        <RadzenLabel Text="@Text" />
     </div>
-    <div class="col-4">
-        <RadzenNumeric TValue="decimal" Format="0.00" Class="mr-1" />
+    <div class="col-6">
+        <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                       @bind-Value="@Amount"
+                       Format="0.00" Class="mr-1"  
+                       ReadOnly="@ReadOnly"
+                       ShowUpDown="@ShowUpDown"/>
     </div>
 </div>
 
-@code {
-    [Parameter] public PaymentViewModel PaymentViewModel { get; set; } = default!;
+@code
+{
+    [Parameter]
+    public string Text { get; set; } = default!;
 
-    private readonly List<PaymentMethod> paymentMethods = Enum.GetValues(typeof(PaymentMethod)).Cast<PaymentMethod>().ToList();
+    [Parameter]
+    public decimal Amount { get; set; }
+
+    [Parameter]
+    public bool ShowUpDown { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
 }

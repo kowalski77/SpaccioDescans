@@ -15,7 +15,7 @@
                 <CustomerInfo CustomerInfoViewModel="orderViewModel.CustomerInfoViewModel"/>
             </div>
             <div class="col-md-6">
-                <Payments Amount="@this.orderViewModel.TotalAmount"/>
+                <Payments OrderViewModel="@this.orderViewModel"/>
             </div>
         </div>
         <div class="row">
@@ -47,6 +47,6 @@
 
     private void UpdateTotal(decimal total)
     {
-        this.orderViewModel.TotalAmount = total;
+        this.orderViewModel.NetAmount = total;
     }
 }
