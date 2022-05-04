@@ -3,28 +3,34 @@
         <RadzenLabel Text="Cantidad" />
     </div>
     <div class="col-md-1">
-        <RadzenNumeric TValue="int" Step="1" style="width: 50%;" Name="Cantidad" @bind-Value="OrderDetailViewModel.Quantity"/>
+        <RadzenNumeric TValue="int" Step="1" style="width: 50%;" Name="Cantidad" Value="@OrderDetailViewModel.Quantity" Change="OnQuantityUpdated" />
     </div>
     <div class="col-md-1">
         <RadzenLabel Text="Producto" />
     </div>
-    <div class="col-3">
-        <RadzenTextBox style="width: 100%;" Placeholder="Producto" @bind-Value="OrderDetailViewModel.Name" ReadOnly="true"/>
+    <div class="col-2">
+        <RadzenTextBox style="width: 100%;" Placeholder="Producto" @bind-Value="OrderDetailViewModel.Name" ReadOnly="true" />
     </div>
     <div class="col-md-1">
         <RadzenLabel Text="Precio" />
     </div>
     <div class="col-md-1">
-        <RadzenNumeric TValue="decimal" style="width: 70%;" @bind-Value="OrderDetailViewModel.Price" ShowUpDown="false" ReadOnly="true"/>
+        <RadzenNumeric TValue="decimal" style="width: 70%;" @bind-Value="OrderDetailViewModel.Price" ShowUpDown="false" ReadOnly="true" />
     </div>
     <div class="col-md-1">
         <RadzenLabel Text="Descuento" />
     </div>
     <div class="col-md-1">
-        <RadzenNumeric TValue="decimal" style="width: 50%;" Name="Descuento" @bind-Value="OrderDetailViewModel.Discount"/>
+        <RadzenNumeric TValue="decimal" style="width: 50%;" Name="Descuento" Value="OrderDetailViewModel.Discount" Change="OnDiscountUpdated" />
     </div>
     <div class="col-md-1">
-        <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Click="@RemoveProduct" ButtonType="ButtonType.Button"/>
+        <RadzenLabel Text="Total" />
+    </div>
+    <div class="col-md-1">
+        <RadzenNumeric TValue="decimal" style="width: 70%;" Name="Total" Value="OrderDetailViewModel.Total" ShowUpDown="false" ReadOnly="true" Format="0.00"/>
+    </div>
+    <div class="col-md-1">
+        <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Click="@RemoveProduct" ButtonType="ButtonType.Button" />
     </div>
 </div>
 
@@ -36,11 +42,26 @@
     [Parameter]
     public EventCallback<int> OnRemoveOrderDetail { get; set; }
 
+    [Parameter]
+    public EventCallback OnOrderDetailUpdated { get; set; }
+
     [Inject]
     private DialogService DialogService { get; set; } = default!;
 
     private async Task RemoveProduct()
     {
         await this.OnRemoveOrderDetail.InvokeAsync(this.OrderDetailViewModel.ProductCode);
+    }
+
+    private async Task OnQuantityUpdated(int quantity)
+    {
+        this.OrderDetailViewModel.Quantity = quantity;
+        await this.OnOrderDetailUpdated.InvokeAsync();
+    }
+
+    private async Task OnDiscountUpdated(decimal discount)
+    {
+        this.OrderDetailViewModel.Discount = discount;
+        await this.OnOrderDetailUpdated.InvokeAsync();
     }
 }

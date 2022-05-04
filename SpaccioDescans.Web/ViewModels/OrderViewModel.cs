@@ -37,6 +37,8 @@ public class OrderDetailViewModel
     public int Quantity { get; set; } = 1;
 
     public decimal Discount { get; set; }
+
+    public decimal Total => (this.Price * this.Quantity) - (this.Price * this.Quantity) * (this.Discount / 100);
 }
 
 public class PaymentViewModel

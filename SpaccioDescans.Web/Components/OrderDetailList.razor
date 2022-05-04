@@ -2,7 +2,9 @@
 <RadzenFieldset Text="Productos">
     @foreach (var orderDetail in OrderDetailViewModels)
     {
-        <OrderDetailItem OrderDetailViewModel="orderDetail" OnRemoveOrderDetail="RemoveItem" />
+        <OrderDetailItem OrderDetailViewModel="orderDetail" 
+                         OnRemoveOrderDetail="RemoveItem" 
+                         OnOrderDetailUpdated="InvokeOnOrderDetailUpdated"/>
     }
     <RadzenButton Click="SearchProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button" />
 </RadzenFieldset>
@@ -12,7 +14,7 @@
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<decimal> OnProductUpdated { get; set; }
+    public EventCallback<decimal> OnOrderDetailUpdated { get; set; }
 
     [Inject]
     private DialogService DialogService { get; set; } = default!;
@@ -42,17 +44,17 @@
                 ProductCode = product.ProductCode
             });
 
-        await InvokeOnProductUpdated();
+        await InvokeOnOrderDetailUpdated();
     }
 
     private async Task RemoveItem(int productCode)
     {
         this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductCode == productCode));
-        await InvokeOnProductUpdated();
+        await InvokeOnOrderDetailUpdated();
     }
 
-    private async Task InvokeOnProductUpdated()
+    private async Task InvokeOnOrderDetailUpdated()
     {
-        await this.OnProductUpdated.InvokeAsync(this.OrderDetailViewModels.Sum(x => x.Price));
+        await this.OnOrderDetailUpdated.InvokeAsync(this.OrderDetailViewModels.Sum(x => x.Total));
     }
 }
