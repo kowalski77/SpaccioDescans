@@ -2,7 +2,7 @@
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 
-namespace SpaccioDescans.Core.Application;
+namespace SpaccioDescans.Core.Application.Products;
 
 public sealed record EditProductCommand(Guid Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest;
 

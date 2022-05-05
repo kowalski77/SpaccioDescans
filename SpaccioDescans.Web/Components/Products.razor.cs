@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
 using SpaccioDescans.Core.Application;
+using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Web.ViewModels;
 
 namespace SpaccioDescans.Web.Components;

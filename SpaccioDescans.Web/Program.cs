@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Radzen;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application;
+using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Infrastructure.Persistence;
 

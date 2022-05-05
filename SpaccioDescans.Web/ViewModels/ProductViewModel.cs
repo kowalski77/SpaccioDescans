@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application;
+using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Core.Products;
 
 namespace SpaccioDescans.Web.ViewModels;
