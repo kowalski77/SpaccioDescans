@@ -12,6 +12,14 @@ public class OrderViewModel
     public decimal NetAmount { get; set; }
 
     public decimal TotalAmount => this.NetAmount + (this.NetAmount * SpaccioConstants.Vat / 100);
+
+    public decimal CreditCardAmount { get; set; }
+
+    public decimal CashAmount { get; set; }
+
+    public decimal FinancedAmount { get; set; }
+
+    public decimal PendingAmount => this.TotalAmount - this.CashAmount - this.CreditCardAmount - this.FinancedAmount;
 }
 
 public class CustomerInfoViewModel

@@ -4,14 +4,73 @@
         <Match>
             <div class="row">
                 <div class="col-6">
-                    <PaymentDetail Text="Tarjeta" ShowUpDown="true" />
-                    <PaymentDetail Text="Efectivo" ShowUpDown="true" />
-                    <PaymentDetail Text="Financiado" ShowUpDown="true" />
+                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Tarjeta" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           @bind-Value="@this.OrderViewModel.CreditCardAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Efectivo" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           @bind-Value="@this.OrderViewModel.CashAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Financiado" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           @bind-Value="@this.OrderViewModel.FinancedAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6">
-                    <PaymentDetail Text="Neto" Amount="@this.OrderViewModel.NetAmount" ReadOnly="true" ShowUpDown="false" />
-                    <PaymentDetail Text="Total (+ 21% IVA)" Amount="@this.OrderViewModel.TotalAmount" ReadOnly="true" ShowUpDown="false" />
-                    <PaymentDetail Text="Pendiente" ReadOnly="true" ShowUpDown="false" />
+                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Neto" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           ShowUpDown="false"
+                                           ReadOnly="true"
+                                           Value="@this.OrderViewModel.NetAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Total (+ 21% IVA)" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           ShowUpDown="false"
+                                           ReadOnly="true"
+                                           Value="@this.OrderViewModel.TotalAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <RadzenLabel Text="Pendiente" />
+                        </div>
+                        <div class="col-6">
+                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
+                                           ShowUpDown="false"
+                                           ReadOnly="true"
+                                           Value="@this.OrderViewModel.PendingAmount"
+                                           Format="0.00" Class="mr-1"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Match>
@@ -19,8 +78,6 @@
 </RadzenFieldset>
 
 @code {
-
     [Parameter]
     public OrderViewModel OrderViewModel { get; set; } = default!;
-
 }
