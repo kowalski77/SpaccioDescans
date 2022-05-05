@@ -27,9 +27,7 @@ public sealed class Order : Entity, IAggregateRoot
         this.payments = paymentList.ToList();
     }
 
-    public Guid Id { get; private set; } = Guid.NewGuid();
-
-    public long OrderId { get; private set; }
+    public long Id { get; private set; }
 
     public DateTime Date { get; private set; }
 

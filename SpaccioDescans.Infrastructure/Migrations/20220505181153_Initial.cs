@@ -52,7 +52,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
                     Address = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
@@ -70,14 +70,13 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Vendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Measures = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NetPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Code = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -90,8 +89,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "Stores",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false),
@@ -212,14 +211,13 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Remarks = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    Remarks = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
                     SubTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false),
@@ -246,8 +244,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "ProductStore",
                 columns: table => new
                 {
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -271,10 +269,10 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
                     Discount = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OrderId = table.Column<long>(type: "bigint", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -294,15 +292,37 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Stores",
-                columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("a531b185-c786-4dba-980f-bc7759048827"), "Avenida de Matadepera", 2, "Tienda 2", false, 0 });
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<long>(type: "bigint", nullable: true),
+                    TenantId = table.Column<int>(type: "int", nullable: false),
+                    SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payment_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
+                });
 
             migrationBuilder.InsertData(
                 table: "Stores",
-                columns: new[] { "Id", "Address", "Code", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { new Guid("ac51e36d-7c1a-410b-9d58-236e16bc922e"), "Carretera de Terrassa", 1, "Tienda 1", false, 0 });
+                columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
+                values: new object[] { 1L, "Carretera de Terrassa", "Tienda 1", false, 0 });
+
+            migrationBuilder.InsertData(
+                table: "Stores",
+                columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
+                values: new object[] { 2L, "Avenida de Matadepera", "Tienda 2", false, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -364,6 +384,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payment_OrderId",
+                table: "Payment",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductStore_StoreId",
                 table: "ProductStore",
                 column: "StoreId");
@@ -388,6 +413,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderDetail");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "ProductStore");

@@ -1,4 +1,4 @@
-﻿@page "/order"
+﻿@inherits OrderBase
 
 <PageTitle>Crear factura</PageTitle>
 
@@ -9,18 +9,18 @@
     </RadzenBreadCrumb>
 </RadzenCard>
 <RadzenCard class="pb-4">
-    <RadzenTemplateForm Data="@orderViewModel" Submit="@((OrderViewModel order) => { Submit(order); })">
+    <RadzenTemplateForm Data="@OrderViewModel" Submit="@((OrderViewModel order) => { Submit(order); })">
         <div class="row">
             <div class="col-md-6">
-                <CustomerInfo CustomerInfoViewModel="orderViewModel.CustomerInfoViewModel"/>
+                <CustomerInfo CustomerInfoViewModel="OrderViewModel.CustomerInfoViewModel"/>
             </div>
             <div class="col-md-6">
-                <Payments OrderViewModel="@this.orderViewModel"/>
+                <Payments OrderViewModel="@this.OrderViewModel"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <OrderDetailList OrderDetailViewModels="orderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="UpdateTotal"/>
+                <OrderDetailList OrderDetailViewModels="OrderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="UpdateTotal"/>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -31,22 +31,3 @@
         </div>
     </RadzenTemplateForm>
 </RadzenCard>
-
-@code {
-    private readonly OrderViewModel orderViewModel = new();
-
-    private void Submit(OrderViewModel arg)
-    {
-    //
-    }
-
-    private void Cancel()
-    {
-    //
-    }
-
-    private void UpdateTotal(decimal total)
-    {
-        this.orderViewModel.NetAmount = total;
-    }
-}

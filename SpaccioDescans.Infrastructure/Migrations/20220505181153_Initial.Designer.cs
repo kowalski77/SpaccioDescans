@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220502075059_Initial")]
+    [Migration("20220505181153_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,11 +228,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -267,24 +267,19 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
-
                     b.Property<string>("Remarks")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
@@ -294,8 +289,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("StoreId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("SubTotal")
                         .HasPrecision(10, 2)
@@ -325,11 +320,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
@@ -346,17 +341,44 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("Code")
-                        .ValueGeneratedOnAdd()
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Code"), 1L, 1);
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Payment");
+                });
+
+            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -387,11 +409,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
                 {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("StoreId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ProductId", "StoreId");
 
@@ -402,16 +424,15 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -430,18 +451,16 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ac51e36d-7c1a-410b-9d58-236e16bc922e"),
+                            Id = 1L,
                             Address = "Carretera de Terrassa",
-                            Code = 1,
                             Name = "Tienda 1",
                             SoftDeleted = false,
                             TenantId = 0
                         },
                         new
                         {
-                            Id = new Guid("a531b185-c786-4dba-980f-bc7759048827"),
+                            Id = 2L,
                             Address = "Avenida de Matadepera",
-                            Code = 2,
                             Name = "Tienda 2",
                             SoftDeleted = false,
                             TenantId = 0
@@ -575,12 +594,19 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
+                {
+                    b.HasOne("SpaccioDescans.Core.Orders.Order", null)
+                        .WithMany("Payment")
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
                 {
                     b.OwnsOne("SpaccioDescans.Core.Products.Price", "NetPrice", b1 =>
                         {
-                            b1.Property<Guid>("ProductId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<long>("ProductId")
+                                .HasColumnType("bigint");
 
                             b1.Property<decimal>("Value")
                                 .HasPrecision(10, 2)
@@ -611,11 +637,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.OwnsOne("SpaccioDescans.Core.Products.Quantity", "Quantity", b1 =>
                         {
-                            b1.Property<Guid>("ProductStoreProductId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<long>("ProductStoreProductId")
+                                .HasColumnType("bigint");
 
-                            b1.Property<Guid>("ProductStoreStoreId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<long>("ProductStoreStoreId")
+                                .HasColumnType("bigint");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("int")
@@ -640,6 +666,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>

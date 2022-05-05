@@ -9,12 +9,11 @@ public sealed class StoreRepository : IStoreRepository
 
     public StoreRepository(SpaccioContext context)
     {
-        ArgumentNullException.ThrowIfNull(context);
-        this.context = context;
+        this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<Store> GetByCodeAsync(int code, CancellationToken cancellationToken = default)
+    public async Task<Store> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await this.context.Stores.FirstAsync(x => x.Code == code, cancellationToken: cancellationToken);
+        return await this.context.Stores.FirstAsync(x => x.Id == id, cancellationToken: cancellationToken);
     }
 }

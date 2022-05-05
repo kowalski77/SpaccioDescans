@@ -1,6 +1,5 @@
 ﻿@using System.Collections.ObjectModel
 @using MediatR
-@using SpaccioDescans.Core.Application
 @using SpaccioDescans.Core.Application.Products
 
 <Condition Evaluation="ProductViewModelsCollection is null">
@@ -21,7 +20,7 @@
                             TItem="ProductViewModel"
                             LogicalFilterOperator="LogicalFilterOperator.Or">
                 <Columns>
-                    <RadzenDataGridColumn TItem="ProductViewModel" Property="ProductCode" Title="Código" TextAlign="TextAlign.Center">
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Id" Title="Código" TextAlign="TextAlign.Center">
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
                         <EditTemplate Context="product">

@@ -10,13 +10,13 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
     {
         ArgumentNullException.ThrowIfNull(builder);
 
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.OwnsOne(x => x.NetPrice, y =>
         {
             y.Property(z => z.Value).HasColumnName(nameof(Product.NetPrice));
             y.Property(z => z.Value).HasPrecision(10, 2);
         });
 
-        builder.Property(x => x.Code).ValueGeneratedOnAdd();
         builder.HasQueryFilter(x => !x.SoftDeleted);
     }
 }

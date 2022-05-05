@@ -10,7 +10,7 @@ public class Payment : Entity
         this.PaymentMethod = paymentMethod;
     }
 
-    public int Id { get; private set; }
+    public long Id { get; private set; }
 
     public decimal Amount { get; private set; }
 

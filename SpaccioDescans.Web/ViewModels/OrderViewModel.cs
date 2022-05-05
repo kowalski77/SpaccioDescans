@@ -36,7 +36,7 @@ public class CustomerInfoViewModel
 
 public class OrderDetailViewModel
 {
-    public int ProductCode { get; set; }
+    public long ProductId { get; set; }
 
     public string Name { get; set; } = default!;
 

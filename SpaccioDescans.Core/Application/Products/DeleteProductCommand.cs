@@ -3,7 +3,7 @@ using SpaccioDescans.Core.Products;
 
 namespace SpaccioDescans.Core.Application.Products;
 
-public sealed record DeleteProductCommand(Guid Id) : IRequest;
+public sealed record DeleteProductCommand(long Id) : IRequest;
 
 public sealed class DeleteProductHandler : IRequestHandler<DeleteProductCommand>
 {

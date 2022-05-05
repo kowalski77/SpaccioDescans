@@ -4,7 +4,7 @@ using SpaccioDescans.Core.Stores;
 
 namespace SpaccioDescans.Core.Application.Products;
 
-public sealed record EditProductCommand(Guid Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest;
+public sealed record EditProductCommand(long Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest;
 
 public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 {
@@ -32,7 +32,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
-            var store = await this.storeRepository.GetByCodeAsync(storeQuantity.StoreCode, cancellationToken);
+            var store = await this.storeRepository.GetByIdAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
             product.EditInStore(store, quantity);

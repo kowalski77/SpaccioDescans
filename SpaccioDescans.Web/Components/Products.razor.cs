@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
-using SpaccioDescans.Core.Application;
 using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Web.ViewModels;
 
@@ -48,9 +47,9 @@ public class ProductsBase : ComponentBase
         ArgumentNullException.ThrowIfNull(product);
 
         var command = (CreateProductCommand)product;
-        var code = await this.Mediator.Send(command);
+        var id = await this.Mediator.Send(command);
 
-        product.ProductCode = code;
+        product.Id = id;
         await this.ProductViewModelsGrid.UpdateRow(product);
     }
 

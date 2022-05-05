@@ -33,7 +33,7 @@
                             RowCreate="@this.OnProductAddAsync"
                             RowUpdate="@this.OnProductEditAsync">
                 <Columns>
-                    <RadzenDataGridColumn TItem="ProductViewModel" Property="ProductCode" Title="Código" TextAlign="TextAlign.Center">
+                    <RadzenDataGridColumn TItem="ProductViewModel" Property="Id" Title="Código" TextAlign="TextAlign.Center">
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="Vendor" Title="Fabricante" TextAlign="TextAlign.Center">
                         <EditTemplate Context="product">

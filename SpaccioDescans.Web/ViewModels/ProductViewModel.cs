@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application;
 using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Core.Products;
 
@@ -8,9 +7,7 @@ namespace SpaccioDescans.Web.ViewModels;
 
 public class ProductViewModel
 {
-    public Guid Id { get; init; } = Guid.NewGuid();
-
-    public int ProductCode { get; set; }
+    public long Id { get; set; }
 
     [Required] public string Vendor { get; set; } = string.Empty;
 
@@ -32,11 +29,11 @@ public class ProductViewModel
 
         return new ProductViewModel
         {
-            Id = productDto.Id,  ProductCode = productDto.Code, 
+            Id = productDto.Id,
             Vendor = productDto.Vendor, Name = productDto.Name, Description = productDto.Description, 
             Measures = productDto.Measures, Price = productDto.NetPrice, 
-            QuantityStoreOne = productDto.ProductStoreDtos.First(x=>x.StoreCode == SpaccioConstants.StoreOneCode).Quantity,
-            QuantityStoreTwo = productDto.ProductStoreDtos.First(x=>x.StoreCode == SpaccioConstants.StoreTwoCode).Quantity
+            QuantityStoreOne = productDto.ProductStoreDtos.First(x=>x.StoreId == SpaccioConstants.StoreOneCode).Quantity,
+            QuantityStoreTwo = productDto.ProductStoreDtos.First(x=>x.StoreId == SpaccioConstants.StoreTwoCode).Quantity
         };
     }
 
@@ -50,7 +47,7 @@ public class ProductViewModel
             new StoreQuantity(SpaccioConstants.StoreTwoCode, viewModel.QuantityStoreTwo)
         });
 
-        return new CreateProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name, 
+        return new CreateProductCommand(viewModel.Vendor, viewModel.Name, 
             viewModel.Description, viewModel.Measures, viewModel.Price, storeQuantities);
     }
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SpaccioDescans.Core.Orders;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence;
@@ -21,6 +22,7 @@ public static class InfrastructureExtensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductReadRepository, ProductReadRepository>();
         services.AddScoped<IStoreRepository, StoreRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<SpaccioContext>();

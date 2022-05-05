@@ -41,15 +41,15 @@
             {
                 Name = $"{product.Vendor} {product.Name} {product.Measures}",
                 Price = product.Price,
-                ProductCode = product.ProductCode
+                ProductId = product.Id
             });
 
         await InvokeOnOrderDetailUpdated();
     }
 
-    private async Task RemoveItem(int productCode)
+    private async Task RemoveItem(long productId)
     {
-        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductCode == productCode));
+        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductId == productId));
         await InvokeOnOrderDetailUpdated();
     }
 

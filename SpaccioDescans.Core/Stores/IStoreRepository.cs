@@ -2,5 +2,5 @@
 
 public interface IStoreRepository
 {
-    Task<Store> GetByCodeAsync(int code, CancellationToken cancellationToken = default);
+    Task<Store> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 }

@@ -16,8 +16,8 @@ public sealed class ProductReadRepository : IProductReadRepository
     public async Task<IReadOnlyList<ProductDto>> GetAll(CancellationToken cancellationToken = default)
     {
         var products = await this.context.Products
-            .Select(x => new ProductDto(x.Id, x.Code, x.Vendor, x.Name, x.Description, x.Measures, x.NetPrice.Value, x.ProductStores.Select(y => 
-                new ProductStoreDto(y.Store.Code, y.Quantity.Value))))
+            .Select(x => new ProductDto(x.Id, x.Vendor, x.Name, x.Description, x.Measures, x.NetPrice.Value, x.ProductStores.Select(y => 
+                new ProductStoreDto(y.Store.Id, y.Quantity.Value))))
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 

@@ -26,12 +26,12 @@ public sealed class ProductRepository : IProductRepository
         return product.Entity;
     }
 
-    public async Task<Product?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Product?> GetAsync(long id, CancellationToken cancellationToken = default)
     {
         return await this.context.Products.FirstAsync(x => x.Id == id, cancellationToken);
     }
 
-    public async Task<Product> GetByIdWithStoresAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Product> GetByIdWithStoresAsync(long id, CancellationToken cancellationToken = default)
     {
         return await this.context.Products
             .Include(x => x.ProductStores)

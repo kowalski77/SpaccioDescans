@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core.Products;
+﻿#pragma warning disable 8618
+using SpaccioDescans.Core.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Stores;
@@ -7,16 +8,16 @@ public class Store : Entity, IAggregateRoot
 {
     private List<ProductStore> productStores = new();
 
-    public Store(int code, string name, string address)
+    private Store() { }
+
+    public Store(int id, string name, string address)
     {
-        this.Code = code;
+        this.Id = id;
         this.Name = name;
         this.Address = address;
     }
 
-    public Guid Id { get; private set; } = Guid.NewGuid();
-
-    public int Code { get; internal set; }
+    public long Id { get; internal set; }
 
     public string Name { get; internal set; }
 
