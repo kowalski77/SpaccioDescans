@@ -4,7 +4,7 @@ namespace SpaccioDescans.Core.Orders;
 
 public class Discount : ValueObject
 {
-    private const string DiscountShouldBeGreaterThanZero = "Discount should be greater than zero";
+    private const string DiscountShouldBePositive = "Discount should be positive";
 
     private Discount(decimal value)
     {
@@ -15,9 +15,9 @@ public class Discount : ValueObject
 
     public static Discount CreateInstance(decimal value)
     {
-        if (value <= 0)
+        if (value < 0)
         {
-            throw new InvalidOperationException(DiscountShouldBeGreaterThanZero);
+            throw new InvalidOperationException(DiscountShouldBePositive);
         }
 
         return new Discount(value);

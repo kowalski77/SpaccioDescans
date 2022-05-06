@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
+using SpaccioDescans.Core.Application.Orders;
+using SpaccioDescans.Core.Orders;
 
 namespace SpaccioDescans.Web.ViewModels;
 
@@ -20,6 +22,24 @@ public class OrderViewModel
     public decimal FinancedAmount { get; set; }
 
     public decimal PendingAmount => this.TotalAmount - this.CashAmount - this.CreditCardAmount - this.FinancedAmount;
+
+    public static explicit operator CreateOrderCommand(OrderViewModel orderViewModel)
+    {
+        ArgumentNullException.ThrowIfNull(orderViewModel);
+
+        var customerInfo = new CustomerInfo(orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address, 
+            orderViewModel.CustomerInfoViewModel.City, orderViewModel.CustomerInfoViewModel.Phone);
+        var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.Quantity, x.Discount));
+        var paymentDataCollection = new List<PaymentData>
+        {
+            new(PaymentMethod.CreditCard, orderViewModel.CreditCardAmount),
+            new(PaymentMethod.Cash, orderViewModel.CashAmount),
+            new(PaymentMethod.Financed, orderViewModel.FinancedAmount)
+        };
+
+
+        return new CreateOrderCommand(customerInfo, orderDetailItemCollection, paymentDataCollection);
+    }
 }
 
 public class CustomerInfoViewModel

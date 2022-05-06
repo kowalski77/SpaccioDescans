@@ -21,10 +21,12 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.Store = store;
         this.Customer = customer;
-        this.Status = OrderStatus.Pending;
         this.Date = DateTime.Now;
         this.orderDetails = orderDetailList.ToList();
         this.payments = paymentList.ToList();
+
+        this.CalculateTotals();
+        this.SetStatus();
     }
 
     public long Id { get; private set; }
@@ -47,15 +49,15 @@ public sealed class Order : Entity, IAggregateRoot
 
     public decimal Total { get; private set; }
 
-    public void AddOrderDetail(OrderDetail orderDetail)
-    {
-        ArgumentNullException.ThrowIfNull(orderDetail);
-        this.orderDetails.Add(orderDetail);
-    }
-
-    public void CalculateTotals()
+    private void CalculateTotals()
     {
         this.SubTotal = this.orderDetails.Sum(x => x.SubTotal);
         this.Total = this.SubTotal + (this.SubTotal * SpaccioConstants.Vat / 100);
+    }
+
+    private void SetStatus()
+    {
+        var isTotallyPaid = this.payments.Sum(x => x.Amount) == this.Total;
+        this.Status = isTotallyPaid ? OrderStatus.Completed : OrderStatus.Pending;
     }
 }

@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Radzen;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application;
 using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Infrastructure.Persistence;
@@ -16,6 +15,7 @@ builder.Services.AddAuthentication("Identity.Application").AddCookie();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<TenantConfiguration>(builder.Configuration.GetSection(nameof(TenantConfiguration)));

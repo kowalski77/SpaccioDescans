@@ -9,7 +9,7 @@ public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<O
 
 public sealed record CustomerInfo(string Name, string Address, string City, string Phone);
 
-public sealed record OrderDetailItem(int ProductId, int Quantity, decimal Discount);
+public sealed record OrderDetailItem(long ProductId, int Quantity, decimal Discount);
 
 public sealed record PaymentData(PaymentMethod PaymentMethod, decimal Amount);
 
