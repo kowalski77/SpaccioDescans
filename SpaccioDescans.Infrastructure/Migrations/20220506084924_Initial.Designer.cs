@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220505181153_Initial")]
+    [Migration("20220506084924_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -554,9 +554,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
 
-                            b1.Property<int>("Value")
+                            b1.Property<decimal>("Value")
                                 .HasPrecision(10, 2)
-                                .HasColumnType("int")
+                                .HasColumnType("decimal(10,2)")
                                 .HasColumnName("Discount");
 
                             b1.HasKey("OrderDetailId");

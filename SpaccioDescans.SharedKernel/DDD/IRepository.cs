@@ -7,5 +7,5 @@ public interface IRepository<T>
 
     T Add(T item);
 
-    Task<T?> GetAsync(long id, CancellationToken cancellationToken = default);
+    Task<T> GetAsync(long id, CancellationToken cancellationToken = default);
 }

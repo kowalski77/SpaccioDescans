@@ -271,7 +271,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
-                    Discount = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)

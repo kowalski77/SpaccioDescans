@@ -552,9 +552,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
 
-                            b1.Property<int>("Value")
+                            b1.Property<decimal>("Value")
                                 .HasPrecision(10, 2)
-                                .HasColumnType("int")
+                                .HasColumnType("decimal(10,2)")
                                 .HasColumnName("Discount");
 
                             b1.HasKey("OrderDetailId");

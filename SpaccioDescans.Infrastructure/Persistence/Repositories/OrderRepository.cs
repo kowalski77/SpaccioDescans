@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core.Orders;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaccioDescans.Core.Orders;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
@@ -23,8 +24,8 @@ public sealed class OrderRepository : IOrderRepository
         return orderEntry.Entity;
     }
 
-    public Task<Order?> GetAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<Order> GetAsync(long id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await this.context.Orders.FirstAsync(x => x.Id == id, cancellationToken);
     }
 }

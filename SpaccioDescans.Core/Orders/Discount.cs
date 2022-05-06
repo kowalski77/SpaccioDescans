@@ -6,14 +6,14 @@ public class Discount : ValueObject
 {
     private const string DiscountShouldBeGreaterThanZero = "Discount should be greater than zero";
 
-    private Discount(int value)
+    private Discount(decimal value)
     {
         this.Value = value;
     }
 
-    public int Value { get; private set; }
+    public decimal Value { get; private set; }
 
-    public static Discount CreateInstance(int value)
+    public static Discount CreateInstance(decimal value)
     {
         if (value <= 0)
         {
