@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 8618
+using SpaccioDescans.Core.Application.Orders;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
@@ -11,7 +12,7 @@ public sealed class Order : Entity, IAggregateRoot
 
     private Order() { }
 
-    public Order(Store store, Customer customer, 
+    public Order(Store store, Customer customer,
         IEnumerable<OrderDetail> orderDetailList, IEnumerable<Payment> paymentList)
     {
         ArgumentNullException.ThrowIfNull(store);
@@ -27,6 +28,7 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.CalculateTotals();
         this.SetStatus();
+        this.AddDomainEvent(new OrderCreated(this.orderDetails.Select(x => x.Product.Id).ToList(), 1));
     }
 
     public long Id { get; private set; }

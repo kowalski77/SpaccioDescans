@@ -12,11 +12,6 @@ public class ProductStoreEntityTypeConfiguration : IEntityTypeConfiguration<Prod
 
         builder.HasKey(x => new { x.ProductId, x.StoreId });
 
-        builder.OwnsOne(x => x.Quantity, y =>
-        {
-            y.Property(z => z.Value).HasColumnName(nameof(ProductStore.Quantity));
-        });
-
         builder.HasOne(x => x.Product)
             .WithMany(y => y.ProductStores)
             .HasForeignKey(x => x.ProductId)

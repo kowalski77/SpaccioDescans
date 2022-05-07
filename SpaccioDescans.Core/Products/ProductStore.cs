@@ -4,7 +4,7 @@ namespace SpaccioDescans.Core.Products;
 
 public class ProductStore
 {
-    public Quantity Quantity { get; internal set; } = default!;
+    public int Quantity { get; internal set; }
 
     public long ProductId { get; internal set; }
 

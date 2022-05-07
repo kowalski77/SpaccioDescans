@@ -20,4 +20,8 @@
 	  <ProjectReference Include="..\SpaccioDescans.Core\SpaccioDescans.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Transactions\" />
+	</ItemGroup>
+
 </Project>

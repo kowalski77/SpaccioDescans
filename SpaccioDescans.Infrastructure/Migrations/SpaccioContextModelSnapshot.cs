@@ -413,6 +413,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<long>("StoreId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId", "StoreId");
 
                     b.HasIndex("StoreId");
@@ -633,30 +636,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .WithMany("ProductStores")
                         .HasForeignKey("StoreId");
 
-                    b.OwnsOne("SpaccioDescans.Core.Products.Quantity", "Quantity", b1 =>
-                        {
-                            b1.Property<long>("ProductStoreProductId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<long>("ProductStoreStoreId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("int")
-                                .HasColumnName("Quantity");
-
-                            b1.HasKey("ProductStoreProductId", "ProductStoreStoreId");
-
-                            b1.ToTable("ProductStore");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProductStoreProductId", "ProductStoreStoreId");
-                        });
-
                     b.Navigation("Product");
-
-                    b.Navigation("Quantity")
-                        .IsRequired();
 
                     b.Navigation("Store");
                 });

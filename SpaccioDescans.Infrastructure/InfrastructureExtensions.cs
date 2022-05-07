@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence;
 using SpaccioDescans.Infrastructure.Persistence.Repositories;
+using SpaccioDescans.Infrastructure.Transactions;
 
 namespace SpaccioDescans.Infrastructure;
 
@@ -35,5 +37,8 @@ public static class InfrastructureExtensions
                 sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
             });
         });
+
+        services.AddScoped<IDbContext, SpaccioContext>();
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
     }
 }

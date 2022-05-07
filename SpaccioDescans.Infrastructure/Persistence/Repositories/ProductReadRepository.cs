@@ -17,7 +17,7 @@ public sealed class ProductReadRepository : IProductReadRepository
     {
         var products = await this.context.Products
             .Select(x => new ProductDto(x.Id, x.Vendor, x.Name, x.Description, x.Measures, x.NetPrice.Value, x.ProductStores.Select(y => 
-                new ProductStoreDto(y.Store.Id, y.Quantity.Value))))
+                new ProductStoreDto(y.Store.Id, y.Quantity))))
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 

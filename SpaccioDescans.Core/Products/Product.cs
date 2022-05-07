@@ -40,7 +40,7 @@ public sealed class Product : Entity, IAggregateRoot
         {
             Product = this,
             Store = store,
-            Quantity = quantity
+            Quantity = quantity.Value
         });
     }
 
@@ -50,7 +50,7 @@ public sealed class Product : Entity, IAggregateRoot
         ArgumentNullException.ThrowIfNull(quantity);
 
         var productStore = this.productStores.First(x => x.Store.Id == store.Id);
-        productStore.Quantity = quantity;
+        productStore.Quantity = quantity.Value;
     }
 
     public IReadOnlyList<ProductStore> ProductStores => this.productStores;

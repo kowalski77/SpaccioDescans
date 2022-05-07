@@ -1,22 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Orders;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence.Configurations;
-using SpaccioDescans.SharedKernel.DDD;
+using SpaccioDescans.Infrastructure.Transactions;
 
 namespace SpaccioDescans.Infrastructure.Persistence;
 
-public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
+public class SpaccioContext : TransactionContext
 {
-    private readonly ITenantProvider tenantProvider;
-
-    public SpaccioContext(DbContextOptions options, ITenantProvider tenantProvider)
-        : base(options)
+    public SpaccioContext(DbContextOptions options, IMediator mediator)
+        : base(options, mediator)
     {
-        this.tenantProvider = tenantProvider ?? throw new ArgumentNullException(nameof(tenantProvider));
     }
 
     public DbSet<Product> Products { get; set; } = default!;
@@ -24,21 +20,6 @@ public class SpaccioContext : IdentityDbContext<IdentityUser>, IUnitOfWork
     public DbSet<Store> Stores { get; set; } = default!;
 
     public DbSet<Order> Orders { get; set; } = default!;
-
-    public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-    {
-        var tenantId = this.tenantProvider.GetTenantId();
-        foreach (var entry in this.ChangeTracker.Entries<Entity>())
-        {
-            entry.Entity.TenantId = entry.State switch
-            {
-                EntityState.Added => tenantId,
-                _ => entry.Entity.TenantId
-            };
-        }
-
-        return await base.SaveChangesAsync(cancellationToken) > 0;
-    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
