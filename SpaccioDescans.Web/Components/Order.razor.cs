@@ -20,17 +20,16 @@ public class OrderBase : ComponentBase
     {
         ArgumentNullException.ThrowIfNull(model);
 
+        var isValid = this.ValidateOrderDetails();
+        if (!isValid)
+        {
+            return;
+        }
+
         var isConfirmed = await this.ConfirmOrderCreationAsync();
         if (isConfirmed)
         {
-            var command = (CreateOrderCommand)model;
-            var result = await this.Mediator.Send(command);
-
-            this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {result}");
-        }
-        else
-        {
-            this.NotificationService.Notify(NotificationSeverity.Info, "Creación de factura cancelada");
+            await this.CreateOrderAsync(model);
         }
     }
 
@@ -44,6 +43,17 @@ public class OrderBase : ComponentBase
         this.OrderViewModel.NetAmount = total;
     }
 
+    private bool ValidateOrderDetails()
+    {
+        if (this.OrderViewModel.OrderDetailViewModels.Count is not 0)
+        {
+            return true;
+        }
+
+        this.NotificationService.Notify(NotificationSeverity.Error, "No has añadido productos");
+        return false;
+    }
+
     private async Task<bool> ConfirmOrderCreationAsync()
     {
         var isConfirmed = await this.DialogService.Confirm("¿Estás seguro?", "Crear factura", new ConfirmOptions
@@ -52,11 +62,20 @@ public class OrderBase : ComponentBase
             CancelButtonText = "Cancelar"
         });
 
-        if (isConfirmed == null)
+        if (isConfirmed != null && (bool)isConfirmed)
         {
-            return false;
+            return (bool)isConfirmed;
         }
 
-        return (bool)isConfirmed;
+        this.NotificationService.Notify(NotificationSeverity.Info, "Creación de factura cancelada");
+        return false;
+    }
+
+    private async Task CreateOrderAsync(OrderViewModel model)
+    {
+        var command = (CreateOrderCommand)model;
+        var result = await this.Mediator.Send(command);
+
+        this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {result}");
     }
 }
