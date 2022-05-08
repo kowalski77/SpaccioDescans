@@ -63,7 +63,7 @@
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
                         <Template Context="product">
-                            <RadzenButton Id="select-product" ButtonStyle="ButtonStyle.Info" Icon="select" Size="ButtonSize.Small" Class="m-1" Click="@(async () => await SelectProduct(product))" @onclick:stopPropagation="true">
+                            <RadzenButton Id="select-product" ButtonStyle="ButtonStyle.Info" Icon="check" Size="ButtonSize.Small" Class="m-1" Click="@(async () => await SelectProduct(product))" @onclick:stopPropagation="true">
                             </RadzenButton>
                         </Template>
                     </RadzenDataGridColumn>

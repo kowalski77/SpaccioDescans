@@ -5,11 +5,11 @@ using SpaccioDescans.Core.Stores;
 
 namespace SpaccioDescans.Core.Application.Orders;
 
-public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDatas) : IRequest<long>;
+public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : IRequest<long>;
 
 public sealed record CustomerInfo(string Name, string Address, string City, string Phone);
 
-public sealed record OrderDetailItem(long ProductId, int Quantity, decimal Discount);
+public sealed record OrderDetailItem(long ProductId, long StoreId, int Quantity, decimal Discount);
 
 public sealed record PaymentData(PaymentMethod PaymentMethod, decimal Amount);
 
@@ -33,7 +33,7 @@ public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, lon
         var store = await this.storeRepository.GetCurrentStore(cancellationToken);
         var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.City, request.CustomerInfo.Phone);
         var orderDetails = await this.GetOrderDetails(request.OrderDetailItems);
-        var payments = request.PaymentDatas.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));
+        var payments = request.PaymentDataCollection.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));
 
         var order = new Order(store, customer, orderDetails, payments);
 

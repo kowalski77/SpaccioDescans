@@ -27,16 +27,18 @@ public class OrderViewModel
     {
         ArgumentNullException.ThrowIfNull(orderViewModel);
 
-        var customerInfo = new CustomerInfo(orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address, 
+        var customerInfo = new CustomerInfo(
+            orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address, 
             orderViewModel.CustomerInfoViewModel.City, orderViewModel.CustomerInfoViewModel.Phone);
-        var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.Quantity, x.Discount));
+
+        var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
+
         var paymentDataCollection = new List<PaymentData>
         {
             new(PaymentMethod.CreditCard, orderViewModel.CreditCardAmount),
             new(PaymentMethod.Cash, orderViewModel.CashAmount),
             new(PaymentMethod.Financed, orderViewModel.FinancedAmount)
         };
-
 
         return new CreateOrderCommand(customerInfo, orderDetailItemCollection, paymentDataCollection);
     }
@@ -57,6 +59,8 @@ public class CustomerInfoViewModel
 public class OrderDetailViewModel
 {
     public long ProductId { get; set; }
+
+    public long StoreId { get; set; }
 
     public string Name { get; set; } = default!;
 

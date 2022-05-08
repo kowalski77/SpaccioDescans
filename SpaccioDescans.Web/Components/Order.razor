@@ -9,7 +9,7 @@
     </RadzenBreadCrumb>
 </RadzenCard>
 <RadzenCard class="pb-4">
-    <RadzenTemplateForm Data="@OrderViewModel" Submit="@((OrderViewModel order) => { Submit(order); })">
+    <RadzenTemplateForm Data="@OrderViewModel" Submit="@(async (OrderViewModel order) => { await Submit(order); })">
         <div class="row">
             <div class="col-md-6">
                 <CustomerInfo CustomerInfoViewModel="OrderViewModel.CustomerInfoViewModel"/>
