@@ -32,6 +32,7 @@
 		<_ContentIncludedByDefault Remove="Components\CustomerInfo.razor" />
 		<_ContentIncludedByDefault Remove="Components\Payments.razor" />
 		<_ContentIncludedByDefault Remove="Components\Products.razor" />
+		<_ContentIncludedByDefault Remove="Pages\OutOfStock.razor" />
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
 		<_ContentIncludedByDefault Remove="Shared\User.razor" />
 	</ItemGroup>
@@ -55,6 +56,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Components\Payments.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\OutOfStock.razor" />
 	</ItemGroup>
 
 </Project>

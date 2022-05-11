@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220507093154_Initial")]
+    [Migration("20220509142652_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -320,7 +320,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("OrderId")
+                    b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
@@ -542,12 +542,14 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Orders.Order", null)
+                    b.HasOne("SpaccioDescans.Core.Orders.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -590,6 +592,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.Navigation("Discount")
                         .IsRequired();
+
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
 
@@ -652,6 +656,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
                 {
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductStores");
                 });
 

@@ -271,8 +271,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
+                    OrderId = table.Column<long>(type: "bigint", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    OrderId = table.Column<long>(type: "bigint", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -283,7 +283,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         name: "FK_OrderDetail_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderDetail_Products_ProductId",
                         column: x => x.ProductId,

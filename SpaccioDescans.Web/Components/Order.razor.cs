@@ -74,8 +74,8 @@ public class OrderBase : ComponentBase
     private async Task CreateOrderAsync(OrderViewModel model)
     {
         var command = (CreateOrderCommand)model;
-        var result = await this.Mediator.Send(command);
+        var orderId = await this.Mediator.Send(command);
 
-        this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {result}");
+        this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {orderId}");
     }
 }

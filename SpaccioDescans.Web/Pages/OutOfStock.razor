@@ -1,0 +1,62 @@
+﻿@page "/outofstock"
+@using MediatR
+@using SpaccioDescans.Core.Application.Products
+@using System.Collections.ObjectModel
+
+<PageTitle>Fuera de stock</PageTitle>
+
+    <div class="row py-5">
+        <div class="col">
+            <RadzenCard>
+                <RadzenDataList WrapItems="true" AllowPaging="true" Data="@ProductOutOfStockViewModels" TItem="ProductOutOfStockViewModel" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+                    <Template Context="product">
+                        <RadzenCard Style="width: 100%; padding: 0; overflow: hidden;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-3 p-3 product-title">
+                                            @(product.Description)
+                                    </div>
+                                    <div class="col-lg-7 p-3">
+                                        <div class="row d-flex">
+                                            <div class="col-md-6 col-lg-2">
+                                                <h5 class="mb-0">En tienda 1</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(product.QuantityStoreOne)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-2">
+                                                <h5 class="mb-0">En tienda 2</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(product.QuantityStoreTwo)</p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5">
+                                                <h5 class="mb-0">Facturas</h5>
+                                                <p class="mb-sm-2 mb-lg-0">@(string.Join(", ", product.RelatedOrderIds))</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 p-3">
+                                        <RadzenButton Text="Actualizar" Class="w-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>
+            </RadzenCard>
+        </div>
+    </div>
+
+@code {
+
+    [Inject]
+    private IMediator Mediator { get; set; } = default!;
+
+    private Collection<ProductOutOfStockViewModel>? ProductOutOfStockViewModels { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var productOutOfStockDtos = await this.Mediator.Send(new GetOutOfStockProductsQuery());
+        var productViewModels = productOutOfStockDtos.Select(x => (ProductOutOfStockViewModel)x).ToList();
+
+        this.ProductOutOfStockViewModels = new Collection<ProductOutOfStockViewModel>(productViewModels);
+    }
+
+}

@@ -5,16 +5,12 @@
     <AuthorizeView>
         <Authorized>
             <RadzenMenu>
-                <RadzenMenuItem Text="Inventario" Icon="dashboard">
+                <RadzenMenuItem Text="Inventario" Icon="inventory">
                     <RadzenMenuItem id="inventory-link" Text="Productos" Path="inventory" Icon="list" />
+                    <RadzenMenuItem id="stock-link" Text="Fuera de stock" Path="outofstock" Icon="event_seat" />
                 </RadzenMenuItem>
                 <RadzenMenuItem Text="Facturación" Icon="payment">
-                    <RadzenMenuItem Text="Crear factura" Path="billing" Icon="description"></RadzenMenuItem>
-                    <RadzenMenuItem Text="CheckBox" Path="checkbox" Icon="check_circle"></RadzenMenuItem>
-                    <RadzenMenuItem Text="TextBox" Path="textbox" Icon="input"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Password" Path="password" Icon="payment"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Numeric" Path="numeric" Icon="aspect_ratio"></RadzenMenuItem>
-                    <RadzenMenuItem Text="DatePicker" Path="datepicker" Icon="date_range"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Crear factura" Path="billing" Icon="description"/>
                 </RadzenMenuItem>
             </RadzenMenu>
         </Authorized>

@@ -318,7 +318,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("OrderId")
+                    b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
@@ -540,12 +540,14 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Orders.Order", null)
+                    b.HasOne("SpaccioDescans.Core.Orders.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -588,6 +590,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.Navigation("Discount")
                         .IsRequired();
+
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
 
@@ -650,6 +654,8 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
                 {
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductStores");
                 });
 

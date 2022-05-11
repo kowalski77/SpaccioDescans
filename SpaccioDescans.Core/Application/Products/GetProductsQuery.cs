@@ -11,8 +11,7 @@ public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IRead
 
     public GetProductsHandler(IProductReadRepository productReadRepository)
     {
-        ArgumentNullException.ThrowIfNull(productReadRepository);
-        this.productReadRepository = productReadRepository;
+        this.productReadRepository = productReadRepository ?? throw new ArgumentNullException(nameof(productReadRepository));
     }
 
     public async Task<IReadOnlyList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)

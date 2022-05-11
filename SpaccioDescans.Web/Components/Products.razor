@@ -18,7 +18,7 @@
         </RadzenCard>
         <RadzenCard class="pb-4">
             <RadzenButton Id="add-product" Icon="add_circle_outline" Text="Nuevo"
-                          Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" Style="width: 200px; margin-bottom: 10px;"/>
+                          Click="@this.AddProductAsync" Disabled="@(this.NewlyProduct is not null)" Style="width: 200px; margin-bottom: 10px;" />
             <RadzenDataGrid @ref="ProductViewModelsGrid"
                             AllowFiltering="true"
                             AllowColumnResize="true"
@@ -55,8 +55,8 @@
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="Measures" Title="Medidas" TextAlign="TextAlign.Center">
                         <EditTemplate Context="product">
-                            <RadzenTextBox @bind-Value="product.Measures" Class="grid-textbox" Name="Description" />
-                            <RadzenRequiredValidator Text="Medida requerida" Component="Description" Popup="true" />
+                            <RadzenTextBox @bind-Value="product.Measures" Class="grid-textbox" Name="Measures" />
+                            <RadzenRequiredValidator Text="Medida requerida" Component="Measures" Popup="true" />
                         </EditTemplate>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="Price" Title="Precio" TextAlign="TextAlign.Center" Filterable="false">
@@ -66,12 +66,14 @@
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreOne" Title="Tienda 1: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
                         <EditTemplate Context="product">
-                            <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreOne" Style="width: 100%" />
+                            <RadzenNumeric Name="QuantityStoreOne" TValue="int" Step="1" @bind-Value="product.QuantityStoreOne" />
+                            <RadzenNumericRangeValidator Component="QuantityStoreOne" Min="0" Max="100" Text="La cantidad no puede ser negativa" Popup="true" />
                         </EditTemplate>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Property="QuantityStoreTwo" Title="Tienda 2: Cantidad" TextAlign="TextAlign.Center" Filterable="false">
                         <EditTemplate Context="product">
-                            <RadzenNumeric Name="Quantity" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%" />
+                            <RadzenNumeric Name="QuantityStoreTwo" TValue="int" Step="1" @bind-Value="product.QuantityStoreTwo" Style="width: 100%" />
+                            <RadzenNumericRangeValidator Component="QuantityStoreTwo" Min="0" Max="100" Text="La cantidad no puede ser negativa" Popup="true" />
                         </EditTemplate>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="ProductViewModel" Context="data" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">

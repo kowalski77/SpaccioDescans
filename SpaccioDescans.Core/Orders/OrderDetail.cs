@@ -21,6 +21,8 @@ public class OrderDetail : Entity
 
     public OrderQuantity Quantity { get; private set; }
 
+    public Order Order { get; private set; }
+
     public Discount Discount { get; private set; }
 
     public decimal SubTotal => this.Discount.Value > 0 ? 
