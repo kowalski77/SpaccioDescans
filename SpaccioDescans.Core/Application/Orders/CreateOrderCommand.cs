@@ -37,7 +37,7 @@ public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, lon
 
         var order = new Order(store, customer, orderDetails, payments);
 
-        _ = this.orderRepository.Add(order);
+        _ = this.orderRepository.Save(order);
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return order.Id;

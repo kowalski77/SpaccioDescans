@@ -1,31 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SpaccioDescans.Core.Orders;
+﻿using SpaccioDescans.Core.Orders;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 
-public sealed class OrderRepository : IOrderRepository
+public sealed class OrderRepository : Repository<Order>, IOrderRepository
 {
-    private readonly SpaccioContext context;
-
-    public OrderRepository(SpaccioContext context)
+    public OrderRepository(SpaccioContext context) : base(context)
     {
-        this.context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public IUnitOfWork UnitOfWork => this.context;
-
-    public Order Add(Order item)
+    public override async Task<Order> GetAsync(long id, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(item);
+        var order = await this.Context.Set<Order>().FindAsync(new object?[] { id }, cancellationToken) ??
+                    throw new InvalidOperationException($"Entity type: {nameof(Order)} with id: {id} not found");
 
-        var orderEntry = this.context.Orders.Add(item);
+        await this.Context.Entry(order).Reference(x=>x.Customer).LoadAsync(cancellationToken);
+        await this.Context.Entry(order).Collection(x=>x.Payments).LoadAsync(cancellationToken);
+        await this.Context.Entry(order).Collection(x=>x.OrderDetails).LoadAsync(cancellationToken);
 
-        return orderEntry.Entity;
-    }
-
-    public async Task<Order> GetAsync(long id, CancellationToken cancellationToken = default)
-    {
-        return await this.context.Orders.FirstAsync(x => x.Id == id, cancellationToken);
+        return order;
     }
 }

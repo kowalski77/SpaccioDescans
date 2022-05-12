@@ -8,7 +8,7 @@ using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence;
 using SpaccioDescans.Infrastructure.Persistence.Repositories;
-using SpaccioDescans.Infrastructure.Transactions;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure;
 

@@ -45,7 +45,7 @@ public sealed class Order : Entity, IAggregateRoot
 
     public IReadOnlyList<OrderDetail> OrderDetails => this.orderDetails;
 
-    public IReadOnlyList<Payment> Payment => this.payments;
+    public IReadOnlyList<Payment> Payments => this.payments;
 
     public decimal SubTotal { get; private set; }
 

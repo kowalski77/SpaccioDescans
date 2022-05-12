@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Infrastructure.Transactions;
+namespace SpaccioDescans.SharedKernel.DDD;
 
 public abstract class TransactionContext : IdentityDbContext<IdentityUser>, IDbContext, IUnitOfWork
 {

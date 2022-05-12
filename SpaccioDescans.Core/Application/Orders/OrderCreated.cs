@@ -20,7 +20,7 @@ public class OrderCreatedHandler : INotificationHandler<OrderCreated>
 
         foreach (var productId in notification.ProductIds)
         {
-            var product = await this.productRepository.GetByIdWithStoresAsync(productId, cancellationToken);
+            var product = await this.productRepository.GetAsync(productId, cancellationToken);
             var store = product.ProductStores.First(x => x.StoreId == notification.StoreId);
             store.Quantity--;
         }

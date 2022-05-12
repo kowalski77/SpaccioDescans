@@ -10,6 +10,8 @@ public class StoreEntityTypeConfiguration : IEntityTypeConfiguration<Store>
     {
         ArgumentNullException.ThrowIfNull(builder);
 
+        builder.Navigation(x => x.ProductStores).AutoInclude();
+
         builder.HasData(new Store(1, "Tienda 1", "Carretera de Terrassa"), new Store(2, "Tienda 2", "Avenida de Matadepera"));
     }
 }

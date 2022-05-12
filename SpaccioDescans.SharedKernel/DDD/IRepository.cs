@@ -5,7 +5,7 @@ public interface IRepository<T>
 {
     IUnitOfWork UnitOfWork { get; }
 
-    T Add(T item);
+    T Save(T item);
 
     Task<T> GetAsync(long id, CancellationToken cancellationToken = default);
 }

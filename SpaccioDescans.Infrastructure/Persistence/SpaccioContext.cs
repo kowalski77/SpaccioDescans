@@ -1,10 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SpaccioDescans.Core.Orders;
-using SpaccioDescans.Core.Products;
-using SpaccioDescans.Core.Stores;
 using SpaccioDescans.Infrastructure.Persistence.Configurations;
-using SpaccioDescans.Infrastructure.Transactions;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence;
 
@@ -14,12 +11,6 @@ public class SpaccioContext : TransactionContext
         : base(options, mediator)
     {
     }
-
-    public DbSet<Product> Products { get; set; } = default!;
-
-    public DbSet<Store> Stores { get; set; } = default!;
-
-    public DbSet<Order> Orders { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Infrastructure.Transactions;
+namespace SpaccioDescans.SharedKernel.DDD;
 
 public static class MessagesDispatcherExtensions
 {

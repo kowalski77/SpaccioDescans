@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace SpaccioDescans.Infrastructure.Transactions;
+namespace SpaccioDescans.SharedKernel.DDD;
 
 public interface IDbContext
 {

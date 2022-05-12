@@ -15,7 +15,7 @@ public sealed class ProductReadRepository : IProductReadRepository
 
     public async Task<IReadOnlyList<ProductDto>> GetAll(CancellationToken cancellationToken = default)
     {
-        var products = await this.context.Products
+        var products = await this.context.Set<Product>()
             .Select(x => new ProductDto(x.Id, x.Vendor, x.Name, x.Description, x.Measures, x.NetPrice.Value, x.ProductStores.Select(y =>
                 new ProductStoreDto(y.Store.Id, y.Quantity))))
             .AsNoTracking()
@@ -26,7 +26,7 @@ public sealed class ProductReadRepository : IProductReadRepository
 
     public async Task<IReadOnlyList<ProductOutOfStockDto>> GetAllOutOfStock(CancellationToken cancellationToken = default)
     {
-        var products = await this.context.Products
+        var products = await this.context.Set<Product>()
             .Where(x => x.ProductStores.Any(y => y.Quantity < 0))
             .Select(x => new ProductOutOfStockDto(
                 x.Id,

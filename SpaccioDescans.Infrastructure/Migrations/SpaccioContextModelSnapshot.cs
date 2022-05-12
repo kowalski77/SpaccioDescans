@@ -307,7 +307,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
@@ -402,7 +402,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
@@ -447,7 +447,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Store");
 
                     b.HasData(
                         new
@@ -602,7 +602,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
                 {
                     b.HasOne("SpaccioDescans.Core.Orders.Order", null)
-                        .WithMany("Payment")
+                        .WithMany("Payments")
                         .HasForeignKey("OrderId");
                 });
 
@@ -620,7 +620,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                             b1.HasKey("ProductId");
 
-                            b1.ToTable("Products");
+                            b1.ToTable("Product");
 
                             b1.WithOwner()
                                 .HasForeignKey("ProductId");
@@ -649,7 +649,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 {
                     b.Navigation("OrderDetails");
 
-                    b.Navigation("Payment");
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>

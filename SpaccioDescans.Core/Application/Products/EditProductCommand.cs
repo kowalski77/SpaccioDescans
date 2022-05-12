@@ -22,7 +22,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
         ArgumentNullException.ThrowIfNull(request);
 
         var netPrice = Price.CreateInstance(request.NetPrice);
-        var product = await this.productRepository.GetByIdWithStoresAsync(request.Id, cancellationToken);
+        var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
 
         product.NetPrice = netPrice;
         product.Name = request.Name;
@@ -32,7 +32,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
-            var store = await this.storeRepository.GetByIdAsync(storeQuantity.StoreCode, cancellationToken);
+            var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
             product.EditInStore(store, quantity);

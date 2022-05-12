@@ -19,8 +19,6 @@
     [Inject]
     private DialogService DialogService { get; set; } = default!;
 
-    private int count;
-
     private async Task SearchProduct()
     {
         await DialogService.OpenAsync<SearchProductDialog>("Buscar producto", new Dictionary<string, object>

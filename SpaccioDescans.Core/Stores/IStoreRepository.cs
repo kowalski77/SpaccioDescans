@@ -1,8 +1,8 @@
-﻿namespace SpaccioDescans.Core.Stores;
+﻿using SpaccioDescans.SharedKernel.DDD;
 
-public interface IStoreRepository
+namespace SpaccioDescans.Core.Stores;
+
+public interface IStoreRepository : IRepository<Store>
 {
-    Task<Store> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-
     Task<Store> GetCurrentStore(CancellationToken cancellationToken = default);
 }

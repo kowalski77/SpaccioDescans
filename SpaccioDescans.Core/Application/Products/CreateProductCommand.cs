@@ -26,13 +26,13 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
-            var store = await this.storeRepository.GetByIdAsync(storeQuantity.StoreCode, cancellationToken);
+            var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
-            product.AddToStore(store, quantity);
+            product.AddToStore(store!, quantity);
         }
 
-        var newlyProduct = this.productRepository.Add(product);
+        var newlyProduct = this.productRepository.Save(product);
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return newlyProduct.Id;
