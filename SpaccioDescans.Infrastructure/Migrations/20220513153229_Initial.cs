@@ -67,7 +67,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -82,11 +82,11 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Store",
+                name: "Stores",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -98,7 +98,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Store", x => x.Id);
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,7 +208,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -225,17 +225,17 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_Customer_CustomerId",
+                        name: "FK_Orders_Customer_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Order_Store_StoreId",
+                        name: "FK_Orders_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "Store",
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,14 +252,14 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ProductStore", x => new { x.ProductId, x.StoreId });
                     table.ForeignKey(
-                        name: "FK_ProductStore_Product_ProductId",
+                        name: "FK_ProductStore_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProductStore_Store_StoreId",
+                        name: "FK_ProductStore_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "Store",
+                        principalTable: "Stores",
                         principalColumn: "Id");
                 });
 
@@ -280,15 +280,15 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_OrderDetail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Order_OrderId",
+                        name: "FK_OrderDetail_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Product_ProductId",
+                        name: "FK_OrderDetail_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -309,19 +309,19 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Payment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payment_Order_OrderId",
+                        name: "FK_Payment_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
-                table: "Store",
+                table: "Stores",
                 columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
                 values: new object[] { 1L, "Carretera de Terrassa", "Tienda 1", false, 0 });
 
             migrationBuilder.InsertData(
-                table: "Store",
+                table: "Stores",
                 columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
                 values: new object[] { 2L, "Avenida de Matadepera", "Tienda 2", false, 0 });
 
@@ -365,16 +365,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_CustomerId",
-                table: "Order",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_StoreId",
-                table: "Order",
-                column: "StoreId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_OrderId",
                 table: "OrderDetail",
                 column: "OrderId");
@@ -383,6 +373,16 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "IX_OrderDetail_ProductId",
                 table: "OrderDetail",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_StoreId",
+                table: "Orders",
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_OrderId",
@@ -428,16 +428,16 @@ namespace SpaccioDescans.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Customer");
 
             migrationBuilder.DropTable(
-                name: "Store");
+                name: "Stores");
         }
     }
 }

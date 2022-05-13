@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220512170826_Initial")]
+    [Migration("20220513153229_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -309,7 +309,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
@@ -404,7 +404,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
@@ -449,7 +449,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Store");
+                    b.ToTable("Stores");
 
                     b.HasData(
                         new
@@ -622,7 +622,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                             b1.HasKey("ProductId");
 
-                            b1.ToTable("Product");
+                            b1.ToTable("Products");
 
                             b1.WithOwner()
                                 .HasForeignKey("ProductId");
