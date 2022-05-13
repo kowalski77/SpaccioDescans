@@ -260,7 +260,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
@@ -307,7 +307,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
@@ -336,7 +336,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetail", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
@@ -367,7 +367,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
@@ -402,7 +402,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
@@ -420,7 +420,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("ProductStore");
+                    b.ToTable("ProductStore", (string)null);
                 });
 
             modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
@@ -447,7 +447,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Store");
+                    b.ToTable("Store", (string)null);
 
                     b.HasData(
                         new
@@ -552,7 +552,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("SpaccioDescans.Core.Orders.Discount", "Discount", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Orders.OrderDetail.Discount#SpaccioDescans.Core.Orders.Discount", "Discount", b1 =>
                         {
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
@@ -564,13 +564,13 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                             b1.HasKey("OrderDetailId");
 
-                            b1.ToTable("OrderDetail");
+                            b1.ToTable("OrderDetail", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderDetailId");
                         });
 
-                    b.OwnsOne("SpaccioDescans.Core.Orders.OrderQuantity", "Quantity", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Orders.OrderDetail.Quantity#SpaccioDescans.Core.Orders.OrderQuantity", "Quantity", b1 =>
                         {
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
@@ -582,7 +582,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                             b1.HasKey("OrderDetailId");
 
-                            b1.ToTable("OrderDetail");
+                            b1.ToTable("OrderDetail", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderDetailId");
@@ -608,7 +608,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
             modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
                 {
-                    b.OwnsOne("SpaccioDescans.Core.Products.Price", "NetPrice", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Products.Product.NetPrice#SpaccioDescans.Core.Products.Price", "NetPrice", b1 =>
                         {
                             b1.Property<long>("ProductId")
                                 .HasColumnType("bigint");
@@ -620,7 +620,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
 
                             b1.HasKey("ProductId");
 
-                            b1.ToTable("Product");
+                            b1.ToTable("Product", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ProductId");

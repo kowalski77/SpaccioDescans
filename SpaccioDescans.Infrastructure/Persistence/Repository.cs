@@ -1,14 +1,16 @@
-﻿namespace SpaccioDescans.SharedKernel.DDD;
+﻿using SpaccioDescans.SharedKernel.DDD;
+
+namespace SpaccioDescans.Infrastructure.Persistence;
 
 public abstract class Repository<T> : IRepository<T>
     where T : class, IAggregateRoot
 {
-    protected Repository(TransactionContext context)
+    protected Repository(SpaccioContext context)
     {
         this.Context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    protected TransactionContext Context { get; }
+    protected SpaccioContext Context { get; }
 
     public IUnitOfWork UnitOfWork => this.Context;
 

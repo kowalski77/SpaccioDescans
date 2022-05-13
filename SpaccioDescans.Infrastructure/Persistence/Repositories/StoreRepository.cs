@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpaccioDescans.Core.Stores;
-using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 
@@ -18,6 +17,6 @@ public sealed class StoreRepository : Repository<Store>, IStoreRepository
     {
         var tenantId = this.tenantProvider.GetTenantId();
 
-        return await this.Context.Set<Store>().FirstAsync(x => x.Id == tenantId, cancellationToken);
+        return await this.Context.Stores.FirstAsync(x => x.Id == tenantId, cancellationToken);
     }
 }
