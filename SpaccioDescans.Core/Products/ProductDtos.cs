@@ -3,5 +3,3 @@
 public sealed record ProductDto(long Id, string Vendor,  string Name, string Description, string Measures, decimal NetPrice, IEnumerable<ProductStoreDto> ProductStoreDtos);
 
 public sealed record ProductStoreDto(long StoreId, int Quantity);
-
-public sealed record ProductOutOfStockDto(long Id, string Description, IEnumerable<long> OrderIds, IEnumerable<ProductStoreDto> ProductStoreDtos);
