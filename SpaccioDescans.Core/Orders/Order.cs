@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 8618
 using SpaccioDescans.Core.Application.Orders;
+using SpaccioDescans.Core.Application.Orders.Events;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
@@ -51,6 +52,8 @@ public sealed class Order : Entity, IAggregateRoot
 
     public decimal Total { get; private set; }
 
+    public decimal Pending { get; private set; }
+
     private void CalculateTotals()
     {
         this.SubTotal = this.orderDetails.Sum(x => x.SubTotal);
@@ -59,7 +62,9 @@ public sealed class Order : Entity, IAggregateRoot
 
     private void SetStatus()
     {
-        var isTotallyPaid = this.payments.Sum(x => x.Amount) == this.Total;
-        this.Status = isTotallyPaid ? OrderStatus.Completed : OrderStatus.Pending;
+        var amountPaid = this.payments.Sum(x => x.Amount);
+        this.Status = amountPaid == this.Total ? OrderStatus.Completed : OrderStatus.Pending;
+
+        this.Pending = this.Total - amountPaid;
     }
 }

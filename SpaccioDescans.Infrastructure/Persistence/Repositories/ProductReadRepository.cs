@@ -13,11 +13,20 @@ public sealed class ProductReadRepository : IProductReadRepository
         this.context = context;
     }
 
-    public async Task<IReadOnlyList<ProductDto>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var products = await this.context.Products
-            .Select(x => new ProductDto(x.Id, x.Vendor, x.Name, x.Description, x.Measures, x.NetPrice.Value, x.ProductStores.Select(y =>
-                new ProductStoreDto(y.Store.Id, y.Quantity))))
+            .Select(x => new ProductDto(
+                x.Id, 
+                x.Vendor, 
+                x.Name, 
+                x.Description, 
+                x.Measures, 
+                x.NetPrice.Value, 
+                x.ProductStores.Select(y => 
+                    new ProductStoreDto(
+                        y.Store.Id, 
+                        y.Quantity))))
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 

@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Radzen;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application.Products;
+using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Infrastructure.Persistence;
 

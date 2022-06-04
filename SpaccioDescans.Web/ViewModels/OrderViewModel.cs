@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application.Orders;
+using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Orders;
 
 namespace SpaccioDescans.Web.ViewModels;

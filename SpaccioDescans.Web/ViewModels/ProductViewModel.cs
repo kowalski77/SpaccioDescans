@@ -1,5 +1,6 @@
 ﻿using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products;
+using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Products;
 
 namespace SpaccioDescans.Web.ViewModels;

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
 using Radzen;
-using SpaccioDescans.Core.Application.Orders;
+using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Web.ViewModels;
 
 namespace SpaccioDescans.Web.Components;

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Core.Application.Orders;
+namespace SpaccioDescans.Core.Application.Orders.Events;
 
 public sealed record OrderCreated(IEnumerable<long> ProductIds, int StoreId) : INotification;
 

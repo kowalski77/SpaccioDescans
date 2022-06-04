@@ -2,5 +2,5 @@
 
 public interface IProductReadRepository
 {
-    Task<IReadOnlyList<ProductDto>> GetAll(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default);
 }

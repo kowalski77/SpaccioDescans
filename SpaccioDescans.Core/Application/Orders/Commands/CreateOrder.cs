@@ -3,7 +3,7 @@ using SpaccioDescans.Core.Orders;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
 
-namespace SpaccioDescans.Core.Application.Orders;
+namespace SpaccioDescans.Core.Application.Orders.Commands;
 
 public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : IRequest<long>;
 

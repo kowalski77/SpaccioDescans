@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Core.Application.Products;
+namespace SpaccioDescans.Core.Application.Products.Queries;
 
 public sealed record GetProductsQuery : IRequest<IReadOnlyList<ProductDto>>;
 
@@ -16,6 +16,6 @@ public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IRead
 
     public async Task<IReadOnlyList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        return await this.productReadRepository.GetAll(cancellationToken);
+        return await this.productReadRepository.GetAllAsync(cancellationToken);
     }
 }

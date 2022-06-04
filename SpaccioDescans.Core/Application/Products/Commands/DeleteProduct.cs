@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Core.Application.Products;
+namespace SpaccioDescans.Core.Application.Products.Commands;
 
 public sealed record DeleteProductCommand(long Id) : IRequest;
 
