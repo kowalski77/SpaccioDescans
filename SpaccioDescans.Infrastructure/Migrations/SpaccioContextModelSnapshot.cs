@@ -277,6 +277,10 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Pending")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<string>("Remarks")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
