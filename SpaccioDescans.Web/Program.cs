@@ -5,8 +5,10 @@ using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Infrastructure.Persistence;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddUserSecrets<Program>();
 
 // Add services to the container.
 builder.Services.AddAuthentication("Identity.Application").AddCookie();
@@ -17,6 +19,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSyncfusionBlazor();
 
 builder.Services.Configure<TenantConfiguration>(builder.Configuration.GetSection(nameof(TenantConfiguration)));
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantConfiguration>>().Value);
@@ -25,6 +28,8 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantConfigu
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);
 builder.Services.AddCore();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SyncfusionKey"]);
 
 var app = builder.Build();
 

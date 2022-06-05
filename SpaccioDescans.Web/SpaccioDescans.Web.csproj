@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<NoWarn>CA2007</NoWarn>
+		<UserSecretsId>df3b1ab8-8c2d-44cf-a0eb-5c79e6993111</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -17,6 +18,8 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
 		<PackageReference Include="Radzen.Blazor" Version="3.18.4" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.1.0.58" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.58" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,7 +29,6 @@
 
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
-		<_ContentIncludedByDefault Remove="Shared\User.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,10 +37,6 @@
 
 	<ItemGroup>
 		<UpToDateCheckInput Remove="Shared\Condition.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Shared\User.razor" />
 	</ItemGroup>
 
 </Project>

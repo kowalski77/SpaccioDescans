@@ -1,19 +1,60 @@
 ﻿@using SpaccioDescans.Infrastructure.Persistence
-@using Radzen
 
-<RadzenCard Style="width: fit-content; min-width: 200px;" Class="mt-3 mx-auto">
-    <AuthorizeView>
-        <Authorized>
-            <RadzenMenu>
-                <RadzenMenuItem Text="Inventario" Icon="inventory">
-                    <RadzenMenuItem id="inventory-link" Text="Productos" Path="inventory/index" Icon="list" />
-                </RadzenMenuItem>
-                <RadzenMenuItem Text="Facturación" Icon="payment">
-                    <RadzenMenuItem Text="Crear factura" Path="orders/index" Icon="description"/>
-                </RadzenMenuItem>
-            </RadzenMenu>
-        </Authorized>
-    </AuthorizeView>
-</RadzenCard>
+<SfSidebar Width="250px">
+    <ChildContent>
+        <SfAccordion>
+            <AccordionItems>
+            <AuthorizeView>
+                <Authorized>
+                    <AccordionItem Header="Inventario" IconCss="e-dashboard e-icons" Expanded="true">
+                        <ContentTemplate>
+                            <ul>
+                                <li><NavLink href="/inventory/index">Productos</NavLink></li>
+                            </ul>
+                        </ContentTemplate>
+                    </AccordionItem>
+                    <AccordionItem Header="Facturación" IconCss="e-profile e-icons" Expanded="true">
+                        <ContentTemplate>
+                            <ul>
+                                <li><NavLink href="/orders/index">Crear</NavLink></li>
+                            </ul>
+                        </ContentTemplate>
+                    </AccordionItem>
+                    <AccordionItem Header="@(this.storeName)" IconCss="e-profile e-icons" Expanded="true">
+                        <ContentTemplate>
+                            <ul>
+                                <li>@context.User.Identity?.Name</li>
+                            </ul>
+                            <ul>
+                                <li><NavLink href="/identity/account/logout">Salir</NavLink></li>
+                            </ul>
+                        </ContentTemplate>
+                    </AccordionItem>
+                </Authorized>
+                <NotAuthorized>
+                    <AccordionItem Header="Entrar" IconCss="e-dashboard e-icons" Expanded="true">
+                        <ContentTemplate>
+                            <ul>
+                                <li><NavLink href="/identity/account/login">Entrar</NavLink></li>
+                            </ul>
+                        </ContentTemplate>
+                    </AccordionItem>
+                </NotAuthorized>
+            </AuthorizeView>
+            </AccordionItems>
+        </SfAccordion>
+    </ChildContent>
+</SfSidebar>
 
+@code{
 
+    private string storeName = string.Empty;
+
+    [Inject]
+    private TenantConfiguration TenantConfiguration { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        this.storeName = TenantConfiguration.StoreName;
+    }
+}
