@@ -1,9 +1,8 @@
 ﻿using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Products;
 
-namespace SpaccioDescans.Web.ViewModels;
+namespace SpaccioDescans.Web.Pages.Products;
 
 public class ProductViewModel
 {
@@ -15,7 +14,7 @@ public class ProductViewModel
 
     public string Description { get; set; } = string.Empty;
 
-   public string Measures { get; set; } = string.Empty;
+    public string Measures { get; set; } = string.Empty;
 
     public decimal Price { get; set; }
 
@@ -30,10 +29,13 @@ public class ProductViewModel
         return new ProductViewModel
         {
             Id = productDto.Id,
-            Vendor = productDto.Vendor, Name = productDto.Name, Description = productDto.Description, 
-            Measures = productDto.Measures, Price = productDto.NetPrice, 
-            QuantityStoreOne = productDto.ProductStoreDtos.First(x=>x.StoreId == SpaccioConstants.StoreOneCode).Quantity,
-            QuantityStoreTwo = productDto.ProductStoreDtos.First(x=>x.StoreId == SpaccioConstants.StoreTwoCode).Quantity
+            Vendor = productDto.Vendor,
+            Name = productDto.Name,
+            Description = productDto.Description,
+            Measures = productDto.Measures,
+            Price = productDto.NetPrice,
+            QuantityStoreOne = productDto.ProductStoreDtos.First(x => x.StoreId == SpaccioConstants.StoreOneCode).Quantity,
+            QuantityStoreTwo = productDto.ProductStoreDtos.First(x => x.StoreId == SpaccioConstants.StoreTwoCode).Quantity
         };
     }
 
@@ -47,7 +49,7 @@ public class ProductViewModel
             new StoreQuantity(SpaccioConstants.StoreTwoCode, viewModel.QuantityStoreTwo)
         });
 
-        return new CreateProductCommand(viewModel.Vendor, viewModel.Name, 
+        return new CreateProductCommand(viewModel.Vendor, viewModel.Name,
             viewModel.Description, viewModel.Measures, viewModel.Price, storeQuantities);
     }
 
@@ -61,7 +63,7 @@ public class ProductViewModel
             new StoreQuantity(2, viewModel.QuantityStoreTwo)
         });
 
-        return new EditProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name, 
+        return new EditProductCommand(viewModel.Id, viewModel.Vendor, viewModel.Name,
             viewModel.Description, viewModel.Measures, viewModel.Price, storeQuantities);
     }
 }

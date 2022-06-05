@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using SpaccioDescans.Core.Application.Orders.Commands;
-using SpaccioDescans.Web.ViewModels;
 
-namespace SpaccioDescans.Web.Components;
+namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 
 public class OrderBase : ComponentBase
 {

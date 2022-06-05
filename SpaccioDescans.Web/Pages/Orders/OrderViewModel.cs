@@ -3,7 +3,7 @@ using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Orders;
 
-namespace SpaccioDescans.Web.ViewModels;
+namespace SpaccioDescans.Web.Pages.Orders;
 
 public class OrderViewModel
 {
@@ -13,7 +13,7 @@ public class OrderViewModel
 
     public decimal NetAmount { get; set; }
 
-    public decimal TotalAmount => this.NetAmount + (this.NetAmount * SpaccioConstants.Vat / 100);
+    public decimal TotalAmount => this.NetAmount + this.NetAmount * SpaccioConstants.Vat / 100;
 
     public decimal CreditCardAmount { get; set; }
 
@@ -28,7 +28,7 @@ public class OrderViewModel
         ArgumentNullException.ThrowIfNull(orderViewModel);
 
         var customerInfo = new CustomerInfo(
-            orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address, 
+            orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address,
             orderViewModel.CustomerInfoViewModel.City, orderViewModel.CustomerInfoViewModel.Phone);
 
         var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
@@ -70,5 +70,5 @@ public class OrderDetailViewModel
 
     public decimal Discount { get; set; }
 
-    public decimal Total => (this.Price * this.Quantity) - (this.Price * this.Quantity) * (this.Discount / 100);
+    public decimal Total => this.Price * this.Quantity - this.Price * this.Quantity * (this.Discount / 100);
 }

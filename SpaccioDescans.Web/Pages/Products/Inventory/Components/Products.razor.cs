@@ -5,9 +5,8 @@ using Radzen.Blazor;
 using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Application.Products.Queries;
-using SpaccioDescans.Web.ViewModels;
 
-namespace SpaccioDescans.Web.Components;
+namespace SpaccioDescans.Web.Pages.Products.Inventory.Components;
 
 public class ProductsBase : ComponentBase
 {
