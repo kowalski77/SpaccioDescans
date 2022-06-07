@@ -20,6 +20,7 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
 		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.1.0.58" />
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.58" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.58" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<_ContentIncludedByDefault Remove="Pages\Products\Inventory\Components\Products2.razor" />
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
 	</ItemGroup>
 
@@ -37,6 +39,10 @@
 
 	<ItemGroup>
 		<UpToDateCheckInput Remove="Shared\Condition.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Products\Inventory\Components\Products2.razor" />
 	</ItemGroup>
 
 </Project>

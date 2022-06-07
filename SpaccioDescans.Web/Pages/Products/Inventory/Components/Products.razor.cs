@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
-using SpaccioDescans.Core.Application.Products;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Application.Products.Queries;
 
