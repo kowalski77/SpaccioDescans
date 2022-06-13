@@ -16,8 +16,8 @@
 		</PackageReference>
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
-		<PackageReference Include="Radzen.Blazor" Version="3.18.4" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.1.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.1.0.58" />
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.58" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.58" />
@@ -30,10 +30,6 @@
 
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Shared\Condition.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>

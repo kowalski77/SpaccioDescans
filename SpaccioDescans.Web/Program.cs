@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.Extensions.Options;
-using Radzen;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Infrastructure;
@@ -16,8 +15,6 @@ builder.Services.AddAuthentication("Identity.Application").AddCookie();
 // UI
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<DialogService>();
-builder.Services.AddScoped<NotificationService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
 
