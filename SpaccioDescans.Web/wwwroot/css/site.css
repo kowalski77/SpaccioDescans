@@ -72,3 +72,12 @@ form .row {
     background: #1f2937;
     padding: 1%;
 }
+
+.control-section {
+    background: #1f2937;
+    padding: 2%;
+}
+
+.spaccio-label {
+    color: #ffffff;
+}

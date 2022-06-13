@@ -1,87 +1,65 @@
-﻿@inherits Order2Base
+﻿@using Syncfusion.Blazor.Inputs
+@inherits Order2Base
 <PageTitle>Crear factura</PageTitle>
 
 <SfBreadcrumb>
     <BreadcrumbItems>
-        <BreadcrumbItem IconCss="e-icons e-home" Url=""/>
-        <BreadcrumbItem Text="Facturas" Disabled="true"/>
-        <BreadcrumbItem Text="Crear" Url="./orders/create/index"/>
+        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
+        <BreadcrumbItem Text="Facturas" Disabled="true" />
+        <BreadcrumbItem Text="Crear" Url="./orders/create/index" />
     </BreadcrumbItems>
 </SfBreadcrumb>
 <div class="control-section">
     <div class="row">
-        <div class="col-lg-6 col-md-6">
-            <SfCard ID="BasicCard">
-                <CardHeader Title="Debunking Five Data Science Myths" />
-                <CardContent Content="Tech evangelists are currently pounding their pulpits about all things AI, machine learning, analytics—anything that sounds" />
-                <CardFooter>
-                    <CardFooterContent>
-                        <SfButton CssClass="e-btn e-outline e-primary">Read More</SfButton>
-                    </CardFooterContent>
-                </CardFooter>
-            </SfCard>
-            <SfCard ID="NewIconCard">
-                <div class="newIcon">NEW</div>
-                <CardHeader Title="Debunking Five Data Science Myths" />
-                <CardContent Content="Tech evangelists are currently pounding their pulpits about all things AI, machine learning, analytics—anything that sounds" />
-            </SfCard>
+        <div class="col-sm">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <b class="spaccio-label">Datos del cliente</b>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-6 col-md-6">
-            <SfCard ID="SideCard">
-                <CardHeader Title="Debunking Five Data Science Myths" />
-                <CardContent Content="Tech evangelists are currently pounding their pulpits about all things AI, machine learning, analytics—anything that sounds" />
-                <CardFooter>
-                    <CardFooterContent>
-                        <SfButton CssClass="e-btn e-outline e-primary">Read More</SfButton>
-                    </CardFooterContent>
-                </CardFooter>
-            </SfCard>
+        <div class="col-sm">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <b class="spaccio-label">Forma de pago</b>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <SfTextBox Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<style>
-    #BasicCard, #NewIconCard {
-        height: 180px;
-        margin: 16px;
-    }
-    #SideCard {
-        height: 376px;
-        margin: 16px;
-    }
-    #SideCard .e-card-image {
-        height: 100%;
-    }
-    .e-card > .e-card-image {
-        background-repeat: no-repeat;
-        min-height: 205px;
-    }
-    .newIcon {
-        background: #2CC000;
-        border-radius: 12px;
-        border-radius: 12px;
-        font-family: HelveticaNeue-Medium, 'Segoe UI';
-        font-weight: 500;
-        color: #ffffff;
-        margin-left: 16px;
-        font-size: 14px;
-        width: 58px;
-        height: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        letter-spacing: 0.4px;
-    }
-    .row {
-        width: 80%;
-        margin: auto;
-    }
-    .e-btn {
-        margin-left: 4px;
-    }
-    .e-card .e-card-content {
-        padding-top: 0px;
-    }
-    .material-dark .e-card .e-card-header {
-        padding: 10px;
-    }
-</style>
