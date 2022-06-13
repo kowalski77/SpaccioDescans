@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Radzen.Blazor;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Application.Products.Queries;
+using Syncfusion.Blazor.Grids;
+using Action = Syncfusion.Blazor.Grids.Action;
 
 namespace SpaccioDescans.Web.Pages.Products.Inventory.Components;
 
@@ -11,81 +12,52 @@ public class ProductsBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
 
-    protected Collection<ProductViewModel>? ProductViewModelsCollection { get; private set; }
+    protected Collection<ProductViewModel>? Products { get; private set; }
 
-    protected RadzenDataGrid<ProductViewModel> ProductViewModelsGrid { get; set; } = default!;
+    protected SfGrid<ProductViewModel> Grid { get; set; } = default!;
 
-    protected ProductViewModel? NewlyProduct { get; private set; }
+    protected async Task OnGridActionBeginHandler(ActionEventArgs<ProductViewModel> arg)
+    {
+        ArgumentNullException.ThrowIfNull(arg);
+
+        switch (arg.RequestType)
+        {
+            case Action.Save:
+                await this.SaveAsync(arg);
+                break;
+            case Action.Delete:
+                await this.DeleteAsync(arg);
+                break;
+        }
+    }
+
+    private async Task DeleteAsync(ActionEventArgs<ProductViewModel> arg)
+    {
+        var command = new DeleteProductCommand(arg.Data.Id);
+        _ = await this.Mediator.Send(command);
+    }
+
+    private async Task SaveAsync(ActionEventArgs<ProductViewModel> arg)
+    {
+        if (arg.Action == "Add")
+        {
+            var command = (CreateProductCommand)arg.Data;
+            var id = await this.Mediator.Send(command);
+
+            arg.Data.Id = id;
+        }
+        else
+        {
+            var command = (EditProductCommand)arg.Data;
+            _ = await this.Mediator.Send(command);
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         var products = await this.Mediator.Send(new GetProductsQuery());
         var viewModels = products.Select(x => (ProductViewModel)x).ToList();
 
-        this.ProductViewModelsCollection = new Collection<ProductViewModel>(viewModels);
-    }
-
-    protected async Task AddProductAsync()
-    {
-        this.NewlyProduct = new ProductViewModel();
-        await this.ProductViewModelsGrid.InsertRow(this.NewlyProduct);
-    }
-
-    protected async Task EditProductAsync(ProductViewModel product)
-    {
-        await this.ProductViewModelsGrid.EditRow(product);
-    }
-
-    protected async Task OnProductEditAsync(ProductViewModel product)
-    {
-        var command = (EditProductCommand)product;
-        _ = await this.Mediator.Send(command);
-    }
-
-    protected async Task OnProductAddAsync(ProductViewModel product)
-    {
-        ArgumentNullException.ThrowIfNull(product);
-
-        var command = (CreateProductCommand)product;
-        var id = await this.Mediator.Send(command);
-
-        product.Id = id;
-        await this.ProductViewModelsGrid.UpdateRow(product);
-    }
-
-    protected async Task DeleteProductAsync(ProductViewModel product)
-    {
-        ArgumentNullException.ThrowIfNull(product);
-
-        if (product == this.NewlyProduct)
-        {
-            this.NewlyProduct = null;
-        }
-
-        var command = new DeleteProductCommand(product.Id);
-        _ = await this.Mediator.Send(command);
-
-        this.ProductViewModelsCollection?.Remove(product);
-        await this.ProductViewModelsGrid.Reload().ConfigureAwait(true);
-    }
-
-    protected async Task SaveProductAsync(ProductViewModel product)
-    {
-        if (product == this.NewlyProduct)
-        {
-            this.NewlyProduct = null;
-        }
-
-        await this.ProductViewModelsGrid.UpdateRow(product);
-    }
-
-    protected void CancelEdit(ProductViewModel product)
-    {
-        if (product == this.NewlyProduct)
-        {
-            this.NewlyProduct = null;
-        }
-
-        this.ProductViewModelsGrid.CancelEditRow(product);
+        this.Products = new Collection<ProductViewModel>(viewModels);
     }
 }

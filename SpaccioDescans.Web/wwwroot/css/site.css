@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #1f2937;
 }
 
 h1:focus {
@@ -65,4 +66,9 @@ a, .btn-link {
 
 form .row {
     margin-bottom: 16px;
+}
+
+.e-breadcrumb {
+    background: #1f2937;
+    padding: 1%;
 }

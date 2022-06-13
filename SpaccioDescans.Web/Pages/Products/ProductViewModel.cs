@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core;
+﻿using System.ComponentModel.DataAnnotations;
+using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Products;
 
@@ -10,16 +11,20 @@ public class ProductViewModel
 
     public string Vendor { get; set; } = string.Empty;
 
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
 
     public string Measures { get; set; } = string.Empty;
 
+    [DataType(DataType.Currency), Range(1, 10000)]
     public decimal Price { get; set; }
 
+    [Range(0,100)]
     public int QuantityStoreOne { get; set; }
 
+    [Range(0,100)]
     public int QuantityStoreTwo { get; set; }
 
     public static explicit operator ProductViewModel(ProductDto productDto)
