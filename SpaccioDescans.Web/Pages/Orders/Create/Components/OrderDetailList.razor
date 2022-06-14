@@ -1,15 +1,13 @@
-﻿@*@using SpaccioDescans.Web.Pages.Products.Inventory.Components
-@using SpaccioDescans.Web.Pages.Products
+﻿@using SpaccioDescans.Web.Pages.Products
 
-<RadzenFieldset Text="Productos">
-    @foreach (var orderDetail in OrderDetailViewModels)
-    {
-        <OrderDetailItem OrderDetailViewModel="orderDetail" 
-                         OnRemoveOrderDetail="RemoveItem" 
-                         OnOrderDetailUpdated="InvokeOnOrderDetailUpdated"/>
-    }
-    <RadzenButton Click="SearchProduct" Text="Añadir" ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Button" />
-</RadzenFieldset>
+@foreach (var orderDetail in OrderDetailViewModels)
+{
+    <OrderDetailItem OrderDetailViewModel="orderDetail"
+                 OnRemoveOrderDetail="RemoveItem"
+                 OnOrderDetailUpdated="InvokeOnOrderDetailUpdated" />
+}
+<SfButton CssClass="e-success" @onclick="@this.SearchProduct">Añadir</SfButton>
+
 
 @code {
     [Parameter]
@@ -18,16 +16,16 @@
     [Parameter]
     public EventCallback<decimal> OnOrderDetailUpdated { get; set; }
 
-    [Inject]
-    private DialogService DialogService { get; set; } = default!;
+    //[Inject]
+    //private DialogService DialogService { get; set; } = default!;
 
     private async Task SearchProduct()
     {
-        await DialogService.OpenAsync<SearchProductDialog>("Buscar producto", new Dictionary<string, object>
-        {
-            {"OnProductSelected", ProductSelected}
-        },
-            new DialogOptions { Width = "90%", Height = "570px", Resizable = true, Draggable = true });
+        //await DialogService.OpenAsync<SearchProductDialog>("Buscar producto", new Dictionary<string, object>
+        //{
+        //    {"OnProductSelected", ProductSelected}
+        //},
+        //    new DialogOptions { Width = "90%", Height = "570px", Resizable = true, Draggable = true });
     }
 
     private EventCallback ProductSelected => new(this, (Func<ProductViewModel, Task>)(async product =>
@@ -57,4 +55,4 @@
     {
         await this.OnOrderDetailUpdated.InvokeAsync(this.OrderDetailViewModels.Sum(x => x.Total));
     }
-}*@
+}

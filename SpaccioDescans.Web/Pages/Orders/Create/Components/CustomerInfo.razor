@@ -1,45 +1,29 @@
-﻿@*@using Microsoft.AspNetCore.Components
+﻿@using Syncfusion.Blazor.Inputs
 
-<RadzenFieldset Text="Información del cliente">
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Nombre" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox Name="Name" @bind-Value="CustomerInfoViewModel.Name" Class="w-100" />
-            <RadzenRequiredValidator Component="Name" Text="El nombre no puede estar vacío" Style="position: relative" />
-        </div>
+<div class="col-sm-12 col-lg-12 col-md-12">
+    <b class="spaccio-label">Datos del cliente</b>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <SfTextBox Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Name" />
     </div>
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Dirección" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox @bind-Value="CustomerInfoViewModel.Address" Class="w-100" />
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.City" />
     </div>
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Ciudad" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox @bind-Value="CustomerInfoViewModel.City" Class="w-100" />
-        </div>
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <SfTextBox Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Phone" />
     </div>
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Teléfono" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox @bind-Value="CustomerInfoViewModel.Phone" Class="w-100" />
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <SfTextBox Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Address" />
     </div>
-</RadzenFieldset>
+</div>
 
 
 @code {
     [Parameter]
     public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
 }
-
-*@

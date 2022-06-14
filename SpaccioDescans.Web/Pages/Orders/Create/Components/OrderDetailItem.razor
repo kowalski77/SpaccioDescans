@@ -1,36 +1,29 @@
-﻿@*<div class="row">
-    <div class="col-md-1">
-        <RadzenLabel Text="Cantidad" />
+﻿@using Syncfusion.Blazor.Inputs
+
+<div class="row">
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Cantidad</label>
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Quantity" Change="OnQuantityUpdated"  />
     </div>
-    <div class="col-md-1">
-        <RadzenNumeric TValue="int" Step="1" style="width: 50%;" Name="Cantidad" Value="@OrderDetailViewModel.Quantity" Change="OnQuantityUpdated" />
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Producto</label>
+        <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="@this.OrderDetailViewModel.Name" />
     </div>
-    <div class="col-md-1">
-        <RadzenLabel Text="Producto" />
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Precio</label>
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Price" Readonly="true" ShowSpinButton="false"  />
     </div>
-    <div class="col-2">
-        <RadzenTextBox style="width: 100%;" Placeholder="Producto" @bind-Value="OrderDetailViewModel.Name" ReadOnly="true" />
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Descuento</label>
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Discount" Change="OnDiscountUpdated"  />
     </div>
-    <div class="col-md-1">
-        <RadzenLabel Text="Precio" />
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Total</label>
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Total" Readonly="true" ShowSpinButton="false"  />
     </div>
-    <div class="col-md-1">
-        <RadzenNumeric TValue="decimal" style="width: 70%;" @bind-Value="OrderDetailViewModel.Price" ShowUpDown="false" ReadOnly="true" />
-    </div>
-    <div class="col-md-1">
-        <RadzenLabel Text="Descuento" />
-    </div>
-    <div class="col-md-1">
-        <RadzenNumeric TValue="decimal" style="width: 50%;" Name="Descuento" Value="OrderDetailViewModel.Discount" Change="OnDiscountUpdated" />
-    </div>
-    <div class="col-md-1">
-        <RadzenLabel Text="Total" />
-    </div>
-    <div class="col-md-1">
-        <RadzenNumeric TValue="decimal" style="width: 70%;" Name="Total" Value="OrderDetailViewModel.Total" ShowUpDown="false" ReadOnly="true" Format="0.00"/>
-    </div>
-    <div class="col-md-1">
-        <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Click="@RemoveProduct" ButtonType="ButtonType.Button" />
+    <div class="col-sm-6 col-lg-6 col-md-6">
+        <label class="spaccio-label">Total</label>
+        <SfButton CssClass="e-danger" @onclick="@this.RemoveProduct">Danger</SfButton>
     </div>
 </div>
 
@@ -44,9 +37,6 @@
 
     [Parameter]
     public EventCallback OnOrderDetailUpdated { get; set; }
-
-    [Inject]
-    private DialogService DialogService { get; set; } = default!;
 
     private async Task RemoveProduct()
     {
@@ -64,4 +54,4 @@
         this.OrderDetailViewModel.Discount = discount;
         await this.OnOrderDetailUpdated.InvokeAsync();
     }
-}*@
+}

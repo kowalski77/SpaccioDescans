@@ -1,83 +1,44 @@
-﻿@*@using Microsoft.AspNetCore.Components
-<RadzenFieldset Text="Métodos de pago">
-    <Condition Evaluation="this.OrderViewModel.NetAmount != 0">
-        <Match>
-            <div class="row">
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Tarjeta" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           @bind-Value="@this.OrderViewModel.CreditCardAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Efectivo" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           @bind-Value="@this.OrderViewModel.CashAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Financiado" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           @bind-Value="@this.OrderViewModel.FinancedAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Neto" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           ShowUpDown="false"
-                                           ReadOnly="true"
-                                           Value="@this.OrderViewModel.NetAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Total (+ 21% IVA)" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           ShowUpDown="false"
-                                           ReadOnly="true"
-                                           Value="@this.OrderViewModel.TotalAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <RadzenLabel Text="Pendiente" />
-                        </div>
-                        <div class="col-6">
-                            <RadzenNumeric TValue="decimal" Style="width: 40%;"
-                                           ShowUpDown="false"
-                                           ReadOnly="true"
-                                           Value="@this.OrderViewModel.PendingAmount"
-                                           Format="0.00" Class="mr-1"/>
-                        </div>
-                    </div>
-                </div>
+﻿@using Syncfusion.Blazor.Inputs
+
+<Condition Evaluation="this.OrderViewModel.NetAmount != 0">
+    <Match>
+        <div class="col-sm-12 col-lg-12 col-md-12">
+            <b class="spaccio-label">Forma de pago</b>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Tarjeta</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.CreditCardAmount" />
             </div>
-        </Match>
-    </Condition>
-</RadzenFieldset>
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Neto</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.NetAmount" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Efectivo</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.OrderViewModel.CashAmount" />
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Total (+ 21% IVA)</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.TotalAmount" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Crédito</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.FinancedAmount" />
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6">
+                <label class="spaccio-label">Pendiente</label>
+                <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.PendingAmount" />
+            </div>
+        </div>
+    </Match>
+</Condition>
 
 @code {
     [Parameter]
     public OrderViewModel OrderViewModel { get; set; } = default!;
-}*@
+}
