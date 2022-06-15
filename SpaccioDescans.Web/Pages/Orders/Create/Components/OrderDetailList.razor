@@ -6,8 +6,17 @@
                  OnRemoveOrderDetail="RemoveItem"
                  OnOrderDetailUpdated="InvokeOnOrderDetailUpdated" />
 }
-<SfButton CssClass="e-success" @onclick="@this.SearchProduct">Añadir</SfButton>
+<SfButton CssClass="e-success" @onclick="@(() => this.DialogVisibility = true)">Añadir</SfButton>
 
+<SfDialog Width="80%"  ID="product-dialog"
+          ShowCloseIcon="true" AllowPrerender="true" IsModal="true" @bind-Visible="@this.DialogVisibility">
+    <DialogTemplates>
+        <Content>
+            <ProductsData OnProductSelected="ProductSelected"/>
+        </Content>
+    </DialogTemplates>
+    <DialogAnimationSettings Effect="@DialogEffect.FadeZoom" Duration="400" />
+</SfDialog>
 
 @code {
     [Parameter]
@@ -16,20 +25,11 @@
     [Parameter]
     public EventCallback<decimal> OnOrderDetailUpdated { get; set; }
 
-    //[Inject]
-    //private DialogService DialogService { get; set; } = default!;
-
-    private async Task SearchProduct()
-    {
-        //await DialogService.OpenAsync<SearchProductDialog>("Buscar producto", new Dictionary<string, object>
-        //{
-        //    {"OnProductSelected", ProductSelected}
-        //},
-        //    new DialogOptions { Width = "90%", Height = "570px", Resizable = true, Draggable = true });
-    }
+    private bool DialogVisibility { get; set; }
 
     private EventCallback ProductSelected => new(this, (Func<ProductViewModel, Task>)(async product =>
     {
+        this.DialogVisibility = false;
         await UpdateProduct(product);
     }));
 

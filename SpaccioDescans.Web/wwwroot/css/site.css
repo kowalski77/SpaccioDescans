@@ -81,3 +81,11 @@ form .row {
 .spaccio-label {
     color: #ffffff;
 }
+
+#product-dialog {
+    max-height: 650px !important;
+}
+
+#products-data {
+    cursor: pointer;
+}

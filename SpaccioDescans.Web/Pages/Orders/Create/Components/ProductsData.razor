@@ -1,0 +1,50 @@
+﻿@using SpaccioDescans.Web.Pages.Products
+@using MediatR
+@using SpaccioDescans.Core.Application.Products.Queries
+@using System.Collections.ObjectModel
+
+<SfBreadcrumb>
+    <BreadcrumbItems>
+        <BreadcrumbItem IconCss="e-icons e-home" Url=""/>
+        <BreadcrumbItem Text="Productos" Disabled="true"/>
+        <BreadcrumbItem Text="Inventario" Url="./products/inventory/index"/>
+    </BreadcrumbItems>
+</SfBreadcrumb>
+<SfGrid ID="products-data" DataSource="@Products"
+        AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+    <GridPageSettings PageSize="10" />
+    <GridEvents OnRecordDoubleClick="OnProductDoubleClickHandler" TValue="ProductViewModel"></GridEvents>
+    <GridColumns>
+        <GridColumn Field="@nameof(ProductViewModel.Id)" HeaderText="Id" IsPrimaryKey="true"/>
+        <GridColumn Field="@nameof(ProductViewModel.Vendor)" HeaderText="Fabricante" />
+        <GridColumn Field="@nameof(ProductViewModel.Name)" HeaderText="Nombre" />
+        <GridColumn Field="@nameof(ProductViewModel.Description)" HeaderText="Descripción" />
+        <GridColumn Field="@nameof(ProductViewModel.Measures)" HeaderText="Medidas" Width="150" />
+        <GridColumn Field="@nameof(ProductViewModel.Price)" HeaderText="Precio" Width="150" TextAlign="TextAlign.Center" />
+        <GridColumn Field="@nameof(ProductViewModel.QuantityStoreOne)" HeaderText="Tienda 1" AllowFiltering="false" Width="100" TextAlign="TextAlign.Center" />
+        <GridColumn Field="@nameof(ProductViewModel.QuantityStoreTwo)" HeaderText="Tienda 2" AllowFiltering="false" Width="100" TextAlign="TextAlign.Center" />
+    </GridColumns>
+</SfGrid>
+
+
+@code {
+    [Parameter]
+    public EventCallback OnProductSelected { get; set; }
+
+    [Inject] private IMediator Mediator { get; set; } = default!;
+
+    private Collection<ProductViewModel>? Products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var products = await this.Mediator.Send(new GetProductsQuery());
+        var viewModels = products.Select(x => (ProductViewModel)x).ToList();
+
+        this.Products = new Collection<ProductViewModel>(viewModels);
+    }
+
+    private async Task OnProductDoubleClickHandler(RecordDoubleClickEventArgs<ProductViewModel> obj)
+    {
+        await this.OnProductSelected.InvokeAsync(obj.RowData);
+    }
+}

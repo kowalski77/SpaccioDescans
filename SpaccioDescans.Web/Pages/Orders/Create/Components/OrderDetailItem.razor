@@ -1,29 +1,28 @@
 ﻿@using Syncfusion.Blazor.Inputs
 
 <div class="row">
-    <div class="col-sm-6 col-lg-6 col-md-6">
+    <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Cantidad</label>
         <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Quantity" Change="OnQuantityUpdated"  />
     </div>
-    <div class="col-sm-6 col-lg-6 col-md-6">
+    <div class="col-sm-3 col-lg-3 col-md-3">
         <label class="spaccio-label">Producto</label>
-        <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="@this.OrderDetailViewModel.Name" />
+        <SfTextBox @bind-Value="@this.OrderDetailViewModel.Name" Readonly="true"/>
     </div>
-    <div class="col-sm-6 col-lg-6 col-md-6">
+    <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Precio</label>
         <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Price" Readonly="true" ShowSpinButton="false"  />
     </div>
-    <div class="col-sm-6 col-lg-6 col-md-6">
+    <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Descuento</label>
         <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Discount" Change="OnDiscountUpdated"  />
     </div>
-    <div class="col-sm-6 col-lg-6 col-md-6">
+    <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Total</label>
         <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Total" Readonly="true" ShowSpinButton="false"  />
     </div>
-    <div class="col-sm-6 col-lg-6 col-md-6">
-        <label class="spaccio-label">Total</label>
-        <SfButton CssClass="e-danger" @onclick="@this.RemoveProduct">Danger</SfButton>
+    <div class="col-sm-1 col-lg-1 col-md-1">
+        <SfButton CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
     </div>
 </div>
 
