@@ -46,12 +46,12 @@ public class OrderViewModel
 
 public class CustomerInfoViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "Please enter {0}.")]
     public string Name { get; set; } = string.Empty;
 
     public string Address { get; set; } = string.Empty;
 
-    [Required]
+    [Required(ErrorMessage = "Please enter {0}.")]
     public string City { get; set; } = string.Empty;
 
     public string Phone { get; set; } = string.Empty;
