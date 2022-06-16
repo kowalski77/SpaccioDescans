@@ -8,9 +8,9 @@ public class Order2Base : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
 
-    protected OrderViewModel OrderViewModel { get; } = new();
+    protected OrderViewModel OrderViewModel { get; private set; } = new();
 
-    protected bool ShowConfirmCancelButtons => this.OrderViewModel.OrderDetailViewModels.Count > 0;
+    protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
 
     protected async Task Submit()
     {
@@ -29,7 +29,11 @@ public class Order2Base : ComponentBase
 
     protected void Cancel()
     {
-        //
+        this.OrderViewModel.CustomerInfoViewModel.Address = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.Phone = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.City = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.Name = string.Empty;
+        this.OrderViewModel.OrderDetailViewModels.Clear();
     }
 
     protected void UpdateTotal(decimal total)

@@ -15,7 +15,11 @@
             <CustomerInfo CustomerInfoViewModel="@this.OrderViewModel.CustomerInfoViewModel" />
         </div>
         <div class="col-sm">
-            <Payments OrderViewModel="@this.OrderViewModel" />
+            <Condition Evaluation="@this.ShowOrderItems">
+                <Match>
+                    <Payments OrderViewModel="@this.OrderViewModel" />
+                </Match>
+            </Condition>
         </div>
     </div>
     <div class="row">
@@ -23,12 +27,12 @@
             <OrderDetailList OrderDetailViewModels="@this.OrderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="@this.UpdateTotal" />
         </div>
     </div>
-    <Condition Evaluation="@this.ShowConfirmCancelButtons">
+    <Condition Evaluation="@this.ShowOrderItems">
         <Match>
             <div class="row">
                 <div class="col-sm d-md-flex justify-content-md-end">
                     <SfButton Type="submit" CssClass="e-success me-md-2">Crear</SfButton>
-                    <SfButton Type="button" CssClass="e-danger">Cancelar</SfButton>
+                    <SfButton Type="button" CssClass="e-danger" @onclick="@this.Cancel">Cancelar</SfButton>
                 </div>
             </div>
         </Match>
