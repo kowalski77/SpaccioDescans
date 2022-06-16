@@ -10,6 +10,8 @@ public class Order2Base : ComponentBase
 
     protected OrderViewModel OrderViewModel { get; } = new();
 
+    protected bool ShowConfirmCancelButtons => this.OrderViewModel.OrderDetailViewModels.Count > 0;
+
     protected async Task Submit()
     {
         var isValid = this.ValidateOrderDetails();

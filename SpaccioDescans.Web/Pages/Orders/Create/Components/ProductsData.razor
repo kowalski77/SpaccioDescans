@@ -13,7 +13,7 @@
 <SfGrid ID="products-data" DataSource="@Products"
         AllowPaging="true" AllowSorting="true" AllowFiltering="true">
     <GridPageSettings PageSize="10" />
-    <GridEvents OnRecordDoubleClick="OnProductDoubleClickHandler" TValue="ProductViewModel"></GridEvents>
+    <GridEvents OnRecordClick="OnProductClickHandler" TValue="ProductViewModel"></GridEvents>
     <GridColumns>
         <GridColumn Field="@nameof(ProductViewModel.Id)" HeaderText="Id" IsPrimaryKey="true"/>
         <GridColumn Field="@nameof(ProductViewModel.Vendor)" HeaderText="Fabricante" />
@@ -43,7 +43,7 @@
         this.Products = new Collection<ProductViewModel>(viewModels);
     }
 
-    private async Task OnProductDoubleClickHandler(RecordDoubleClickEventArgs<ProductViewModel> obj)
+    private async Task OnProductClickHandler(RecordClickEventArgs<ProductViewModel> obj)
     {
         await this.OnProductSelected.InvokeAsync(obj.RowData);
     }

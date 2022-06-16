@@ -23,10 +23,14 @@
             <OrderDetailList OrderDetailViewModels="@this.OrderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="@this.UpdateTotal" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm">
-            <SfButton Type="submit" CssClass="e-success">Aceptar</SfButton>
-            <SfButton Type="button" CssClass="e-danger">Cancelar</SfButton>
-        </div>
-    </div>
+    <Condition Evaluation="@this.ShowConfirmCancelButtons">
+        <Match>
+            <div class="row">
+                <div class="col-sm d-md-flex justify-content-md-end">
+                    <SfButton Type="submit" CssClass="e-success me-md-2">Crear</SfButton>
+                    <SfButton Type="button" CssClass="e-danger">Cancelar</SfButton>
+                </div>
+            </div>
+        </Match>
+    </Condition>
 </EditForm>
