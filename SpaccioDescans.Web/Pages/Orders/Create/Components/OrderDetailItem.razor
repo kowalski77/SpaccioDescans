@@ -7,7 +7,7 @@
         <SfNumericTextBox TValue="int" @bind-value="@this.Quantity" OnChange="@this.OnQuantityUpdated"/>
     </div>
     <div class="col-sm-3 col-lg-3 col-md-3">
-        <label class="spaccio-label">Producto</label>
+        <label class="spaccio-label">Nombre</label>
         <SfTextBox @bind-Value="@this.OrderDetailViewModel.Name" Readonly="true"/>
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
@@ -24,7 +24,7 @@
     </div>
     <div class="col-sm-1 col-lg-1 col-md-1">
         <br/>
-        <SfButton CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
+        <SfButton Type="button" CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
     </div>
 </div>
 

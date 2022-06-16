@@ -1,27 +1,29 @@
 ﻿@using Syncfusion.Blazor.Inputs
 
+
 <div class="col-sm-12 col-lg-12 col-md-12">
     <b class="spaccio-label">Datos del cliente</b>
 </div>
 <div class="row">
     <div class="col-sm-12 col-lg-12 col-md-12">
-        <SfTextBox Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Name" />
+        <SfTextBox ID="customer-name" Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Name"/>
+        <ValidationMessage For="@(() => this.CustomerInfoViewModel.Name)"></ValidationMessage>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6 col-lg-6 col-md-6">
-        <SfTextBox Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.City" />
+        <SfTextBox ID="customer-nif" Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.City" />
+        <ValidationMessage For="@(() => this.CustomerInfoViewModel.City)"></ValidationMessage>
     </div>
     <div class="col-sm-6 col-lg-6 col-md-6">
-        <SfTextBox Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Phone" />
+        <SfTextBox ID="customer-phone" Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Phone" />
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12 col-lg-12 col-md-12">
-        <SfTextBox Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Address" />
+        <SfTextBox ID="customer-address" Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Address" />
     </div>
 </div>
-
 
 @code {
     [Parameter]

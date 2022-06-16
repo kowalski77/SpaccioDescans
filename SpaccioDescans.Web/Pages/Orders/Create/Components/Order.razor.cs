@@ -1,80 +1,80 @@
-﻿//using MediatR;
-//using Microsoft.AspNetCore.Components;
-//using Radzen;
-//using SpaccioDescans.Core.Application.Orders.Commands;
+﻿using MediatR;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using SpaccioDescans.Core.Application.Orders.Commands;
 
-//namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
+namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 
-//public class OrderBase : ComponentBase
-//{
-//    [Inject] private DialogService DialogService { get; set; } = default!;
+public class Order2Base : ComponentBase
+{
+    [Inject] private IMediator Mediator { get; set; } = default!;
 
-//    [Inject] private IMediator Mediator { get; set; } = default!;
+    protected OrderViewModel OrderViewModel { get; private set; } = new();
 
-//    [Inject] private NotificationService NotificationService { get; set; } = default!;
+    protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
 
-//    protected OrderViewModel OrderViewModel { get; } = new();
+    protected async Task Submit(EditContext context)
+    {
+        var isValid = this.ValidateOrderDetails();
+        if (!isValid)
+        {
+            return;
+        }
 
-//    protected async Task Submit(OrderViewModel model)
-//    {
-//        ArgumentNullException.ThrowIfNull(model);
+        var isConfirmed = await this.ConfirmOrderCreationAsync();
+        if (isConfirmed)
+        {
+            await this.CreateOrderAsync(this.OrderViewModel);
+        }
+    }
 
-//        var isValid = this.ValidateOrderDetails();
-//        if (!isValid)
-//        {
-//            return;
-//        }
+    protected void Cancel()
+    {
+        this.OrderViewModel.CustomerInfoViewModel.Address = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.Phone = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.City = string.Empty;
+        this.OrderViewModel.CustomerInfoViewModel.Name = string.Empty;
+        this.OrderViewModel.OrderDetailViewModels.Clear();
+    }
 
-//        var isConfirmed = await this.ConfirmOrderCreationAsync();
-//        if (isConfirmed)
-//        {
-//            await this.CreateOrderAsync(model);
-//        }
-//    }
+    protected void UpdateTotal(decimal total)
+    {
+        this.OrderViewModel.NetAmount = total;
+    }
 
-//    protected void Cancel()
-//    {
-//        //
-//    }
+    private bool ValidateOrderDetails()
+    {
+        if (this.OrderViewModel.OrderDetailViewModels.Count is not 0)
+        {
+            return true;
+        }
 
-//    protected void UpdateTotal(decimal total)
-//    {
-//        this.OrderViewModel.NetAmount = total;
-//    }
+        //this.NotificationService.Notify(NotificationSeverity.Error, "No has añadido productos");
+        return false;
+    }
 
-//    private bool ValidateOrderDetails()
-//    {
-//        if (this.OrderViewModel.OrderDetailViewModels.Count is not 0)
-//        {
-//            return true;
-//        }
+    private async Task<bool> ConfirmOrderCreationAsync()
+    {
+        //var isConfirmed = await this.DialogService.Confirm("¿Estás seguro?", "Crear factura", new ConfirmOptions
+        //{
+        //    OkButtonText = "Sí",
+        //    CancelButtonText = "Cancelar"
+        //});
 
-//        this.NotificationService.Notify(NotificationSeverity.Error, "No has añadido productos");
-//        return false;
-//    }
+        //if (isConfirmed != null && (bool)isConfirmed)
+        //{
+        //    return (bool)isConfirmed;
+        //}
 
-//    private async Task<bool> ConfirmOrderCreationAsync()
-//    {
-//        var isConfirmed = await this.DialogService.Confirm("¿Estás seguro?", "Crear factura", new ConfirmOptions
-//        {
-//            OkButtonText = "Sí",
-//            CancelButtonText = "Cancelar"
-//        });
+        //this.NotificationService.Notify(NotificationSeverity.Info, "Creación de factura cancelada");
+        return false;
+    }
 
-//        if (isConfirmed != null && (bool)isConfirmed)
-//        {
-//            return (bool)isConfirmed;
-//        }
+    private async Task CreateOrderAsync(OrderViewModel model)
+    {
+        var command = (CreateOrderCommand)model;
+        var orderId = await this.Mediator.Send(command);
 
-//        this.NotificationService.Notify(NotificationSeverity.Info, "Creación de factura cancelada");
-//        return false;
-//    }
-
-//    private async Task CreateOrderAsync(OrderViewModel model)
-//    {
-//        var command = (CreateOrderCommand)model;
-//        var orderId = await this.Mediator.Send(command);
-
-//        this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {orderId}");
-//    }
-//}
+        //this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {orderId}");
+    }
+}

@@ -1,33 +1,41 @@
-﻿@*@inherits OrderBase
-
+﻿@using Syncfusion.Blazor.Inputs
+@inherits Order2Base
 <PageTitle>Crear factura</PageTitle>
 
-<RadzenCard class="pb-4">
-    <RadzenBreadCrumb>
-        <RadzenBreadCrumbItem Path="/" Text="Inicio" />
-        <RadzenBreadCrumbItem Text="Crear factura" />
-    </RadzenBreadCrumb>
-</RadzenCard>
-<RadzenCard class="pb-4">
-    <RadzenTemplateForm Data="@OrderViewModel" Submit="@(async (OrderViewModel order) => { await Submit(order); })">
-        <div class="row">
-            <div class="col-md-6">
-                <CustomerInfo CustomerInfoViewModel="OrderViewModel.CustomerInfoViewModel"/>
-            </div>
-            <div class="col-md-6">
-                <Payments OrderViewModel="@this.OrderViewModel"/>
-            </div>
+<SfBreadcrumb>
+    <BreadcrumbItems>
+        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
+        <BreadcrumbItem Text="Facturas" Disabled="true" />
+        <BreadcrumbItem Text="Crear" Url="./orders/create/index" />
+    </BreadcrumbItems>
+</SfBreadcrumb>
+<EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col-sm">
+            <CustomerInfo CustomerInfoViewModel="@this.OrderViewModel.CustomerInfoViewModel"/>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <OrderDetailList OrderDetailViewModels="OrderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="UpdateTotal"/>
-            </div>
+        <div class="col-sm">
+            <Condition Evaluation="@this.ShowOrderItems">
+                <Match>
+                    <Payments OrderViewModel="@this.OrderViewModel"/>
+                </Match>
+            </Condition>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12 d-flex align-items-end justify-content-end" style="margin-top: 16px;">
-                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Aceptar"/>
-                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancelar" Click="@Cancel"/>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <OrderDetailList OrderDetailViewModels="@this.OrderViewModel.OrderDetailViewModels" OnOrderDetailUpdated="@this.UpdateTotal"/>
         </div>
-    </RadzenTemplateForm>
-</RadzenCard>*@
+    </div>
+    <Condition Evaluation="@this.ShowOrderItems">
+        <Match>
+            <div class="row">
+                <div class="col-sm d-md-flex justify-content-md-end">
+                    <SfButton Type="submit" CssClass="e-success me-md-2">Crear</SfButton>
+                    <SfButton Type="button" CssClass="e-danger" @onclick="@this.Cancel">Cancelar</SfButton>
+                </div>
+            </div>
+        </Match>
+    </Condition>
+</EditForm>

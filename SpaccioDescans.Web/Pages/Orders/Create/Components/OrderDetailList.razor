@@ -1,18 +1,22 @@
 ﻿@using SpaccioDescans.Web.Pages.Products
 
-@foreach (var orderDetail in OrderDetailViewModels)
-{
-    <OrderDetailItem OrderDetailViewModel="orderDetail"
-                 OnRemoveOrderDetail="RemoveItem"
-                 OnOrderDetailUpdated="InvokeOnOrderDetailUpdated" />
-}
-<SfButton CssClass="e-success" @onclick="@(() => this.DialogVisibility = true)">Añadir</SfButton>
-
-<SfDialog Width="80%"  ID="product-dialog"
+<div class="col-sm-12 col-lg-12 col-md-12" style="margin-bottom: 2px;">
+    <b class="spaccio-label">Productos</b>
+</div>
+<div class="col-sm-12 col-lg-12 col-md-12">
+    @foreach (var orderDetail in OrderDetailViewModels)
+    {
+        <OrderDetailItem OrderDetailViewModel="orderDetail"
+                     OnRemoveOrderDetail="RemoveItem"
+                     OnOrderDetailUpdated="InvokeOnOrderDetailUpdated" />
+    }
+    <SfButton CssClass="e-success" Type="button" @onclick="@(() => this.DialogVisibility = true)">Añadir</SfButton>
+</div>
+<SfDialog Width="80%" ID="product-dialog"
           ShowCloseIcon="true" AllowPrerender="true" IsModal="true" @bind-Visible="@this.DialogVisibility">
     <DialogTemplates>
         <Content>
-            <ProductsData OnProductSelected="ProductSelected"/>
+            <ProductsData OnProductSelected="ProductSelected" />
         </Content>
     </DialogTemplates>
     <DialogAnimationSettings Effect="@DialogEffect.FadeZoom" Duration="400" />
