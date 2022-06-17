@@ -13,14 +13,10 @@ public class Order2Base : ComponentBase
 
     protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
 
+    protected EditContext Context { get; set; }
+
     protected async Task Submit(EditContext context)
     {
-        var isValid = this.ValidateOrderDetails();
-        if (!isValid)
-        {
-            return;
-        }
-
         var isConfirmed = await this.ConfirmOrderCreationAsync();
         if (isConfirmed)
         {
@@ -40,17 +36,6 @@ public class Order2Base : ComponentBase
     protected void UpdateTotal(decimal total)
     {
         this.OrderViewModel.NetAmount = total;
-    }
-
-    private bool ValidateOrderDetails()
-    {
-        if (this.OrderViewModel.OrderDetailViewModels.Count is not 0)
-        {
-            return true;
-        }
-
-        //this.NotificationService.Notify(NotificationSeverity.Error, "No has añadido productos");
-        return false;
     }
 
     private async Task<bool> ConfirmOrderCreationAsync()

@@ -7,6 +7,7 @@ namespace SpaccioDescans.Web.Pages.Orders;
 
 public class OrderViewModel
 {
+    [ValidateComplexType] 
     public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
 
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
@@ -46,15 +47,15 @@ public class OrderViewModel
 
 public class CustomerInfoViewModel
 {
-    [Required(ErrorMessage = "Please enter {0}.")]
-    public string Name { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Nombre necesario.")]
+    public string Name { get; set; }
 
-    public string Address { get; set; } = string.Empty;
+    public string Address { get; set; }
 
-    [Required(ErrorMessage = "Please enter {0}.")]
-    public string City { get; set; } = string.Empty;
+    [Required(ErrorMessage = "NIF necesario.")]
+    public string City { get; set; }
 
-    public string Phone { get; set; } = string.Empty;
+    public string Phone { get; set; }
 }
 
 public class OrderDetailViewModel

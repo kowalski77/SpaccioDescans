@@ -9,8 +9,8 @@
         <BreadcrumbItem Text="Crear" Url="./orders/create/index" />
     </BreadcrumbItems>
 </SfBreadcrumb>
-<EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
-    <DataAnnotationsValidator />
+<EditForm class="control-section" EditContext="@this.Context" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
+    <ObjectGraphDataAnnotationsValidator />
     <div class="row">
         <div class="col-sm">
             <CustomerInfo CustomerInfoViewModel="@this.OrderViewModel.CustomerInfoViewModel"/>
