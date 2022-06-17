@@ -1,27 +1,26 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using SpaccioDescans.Core.Application.Orders.Commands;
+using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 
-public class Order2Base : ComponentBase
+public class OrderBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
+    protected bool ConfirmDialogVisibility { get; set; }
+
+    protected SfToast ConfirmToast { get; set; } = default!;
+
+    protected string ConfirmToastContent { get; set; } = default!;
+
     protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
 
-    protected EditContext Context { get; set; }
-
-    protected async Task Submit(EditContext context)
+    protected void Submit()
     {
-        var isConfirmed = await this.ConfirmOrderCreationAsync();
-        if (isConfirmed)
-        {
-            await this.CreateOrderAsync(this.OrderViewModel);
-        }
+        this.ConfirmDialogVisibility = true;
     }
 
     protected void Cancel()
@@ -38,27 +37,10 @@ public class Order2Base : ComponentBase
         this.OrderViewModel.NetAmount = total;
     }
 
-    private async Task<bool> ConfirmOrderCreationAsync()
+    public async Task CreateOrderAsync()
     {
-        //var isConfirmed = await this.DialogService.Confirm("¿Estás seguro?", "Crear factura", new ConfirmOptions
-        //{
-        //    OkButtonText = "Sí",
-        //    CancelButtonText = "Cancelar"
-        //});
-
-        //if (isConfirmed != null && (bool)isConfirmed)
-        //{
-        //    return (bool)isConfirmed;
-        //}
-
-        //this.NotificationService.Notify(NotificationSeverity.Info, "Creación de factura cancelada");
-        return false;
-    }
-
-    private async Task CreateOrderAsync(OrderViewModel model)
-    {
-        var command = (CreateOrderCommand)model;
-        var orderId = await this.Mediator.Send(command);
+        //var command = (CreateOrderCommand)model;
+        //var orderId = await this.Mediator.Send(command);
 
         //this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {orderId}");
     }

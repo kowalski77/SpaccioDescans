@@ -1,5 +1,7 @@
 ﻿@using Syncfusion.Blazor.Inputs
-@inherits Order2Base
+@using Syncfusion.Blazor.Notifications.Internal
+@inherits OrderBase
+
 <PageTitle>Crear factura</PageTitle>
 
 <SfBreadcrumb>
@@ -9,7 +11,7 @@
         <BreadcrumbItem Text="Crear" Url="./orders/create/index" />
     </BreadcrumbItems>
 </SfBreadcrumb>
-<EditForm class="control-section" EditContext="@this.Context" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
+<EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
     <ObjectGraphDataAnnotationsValidator />
     <div class="row">
         <div class="col-sm">
@@ -39,3 +41,23 @@
         </Match>
     </Condition>
 </EditForm>
+
+<div id="target" class="col-lg-12 control-section">
+    <SfDialog Width="400px" ShowCloseIcon="true" @bind-Visible="@this.ConfirmDialogVisibility" AllowPrerender="true" IsModal="true">
+        <DialogTemplates>
+            <Header> Confirmación</Header>
+            <Content> ¿Estás seguro/a de que deseas crear factura? </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="Aceptar" IsPrimary="true" OnClick="@this.CreateOrderAsync" />
+            <DialogButton Content="Cancelar" IsPrimary="false" OnClick="@(() => this.ConfirmDialogVisibility = false)" />
+        </DialogButtons>
+    </SfDialog>
+</div>
+
+@*<div class="col-lg-12 control-section toast-default-section">
+    <SfToast ID="toast_default" @ref="@this.ConfirmToast" Title="Adaptive Tiles Meeting" Content="@this.ConfirmToastContent" Icon="e-meeting">
+        <ToastPosition X="Right"></ToastPosition>
+    </SfToast>
+</div>
+*@
