@@ -27,6 +27,9 @@ public class OrderBase : ComponentBase
         this.OrderViewModel.CustomerInfoViewModel.Phone = string.Empty;
         this.OrderViewModel.CustomerInfoViewModel.City = string.Empty;
         this.OrderViewModel.CustomerInfoViewModel.Name = string.Empty;
+        this.OrderViewModel.CashAmount = 0;
+        this.OrderViewModel.CreditCardAmount = 0;
+        this.OrderViewModel.FinancedAmount = 0;
         this.OrderViewModel.OrderDetailViewModels.Clear();
     }
 
