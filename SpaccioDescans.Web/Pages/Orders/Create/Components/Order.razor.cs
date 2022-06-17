@@ -14,8 +14,6 @@ public class OrderBase : ComponentBase
 
     protected SfToast ConfirmToast { get; set; } = default!;
 
-    protected string ConfirmToastContent { get; set; } = default!;
-
     protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
 
     protected void Submit()

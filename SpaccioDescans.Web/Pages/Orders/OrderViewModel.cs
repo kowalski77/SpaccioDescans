@@ -22,6 +22,7 @@ public class OrderViewModel
 
     public decimal FinancedAmount { get; set; }
 
+    [Range(0, 100000, ErrorMessage = "El importe pendiente no puede ser negativo.")]
     public decimal PendingAmount => this.TotalAmount - this.CashAmount - this.CreditCardAmount - this.FinancedAmount;
 
     public static explicit operator CreateOrderCommand(OrderViewModel orderViewModel)

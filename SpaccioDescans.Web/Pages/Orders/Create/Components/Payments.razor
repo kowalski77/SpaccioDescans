@@ -31,6 +31,7 @@
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Pendiente</label>
         <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.PendingAmount" />
+        <ValidationMessage For="@(() => this.OrderViewModel.PendingAmount)"></ValidationMessage>
     </div>
 </div>
 
