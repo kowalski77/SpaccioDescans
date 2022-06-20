@@ -1,60 +1,37 @@
-﻿@using SpaccioDescans.Infrastructure.Persistence
-
-<SfSidebar Width="18%">
+﻿<SfSidebar @ref="sidebarObj" Width="300px" DockSize="72px" EnableDock="true" @bind-IsOpen="sidebarToggle">
     <ChildContent>
-        <SfAccordion>
+        <SfAccordion ID="main-menu" Height="100%">
             <AccordionItems>
-            <AuthorizeView>
-                <Authorized>
-                    <AccordionItem Header="Productos" IconCss="e-dashboard e-icons" Expanded="true">
-                        <ContentTemplate>
-                            <ul>
-                                <li><NavLink href="/products/inventory/index">Inventario</NavLink></li>
-                            </ul>
-                        </ContentTemplate>
-                    </AccordionItem>
-                    <AccordionItem Header="Facturación" IconCss="e-profile e-icons" Expanded="true">
-                        <ContentTemplate>
-                            <ul>
-                                <li><NavLink href="/orders/create/index">Crear</NavLink></li>
-                            </ul>
-                        </ContentTemplate>
-                    </AccordionItem>
-                    <AccordionItem Header="@(this.storeName)" IconCss="e-profile e-icons" Expanded="true">
-                        <ContentTemplate>
-                            <ul>
-                                <li>@context.User.Identity?.Name</li>
-                            </ul>
-                            <ul>
-                                <li><NavLink href="/identity/account/logout">Salir</NavLink></li>
-                            </ul>
-                        </ContentTemplate>
-                    </AccordionItem>
-                </Authorized>
-                <NotAuthorized>
-                    <AccordionItem Header="Entrar" IconCss="e-dashboard e-icons" Expanded="true">
-                        <ContentTemplate>
-                            <ul>
-                                <li><NavLink href="/identity/account/login">Entrar</NavLink></li>
-                            </ul>
-                        </ContentTemplate>
-                    </AccordionItem>
-                </NotAuthorized>
-            </AuthorizeView>
+                <AuthorizeView>
+                    <Authorized>
+                        <ul>
+                            <li class="sidebar-item" id="toggle" @onclick="Toggle">
+                                <span class="e-icons expand"></span>
+                                <span class="e-text" title="menu">Menu</span>
+                            </li>
+                            <li class="sidebar-item">
+                                <span class="e-icons  e-changes-accept"></span>
+                                <NavLink class="e-text" href="/products/inventory/index">Inventario</NavLink>
+                            </li>
+                            <li class="sidebar-item">
+                                <span class="e-icons e-expand"></span>
+                                <NavLink class="e-text" href="/orders/create/index">Crear</NavLink>
+                            </li>
+                        </ul>
+                    </Authorized>
+                </AuthorizeView>
             </AccordionItems>
         </SfAccordion>
     </ChildContent>
 </SfSidebar>
 
-@code{
+@code {
+    private SfSidebar sidebarObj = default!;
 
-    private string storeName = string.Empty;
+    private bool sidebarToggle;
 
-    [Inject]
-    private TenantConfiguration TenantConfiguration { get; set; } = default!;
-
-    protected override void OnInitialized()
+    private void Toggle()
     {
-        this.storeName = TenantConfiguration.StoreName;
+        sidebarToggle = !sidebarToggle;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
+using SpaccioDescans.Core.Application.Orders.Commands;
 using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
@@ -21,7 +22,7 @@ public class OrderBase : ComponentBase
         this.ConfirmDialogVisibility = true;
     }
 
-    protected void Cancel()
+    protected void Clear()
     {
         this.OrderViewModel.CustomerInfoViewModel.Address = string.Empty;
         this.OrderViewModel.CustomerInfoViewModel.Phone = string.Empty;
@@ -38,11 +39,23 @@ public class OrderBase : ComponentBase
         this.OrderViewModel.NetAmount = total;
     }
 
-    public async Task CreateOrderAsync()
+    protected async Task CreateOrderAsync()
     {
-        //var command = (CreateOrderCommand)model;
-        //var orderId = await this.Mediator.Send(command);
+        this.ConfirmDialogVisibility = false;
 
-        //this.NotificationService.Notify(NotificationSeverity.Success, "Factura creada", $"nº: {orderId}");
+        var command = (CreateOrderCommand)this.OrderViewModel;
+        var orderId = await this.Mediator.Send(command);
+
+        this.Clear();
+        await this.ShowOrderCreatedNotificationAsync(orderId);
+    }
+
+    private async Task ShowOrderCreatedNotificationAsync(long orderId)
+    {
+        await this.ConfirmToast.ShowAsync(new ToastModel
+        {
+            Content = $"Factura {orderId} creada",
+            Height = "20px"
+        });
     }
 }
