@@ -12,7 +12,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
 
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Address).IsUnicode(false);
-        builder.Property(x => x.City).IsUnicode(false);
+        builder.Property(x => x.Nif).IsUnicode(false);
         builder.Property(x => x.Phone).IsUnicode(false);
         builder.Property(x => x.Name).IsUnicode(false);
     }

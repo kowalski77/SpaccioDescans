@@ -12,7 +12,7 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220604171026_Initial")]
+    [Migration("20220620142546_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,12 +235,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
@@ -249,8 +243,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Nif")
                         .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Phone")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 

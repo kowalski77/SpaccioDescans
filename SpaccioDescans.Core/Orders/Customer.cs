@@ -7,11 +7,11 @@ public class Customer : Entity
 {
     private Customer() { }
 
-    public Customer(string name, string address, string city, string phone)
+    public Customer(string name, string address, string nif, string phone)
     {
         this.Name = name;
         this.Address = address;
-        this.City = city;
+        this.Nif = nif;
         this.Phone = phone;
     }
 
@@ -19,9 +19,9 @@ public class Customer : Entity
 
     public string Name { get; private set; }
 
-    public string Address { get; private set; }
+    public string? Address { get; private set; }
 
-    public string City { get; private set; }
+    public string Nif { get; private set; }
 
-    public string Phone { get; private set; }
+    public string? Phone { get; private set; }
 }

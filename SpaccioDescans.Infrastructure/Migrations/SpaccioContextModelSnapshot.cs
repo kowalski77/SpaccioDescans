@@ -233,12 +233,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
@@ -247,8 +241,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Nif")
                         .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<string>("Phone")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 

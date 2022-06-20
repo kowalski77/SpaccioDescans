@@ -55,9 +55,9 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
-                    Address = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
-                    City = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
-                    Phone = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    Address = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
+                    Nif = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    Phone = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },

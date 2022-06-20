@@ -31,7 +31,7 @@ public class OrderViewModel
 
         var customerInfo = new CustomerInfo(
             orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address,
-            orderViewModel.CustomerInfoViewModel.City, orderViewModel.CustomerInfoViewModel.Phone);
+            orderViewModel.CustomerInfoViewModel.Nif, orderViewModel.CustomerInfoViewModel.Phone);
 
         var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
 
@@ -49,14 +49,14 @@ public class OrderViewModel
 public class CustomerInfoViewModel
 {
     [Required(ErrorMessage = "Nombre necesario.")]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    public string Address { get; set; }
+    public string Address { get; set; } = default!;
 
     [Required(ErrorMessage = "NIF necesario.")]
-    public string City { get; set; }
+    public string Nif { get; set; } = default!;
 
-    public string Phone { get; set; }
+    public string Phone { get; set; } = default!;
 }
 
 public class OrderDetailViewModel

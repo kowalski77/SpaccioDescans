@@ -7,7 +7,7 @@ namespace SpaccioDescans.Core.Application.Orders.Commands;
 
 public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : IRequest<long>;
 
-public sealed record CustomerInfo(string Name, string Address, string City, string Phone);
+public sealed record CustomerInfo(string Name, string Address, string Nif, string Phone);
 
 public sealed record OrderDetailItem(long ProductId, long StoreId, int Quantity, decimal Discount);
 
@@ -31,7 +31,7 @@ public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, lon
         ArgumentNullException.ThrowIfNull(request);
 
         var store = await this.storeRepository.GetCurrentStore(cancellationToken);
-        var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.City, request.CustomerInfo.Phone);
+        var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.Nif, request.CustomerInfo.Phone);
         var orderDetails = await this.GetOrderDetails(request.OrderDetailItems);
         var payments = request.PaymentDataCollection.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));
 
