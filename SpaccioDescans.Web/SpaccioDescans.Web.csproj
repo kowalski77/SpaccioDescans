@@ -18,11 +18,11 @@
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
-		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.1.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.1.0.58" />
-		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="20.1.0.60" />
-		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.58" />
-		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.58" />
+		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.2.0.36" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.2.0.36" />
+		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="20.2.0.36" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.2.0.36" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.2.0.36" />
 	</ItemGroup>
 
 	<ItemGroup>
