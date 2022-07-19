@@ -9,8 +9,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Application\Orders\Queries\" />
-		<Folder Include="Shared\" />
+	  <Compile Remove="Application\Orders\Queries\**" />
+	  <Compile Remove="Shared\**" />
+	  <EmbeddedResource Remove="Application\Orders\Queries\**" />
+	  <EmbeddedResource Remove="Shared\**" />
+	  <None Remove="Application\Orders\Queries\**" />
+	  <None Remove="Shared\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="Stores\" />
 		<Folder Include="Products\" />
 	</ItemGroup>

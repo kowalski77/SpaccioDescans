@@ -216,7 +216,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StoreId = table.Column<long>(type: "bigint", nullable: false),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Remarks = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
                     SubTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
@@ -301,7 +301,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)

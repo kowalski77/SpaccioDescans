@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using Syncfusion.Blazor.Notifications;
 
@@ -8,6 +9,8 @@ namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 public class OrderBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
+
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
@@ -57,5 +60,8 @@ public class OrderBase : ComponentBase
             Content = $"Factura {orderId} creada",
             Height = "20px"
         });
+
+        var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={orderId}";
+        await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
     }
 }

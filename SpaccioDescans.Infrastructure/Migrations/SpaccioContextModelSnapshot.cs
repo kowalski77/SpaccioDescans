@@ -286,8 +286,10 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("StoreId")
                         .HasColumnType("bigint");
@@ -356,8 +358,10 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<long?>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");

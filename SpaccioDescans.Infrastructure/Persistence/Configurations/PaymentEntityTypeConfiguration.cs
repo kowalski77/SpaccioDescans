@@ -12,5 +12,6 @@ public class PaymentEntityTypeConfiguration : IEntityTypeConfiguration<Payment>
 
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Amount).HasPrecision(10, 2);
+        builder.Property(x => x.PaymentMethod).HasConversion<string>().HasMaxLength(50);
     }
 }
