@@ -1,5 +1,4 @@
 ﻿#pragma warning disable 8618
-using SpaccioDescans.Core.Application.Orders;
 using SpaccioDescans.Core.Application.Orders.Events;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.SharedKernel.DDD;

@@ -9,11 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Application\Orders\Queries\**" />
 	  <Compile Remove="Shared\**" />
-	  <EmbeddedResource Remove="Application\Orders\Queries\**" />
 	  <EmbeddedResource Remove="Shared\**" />
-	  <None Remove="Application\Orders\Queries\**" />
 	  <None Remove="Shared\**" />
 	</ItemGroup>
 

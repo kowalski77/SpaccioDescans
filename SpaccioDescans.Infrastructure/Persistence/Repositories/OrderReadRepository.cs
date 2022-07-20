@@ -18,11 +18,11 @@ public sealed class OrderReadRepository : IOrderReadRepository
         var orders = await this.context.Orders
             .Select(x => new OrderDto(
                 x.Id,
+                x.Customer.Name,
                 x.Date,
                 x.Store.Name,
                 x.Status,
-                x.Total,
-                x.Pending))
+                x.Total))
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 

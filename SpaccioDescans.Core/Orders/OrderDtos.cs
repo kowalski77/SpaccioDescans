@@ -1,3 +1,3 @@
 ﻿namespace SpaccioDescans.Core.Orders;
 
-public record OrderDto(long Id, DateTime CreatedAt, string Store, OrderStatus OrderStatus, decimal Total, decimal Pending);
+public record OrderDto(long Id, string Customer, DateTime CreatedAt, string Store, OrderStatus OrderStatus, decimal Total);

@@ -1,0 +1,24 @@
+﻿@inherits OrdersBase
+
+<SfBreadcrumb>
+    <BreadcrumbItems>
+        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
+        <BreadcrumbItem Text="Facturas" Disabled="true" />
+        <BreadcrumbItem Text="Listado" Url="./orders/create/list" />
+    </BreadcrumbItems>
+</SfBreadcrumb>
+
+<SfGrid DataSource="@this.Orders"
+        @ref="@this.Grid"
+        AllowPaging="true" AllowSorting="true" AllowFiltering="true"
+        AllowResizing="true">
+    <GridPageSettings PageSize="10" />
+        <GridColumns>
+        <GridColumn Field="@nameof(OrderViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100"/>
+        <GridColumn Field="@nameof(OrderViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100"/>
+        <GridColumn Field="@nameof(OrderViewModel.CreatedAt)" HeaderText="Fecha" Width="100" />
+        <GridColumn Field="@nameof(OrderViewModel.Store)" HeaderText="Tienda" Width="100"/>
+        <GridColumn Field="@nameof(OrderViewModel.OrderStatus)" HeaderText="Estado" Width="100" />
+        <GridColumn Field="@nameof(OrderViewModel.Total)" HeaderText="Total" Width="100" />
+    </GridColumns>
+</SfGrid>
