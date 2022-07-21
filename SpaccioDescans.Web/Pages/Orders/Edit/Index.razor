@@ -1,3 +1,18 @@
-﻿@page "/orders/edit"
+﻿@page "/orders/edit/{orderId:long}"
 
-<PageTitle>Editar Factura</PageTitle>
+<PageTitle>Editar Factura nº @this.OrderId</PageTitle>
+
+<SfBreadcrumb>
+    <BreadcrumbItems>
+        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
+        <BreadcrumbItem Text="Facturas" Disabled="true" />
+        <BreadcrumbItem Text="Editar" Url="./orders/edit" />
+    </BreadcrumbItems>
+</SfBreadcrumb>
+
+<OrderEdit OrderId="@this.OrderId"/>
+
+@code{
+    [Parameter]
+    public long OrderId { get; set; }
+}

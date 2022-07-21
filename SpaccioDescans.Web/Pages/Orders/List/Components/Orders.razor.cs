@@ -10,6 +10,8 @@ public class OrdersBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
 
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
     protected Collection<OrderViewModel>? Orders { get; private set; }
 
     protected SfGrid<OrderViewModel> Grid { get; set; } = default!;
@@ -25,6 +27,11 @@ public class OrdersBase : ComponentBase
     protected Task ShowOrderAsync(long id)
     {
         return Task.CompletedTask;
+    }
+
+    protected void NavigateToOrderEdit(long id)
+    {
+        this.NavigationManager.NavigateTo($"/orders/edit/{id}");
     }
 }
 

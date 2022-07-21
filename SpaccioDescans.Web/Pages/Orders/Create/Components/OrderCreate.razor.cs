@@ -6,7 +6,7 @@ using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 
-public class OrderBase : ComponentBase
+public class OrderCreateBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
 
@@ -61,6 +61,7 @@ public class OrderBase : ComponentBase
             Height = "20px"
         });
 
+        // TODO: config file
         var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={orderId}";
         await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
     }
