@@ -1,13 +1,6 @@
 ﻿@using TextAlign = Syncfusion.Blazor.Grids.TextAlign
 @inherits ProductsBase
 
-<SfBreadcrumb>
-    <BreadcrumbItems>
-        <BreadcrumbItem IconCss="e-icons e-home" Url=""/>
-        <BreadcrumbItem Text="Productos" Disabled="true"/>
-        <BreadcrumbItem Text="Inventario" Url="./products/inventory/index"/>
-    </BreadcrumbItems>
-</SfBreadcrumb>
 <SfGrid DataSource="@Products"
         @ref="@this.Grid"
         Toolbar="@(new List<string> { "Add", "Edit", "Delete", "Cancel", "Update" })"

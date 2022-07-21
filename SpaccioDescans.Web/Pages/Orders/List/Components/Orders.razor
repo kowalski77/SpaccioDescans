@@ -1,13 +1,5 @@
 ﻿@inherits OrdersBase
 
-<SfBreadcrumb>
-    <BreadcrumbItems>
-        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
-        <BreadcrumbItem Text="Facturas" Disabled="true" />
-        <BreadcrumbItem Text="Listado" Url="./orders/create/list" />
-    </BreadcrumbItems>
-</SfBreadcrumb>
-
 <SfGrid DataSource="@this.Orders"
         @ref="@this.Grid"
         AllowPaging="true" AllowSorting="true" AllowFiltering="true"

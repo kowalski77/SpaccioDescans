@@ -2,15 +2,6 @@
 @using Syncfusion.Blazor.Notifications.Internal
 @inherits OrderBase
 
-<PageTitle>Crear factura</PageTitle>
-
-<SfBreadcrumb>
-    <BreadcrumbItems>
-        <BreadcrumbItem IconCss="e-icons e-home" Url="" />
-        <BreadcrumbItem Text="Facturas" Disabled="true" />
-        <BreadcrumbItem Text="Crear" Url="./orders/create/index" />
-    </BreadcrumbItems>
-</SfBreadcrumb>
 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
     <ObjectGraphDataAnnotationsValidator />
     <div class="row">
