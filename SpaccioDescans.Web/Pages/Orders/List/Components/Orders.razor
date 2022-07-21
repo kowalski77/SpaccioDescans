@@ -13,12 +13,20 @@
         AllowPaging="true" AllowSorting="true" AllowFiltering="true"
         AllowResizing="true">
     <GridPageSettings PageSize="10" />
-        <GridColumns>
-        <GridColumn Field="@nameof(OrderViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100"/>
-        <GridColumn Field="@nameof(OrderViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100"/>
+    <GridColumns>
+        <GridColumn Field="@nameof(OrderViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100" />
+        <GridColumn Field="@nameof(OrderViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100" />
         <GridColumn Field="@nameof(OrderViewModel.CreatedAt)" HeaderText="Fecha" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.Store)" HeaderText="Tienda" Width="100"/>
+        <GridColumn Field="@nameof(OrderViewModel.Store)" HeaderText="Tienda" Width="100" />
         <GridColumn Field="@nameof(OrderViewModel.OrderStatus)" HeaderText="Estado" Width="100" />
         <GridColumn Field="@nameof(OrderViewModel.Total)" HeaderText="Total" Width="100" />
+        <GridColumn Width="100" AllowFiltering="false">
+            <Template>
+                @{
+                    var order = (OrderViewModel)context;
+                    <SfButton CssClass="e-info" @onclick="@(async () =>await this.ShowOrderAsync(order.Id))">Ver</SfButton>
+                }
+            </Template>
+        </GridColumn>
     </GridColumns>
 </SfGrid>

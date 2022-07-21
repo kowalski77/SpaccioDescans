@@ -21,5 +21,10 @@ public class OrdersBase : ComponentBase
 
         this.Orders = new Collection<OrderViewModel>(viewModels);
     }
+
+    protected Task ShowOrderAsync(long id)
+    {
+        return Task.CompletedTask;
+    }
 }
 
