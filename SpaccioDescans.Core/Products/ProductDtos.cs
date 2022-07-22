@@ -2,24 +2,24 @@
 
 public class ProductDto
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
-    public string Vendor { get; set; } = default!;
+    public string Vendor { get; init; } = default!;
 
-    public string Name { get; set; } = default!;
+    public string Name { get; init; } = default!;
 
-    public string Description { get; set; } = default!;
+    public string Description { get; init; } = default!;
 
-    public string Meassures { get; set; } = default!;
+    public string Meassures { get; init; } = default!;
 
-    public decimal NetPrice { get; set; }
+    public decimal NetPrice { get; init; }
 
-    public ICollection<ProductStoreDto> ProductStores { get; set; } = new List<ProductStoreDto>();
+    public ICollection<ProductStoreDto> ProductStores { get; internal set; } = new List<ProductStoreDto>();
 }
 
 public class ProductStoreDto
 {
-    public long StoreId { get; set; }
+    public long StoreId { get; init; }
 
-    public int Quantity { get; set; }
+    public int Quantity { get; init; }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SpaccioDescans.Core.Orders;
+﻿using SpaccioDescans.Core.Orders;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 
@@ -13,22 +12,6 @@ public sealed class OrderReadRepository : IOrderReadRepository
         this.context = context;
     }
 
-    public async Task<IReadOnlyList<OrderDto>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        var orders = await this.context.Orders
-            .Select(x => new OrderDto(
-                x.Id,
-                x.Customer.Name,
-                x.Date,
-                x.Store.Name,
-                x.Status,
-                x.Total))
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
-
-        return orders;
-    }
-
     public async Task<OrderDetailDto> GetAsync(long id, CancellationToken cancellationToken = default)
     {
         var order = await this.context.Orders.FindAsync(new object?[] { id }, cancellationToken) ??
@@ -39,11 +22,11 @@ public sealed class OrderReadRepository : IOrderReadRepository
         await this.context.Entry(order).Collection(x => x.OrderDetails).LoadAsync(cancellationToken);
 
         var orderDto = new OrderDetailDto(
-            order.Id, 
+            order.Id,
             new CustomerDto(
-                order.Customer.Name, 
-                order.Customer.Address, 
-                order.Customer.Nif, 
+                order.Customer.Name,
+                order.Customer.Address,
+                order.Customer.Nif,
                 order.Customer.Phone));
 
         return orderDto;
