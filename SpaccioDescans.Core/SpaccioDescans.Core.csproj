@@ -23,4 +23,10 @@
 	  <ProjectReference Include="..\SpaccioDescans.SharedKernel\SpaccioDescans.SharedKernel.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="dapper" Version="2.0.123" />
+	  <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <!--<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />-->
+	</ItemGroup>
+
 </Project>

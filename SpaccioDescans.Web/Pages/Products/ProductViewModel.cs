@@ -37,10 +37,10 @@ public class ProductViewModel
             Vendor = productDto.Vendor,
             Name = productDto.Name,
             Description = productDto.Description,
-            Measures = productDto.Measures,
+            Measures = productDto.Meassures,
             Price = productDto.NetPrice,
-            QuantityStoreOne = productDto.ProductStoreDtos.First(x => x.StoreId == SpaccioConstants.StoreOneCode).Quantity,
-            QuantityStoreTwo = productDto.ProductStoreDtos.First(x => x.StoreId == SpaccioConstants.StoreTwoCode).Quantity
+            QuantityStoreOne = productDto.ProductStores.First(x => x.StoreId == SpaccioConstants.StoreOneCode).Quantity,
+            QuantityStoreTwo = productDto.ProductStores.First(x => x.StoreId == SpaccioConstants.StoreTwoCode).Quantity
         };
     }
 

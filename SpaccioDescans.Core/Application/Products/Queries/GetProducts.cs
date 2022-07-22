@@ -1,23 +1,49 @@
-﻿using MediatR;
+﻿using System.Data.SqlClient;
+using Dapper;
+using MediatR;
 using SpaccioDescans.Core.Products;
 
 namespace SpaccioDescans.Core.Application.Products.Queries;
 
-public sealed record GetProductsQuery : IRequest<IReadOnlyList<ProductDto>>;
+public sealed record GetProductsQuery : IRequest<IEnumerable<ProductDto>>;
 
-public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IReadOnlyList<ProductDto>>
+public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
 {
-    private readonly IProductReadRepository productReadRepository;
+    private readonly QuerySettings querySettings;
 
-    public GetProductsHandler(IProductReadRepository productReadRepository)
+    public GetProductsHandler(QuerySettings querySettings)
     {
-        this.productReadRepository = productReadRepository ?? throw new ArgumentNullException(nameof(productReadRepository));
+        this.querySettings = querySettings;
     }
 
-    public async Task<IReadOnlyList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        
-        return await this.productReadRepository.GetAllAsync(cancellationToken);
+
+        using var connection = new SqlConnection(this.querySettings.ConnectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        var query = @"select p.Id, p.Vendor, p.Name, p.Description, p.Measures, p.NetPrice, ps.StoreId, ps.Quantity 
+                            from Products p inner join ProductStore ps 
+                            on p.Id = ps.ProductId";
+
+        var products = await connection.QueryAsync<ProductDto, ProductStoreDto, ProductDto>(
+            query,
+            (product, productStore) =>
+            {
+                product.ProductStores.Add(productStore);
+                return product;
+            },
+            splitOn: "StoreId");
+
+        var result = products.GroupBy(x => x.Id).Select(g =>
+        {
+            var product = g.First();
+            product.ProductStores = g.Select(x => x.ProductStores.First()).ToList();
+            
+            return product;
+        });
+
+        return result;
     }
 }

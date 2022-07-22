@@ -10,7 +10,7 @@ public class OrderViewModel
     [ValidateComplexType] 
     public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
 
-    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = new List<OrderDetailViewModel>();
+    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; } = new List<OrderDetailViewModel>();
 
     public decimal NetAmount { get; set; }
 

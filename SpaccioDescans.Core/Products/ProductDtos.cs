@@ -1,5 +1,25 @@
 ﻿namespace SpaccioDescans.Core.Products;
 
-public sealed record ProductDto(long Id, string Vendor,  string Name, string Description, string Measures, decimal NetPrice, IEnumerable<ProductStoreDto> ProductStoreDtos);
+public class ProductDto
+{
+    public long Id { get; set; }
 
-public sealed record ProductStoreDto(long StoreId, int Quantity);
+    public string Vendor { get; set; } = default!;
+
+    public string Name { get; set; } = default!;
+
+    public string Description { get; set; } = default!;
+
+    public string Meassures { get; set; } = default!;
+
+    public decimal NetPrice { get; set; }
+
+    public ICollection<ProductStoreDto> ProductStores { get; set; } = new List<ProductStoreDto>();
+}
+
+public class ProductStoreDto
+{
+    public long StoreId { get; set; }
+
+    public int Quantity { get; set; }
+}

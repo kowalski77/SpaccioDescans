@@ -22,7 +22,6 @@ public static class InfrastructureExtensions
     private static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<IProductReadRepository, ProductReadRepository>();
         services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IOrderReadRepository, OrderReadRepository>();

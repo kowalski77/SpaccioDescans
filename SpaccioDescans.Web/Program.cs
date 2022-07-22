@@ -23,7 +23,7 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantConfigu
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);
-builder.Services.AddCore();
+builder.Services.AddCore(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SyncfusionKey"]);
