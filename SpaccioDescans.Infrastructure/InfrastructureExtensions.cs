@@ -24,7 +24,6 @@ public static class InfrastructureExtensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
-        services.AddScoped<IOrderReadRepository, OrderReadRepository>();
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<SpaccioContext>();

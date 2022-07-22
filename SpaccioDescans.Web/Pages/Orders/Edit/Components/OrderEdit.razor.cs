@@ -13,10 +13,10 @@ public class OrderEditBase : ComponentBase
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
-    //}
+    protected override async Task OnInitializedAsync()
+    {
+        var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
+    }
 
     protected void Submit()
     {

@@ -23,8 +23,8 @@ public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, IEnumerable<Orde
         using var connection = new SqlConnection(this.querySettings.ConnectionString);
         await connection.OpenAsync(cancellationToken);
 
-        var query = @"select o.Id, c.Name as Customer, o.Date as CreatedAt, s.Name as Store, o.Status as OrderStatus, o.Total from Orders o 
-                            inner join Customer c
+        var query = @"select o.Id, c.Name as Customer, o.Date as CreatedAt, s.Name as Store, o.Status as OrderStatus, o.Total 
+                            from Orders o inner join Customer c
                             on o.CustomerId = c.Id
                             inner join Stores s
                             on o.StoreId = s.Id";

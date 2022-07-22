@@ -2,19 +2,33 @@
 
 public class OrderDto
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
-    public string Customer { get; set; } = default!;
+    public string Customer { get; init; } = default!;
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; }
 
-    public string Store { get; set; } = default!;
+    public string Store { get; init; } = default!;
 
-    public OrderStatus OrderStatus { get; set; }
+    public OrderStatus OrderStatus { get; init; }
 
-    public decimal Total { get; set; }
+    public decimal Total { get; init; }
 }
 
-public record OrderDetailDto(long Id, CustomerDto Customer);
+public class OrderDetailDto
+{
+    public long Id { get; init; }
 
-public record CustomerDto(string Name, string? Address, string Nif, string? Phone);
+    public CustomerDto? Customer { get; internal set; }
+}
+
+public class CustomerDto
+{
+    public string Name { get; init; } = default!;
+
+    public string Address { get; init; } = default!;
+
+    public string Nif { get; init; } = default!;
+
+    public string Phone { get; init; } = default!;
+}
