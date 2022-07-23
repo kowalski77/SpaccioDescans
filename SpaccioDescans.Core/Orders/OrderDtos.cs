@@ -20,6 +20,8 @@ public class OrderEditDto
     public long Id { get; init; }
 
     public CustomerEditDto Customer { get; internal set; } = default!;
+
+    public ICollection<PaymentEditDto> Payments { get; internal set; } = new List<PaymentEditDto>();
 }
 
 public class CustomerEditDto
@@ -31,4 +33,11 @@ public class CustomerEditDto
     public string Nif { get; init; } = default!;
 
     public string Phone { get; init; } = default!;
+}
+
+public class PaymentEditDto
+{
+    public decimal Amount { get; private set; }
+
+    public PaymentMethod PaymentMethod { get; private set; }
 }

@@ -23,17 +23,28 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
         using var connection = new SqlConnection(this.querySettings.ConnectionString);
         await connection.OpenAsync(cancellationToken);
 
-        var query = $@"select o.Id, c.Name, c.Address, c.Nif, c.Phone 
-                        from Orders o inner join Customer c
-                        on o.CustomerId = c.Id
+        var query = $@"select o.Id, c.Name, c.Address, c.Nif, c.Phone, p.Amount, p.PaymentMethod
+                        from Orders o 
+						inner join Customer c on c.Id = o.CustomerId 
+						inner join Payment p on p.OrderId = o.Id
                         where o.Id = {request.Id}";
 
-        var order = await connection.QueryAsync<OrderEditDto, CustomerEditDto, OrderEditDto>(query, (order, customer) =>
+        var orders = await connection.QueryAsync<OrderEditDto, CustomerEditDto, PaymentEditDto, OrderEditDto>
+            (query, (order, customer, payment) =>
         {
             order.Customer = customer;
+            order.Payments.Add(payment);
             return order;
-        }, splitOn: "Name");
+        }, splitOn: "Name, Amount");
 
-        return order.First();
+        var result = orders.GroupBy(o => o.Id).Select(g => 
+        {
+            var order = g.First();
+            order.Payments = g.SelectMany(o => o.Payments).ToList();
+            
+            return order;
+        }).First();
+
+        return result;
     }
 }
