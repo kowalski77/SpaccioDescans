@@ -15,14 +15,14 @@ public class OrderDto
     public decimal Total { get; init; }
 }
 
-public class OrderDetailDto
+public class OrderEditDto
 {
     public long Id { get; init; }
 
-    public CustomerDto? Customer { get; internal set; }
+    public CustomerEditDto Customer { get; internal set; } = default!;
 }
 
-public class CustomerDto
+public class CustomerEditDto
 {
     public string Name { get; init; } = default!;
 

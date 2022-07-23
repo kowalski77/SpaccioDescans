@@ -7,8 +7,10 @@ namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 public class OrderViewModel
 {
+    public long Id { get; set; }
+
     [ValidateComplexType]
-    public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
+    public CustomerInfoViewModel CustomerInfo { get; set; } = new();
 
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; } = new List<OrderDetailViewModel>();
 
@@ -30,8 +32,8 @@ public class OrderViewModel
         ArgumentNullException.ThrowIfNull(orderViewModel);
 
         var customerInfo = new CustomerInfo(
-            orderViewModel.CustomerInfoViewModel.Name, orderViewModel.CustomerInfoViewModel.Address,
-            orderViewModel.CustomerInfoViewModel.Nif, orderViewModel.CustomerInfoViewModel.Phone);
+            orderViewModel.CustomerInfo.Name, orderViewModel.CustomerInfo.Address,
+            orderViewModel.CustomerInfo.Nif, orderViewModel.CustomerInfo.Phone);
 
         var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
 

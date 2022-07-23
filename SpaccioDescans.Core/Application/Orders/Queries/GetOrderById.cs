@@ -5,9 +5,9 @@ using SpaccioDescans.Core.Orders;
 
 namespace SpaccioDescans.Core.Application.Orders.Queries;
 
-public sealed record GetOrderByIdQuery(long Id) : IRequest<OrderDetailDto>;
+public sealed record GetOrderByIdQuery(long Id) : IRequest<OrderEditDto>;
 
-public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDetailDto>
+public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderEditDto>
 {
     private readonly QuerySettings querySettings;
 
@@ -16,7 +16,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
         this.querySettings = querySettings;
     }
 
-    public async Task<OrderDetailDto> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OrderEditDto> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -28,7 +28,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
                         on o.CustomerId = c.Id
                         where o.Id = {request.Id}";
 
-        var order = await connection.QueryAsync<OrderDetailDto, CustomerDto, OrderDetailDto>(query, (order, customer) =>
+        var order = await connection.QueryAsync<OrderEditDto, CustomerEditDto, OrderEditDto>(query, (order, customer) =>
         {
             order.Customer = customer;
             return order;

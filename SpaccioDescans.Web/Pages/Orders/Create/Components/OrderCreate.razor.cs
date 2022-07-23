@@ -28,10 +28,10 @@ public class OrderCreateBase : ComponentBase
 
     protected void Clear()
     {
-        this.OrderViewModel.CustomerInfoViewModel.Address = string.Empty;
-        this.OrderViewModel.CustomerInfoViewModel.Phone = string.Empty;
-        this.OrderViewModel.CustomerInfoViewModel.Nif = string.Empty;
-        this.OrderViewModel.CustomerInfoViewModel.Name = string.Empty;
+        this.OrderViewModel.CustomerInfo.Address = string.Empty;
+        this.OrderViewModel.CustomerInfo.Phone = string.Empty;
+        this.OrderViewModel.CustomerInfo.Nif = string.Empty;
+        this.OrderViewModel.CustomerInfo.Name = string.Empty;
         this.OrderViewModel.CashAmount = 0;
         this.OrderViewModel.CreditCardAmount = 0;
         this.OrderViewModel.FinancedAmount = 0;

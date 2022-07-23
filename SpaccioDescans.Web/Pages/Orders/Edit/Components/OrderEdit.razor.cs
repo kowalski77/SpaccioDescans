@@ -17,6 +17,7 @@ public class OrderEditBase : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
+        this.OrderViewModel = order.AsOrderViewModel();
     }
 
     protected void Submit()
