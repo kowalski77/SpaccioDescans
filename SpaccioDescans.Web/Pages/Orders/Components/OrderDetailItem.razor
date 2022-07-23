@@ -4,26 +4,26 @@
 <div class="row">
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Cantidad</label>
-        <SfNumericTextBox TValue="int" @bind-value="@this.Quantity" OnChange="@this.OnQuantityUpdated"/>
+        <SfNumericTextBox TValue="int" @bind-value="@this.Quantity" OnChange="@this.OnQuantityUpdated" />
     </div>
     <div class="col-sm-3 col-lg-3 col-md-3">
         <label class="spaccio-label">Nombre</label>
-        <SfTextBox @bind-Value="@this.OrderDetailViewModel.Name" Readonly="true"/>
+        <SfTextBox @bind-Value="@this.OrderDetailViewModel.Name" Readonly="true" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Precio</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Price" Readonly="true" ShowSpinButton="false"  />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Price" Readonly="true" ShowSpinButton="false" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Descuento</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated"  />
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Total</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Total" Readonly="true" ShowSpinButton="false"  />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Total" Readonly="true" ShowSpinButton="false" />
     </div>
     <div class="col-sm-1 col-lg-1 col-md-1">
-        <br/>
+        <br />
         <SfButton Type="button" CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
     </div>
 </div>

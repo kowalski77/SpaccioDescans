@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
+using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;

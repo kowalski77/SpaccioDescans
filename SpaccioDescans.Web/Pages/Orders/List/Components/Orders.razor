@@ -6,16 +6,16 @@
         AllowResizing="true">
     <GridPageSettings PageSize="10" />
     <GridColumns>
-        <GridColumn Field="@nameof(OrderViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.CreatedAt)" HeaderText="Fecha" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.Store)" HeaderText="Tienda" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.OrderStatus)" HeaderText="Estado" Width="100" />
-        <GridColumn Field="@nameof(OrderViewModel.Total)" HeaderText="Total" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.CreatedAt)" HeaderText="Fecha" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.Store)" HeaderText="Tienda" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.OrderStatus)" HeaderText="Estado" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.Total)" HeaderText="Total" Width="100" />
         <GridColumn Width="100" AllowFiltering="false">
             <Template>
                 @{
-                    var order = (OrderViewModel)context;
+                    var order = (OrderItemViewModel)context;
                     <SfButton CssClass="e-info" @onclick="@(async () =>await this.ShowOrderAsync(order.Id))">Ver</SfButton>
                     <SfButton CssClass="e-info" @onclick="@(() =>this.NavigateToOrderEdit(order.Id))">Editar</SfButton>
                 }

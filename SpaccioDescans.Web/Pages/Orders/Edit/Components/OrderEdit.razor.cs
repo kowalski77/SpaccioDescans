@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
 using SpaccioDescans.Core.Application.Orders.Queries;
+using SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 namespace SpaccioDescans.Web.Pages.Orders.Edit.Components;
 

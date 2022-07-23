@@ -3,11 +3,11 @@ using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Orders;
 
-namespace SpaccioDescans.Web.Pages.Orders;
+namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 public class OrderViewModel
 {
-    [ValidateComplexType] 
+    [ValidateComplexType]
     public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
 
     public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; } = new List<OrderDetailViewModel>();
@@ -44,34 +44,4 @@ public class OrderViewModel
 
         return new CreateOrderCommand(customerInfo, orderDetailItemCollection, paymentDataCollection);
     }
-}
-
-public class CustomerInfoViewModel
-{
-    [Required(ErrorMessage = "Nombre necesario.")]
-    public string Name { get; set; } = default!;
-
-    public string Address { get; set; } = default!;
-
-    [Required(ErrorMessage = "NIF necesario.")]
-    public string Nif { get; set; } = default!;
-
-    public string Phone { get; set; } = default!;
-}
-
-public class OrderDetailViewModel
-{
-    public long ProductId { get; set; }
-
-    public long StoreId { get; set; }
-
-    public string Name { get; set; } = default!;
-
-    public decimal Price { get; set; }
-
-    public int Quantity { get; set; } = 1;
-
-    public decimal Discount { get; set; }
-
-    public decimal Total => this.Price * this.Quantity - this.Price * this.Quantity * (this.Discount / 100);
 }

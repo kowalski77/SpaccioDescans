@@ -1,8 +1,8 @@
 ﻿using SpaccioDescans.Core.Orders;
 
-namespace SpaccioDescans.Web.Pages.Orders.List;
+namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 
-public class OrderViewModel
+public class OrderItemViewModel
 {
     public long Id { get; set; }
 
@@ -16,11 +16,11 @@ public class OrderViewModel
 
     public decimal Total { get; set; }
 
-    public static explicit operator OrderViewModel(OrderDto orderDto)
+    public static explicit operator OrderItemViewModel(OrderDto orderDto)
     {
         ArgumentNullException.ThrowIfNull(orderDto);
 
-        return new OrderViewModel
+        return new OrderItemViewModel
         {
             Id = orderDto.Id,
             Customer = orderDto.Customer,
@@ -31,7 +31,7 @@ public class OrderViewModel
         };
     }
 
-    public static OrderViewModel ToOrderViewModel(OrderViewModel left, OrderViewModel right)
+    public static OrderItemViewModel ToOrderViewModel(OrderItemViewModel left, OrderItemViewModel right)
     {
         throw new NotImplementedException();
     }

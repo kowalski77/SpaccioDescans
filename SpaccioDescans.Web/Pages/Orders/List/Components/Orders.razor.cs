@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using SpaccioDescans.Core.Application.Orders.Queries;
+using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using Syncfusion.Blazor.Grids;
 
 namespace SpaccioDescans.Web.Pages.Orders.List.Components;
@@ -12,16 +13,16 @@ public class OrdersBase : ComponentBase
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
-    protected Collection<OrderViewModel>? Orders { get; private set; }
+    protected Collection<OrderItemViewModel>? Orders { get; private set; }
 
-    protected SfGrid<OrderViewModel> Grid { get; set; } = default!;
+    protected SfGrid<OrderItemViewModel> Grid { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
         var orders = await this.Mediator.Send(new GetOrdersQuery());
-        var viewModels = orders.Select(x => (OrderViewModel)x).ToList();
+        var viewModels = orders.Select(x => (OrderItemViewModel)x).ToList();
 
-        this.Orders = new Collection<OrderViewModel>(viewModels);
+        this.Orders = new Collection<OrderItemViewModel>(viewModels);
     }
 
     protected Task ShowOrderAsync(long id)
