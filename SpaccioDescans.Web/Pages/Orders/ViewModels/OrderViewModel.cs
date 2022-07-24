@@ -46,4 +46,16 @@ public class OrderViewModel
 
         return new CreateOrderCommand(customerInfo, orderDetailItemCollection, paymentDataCollection);
     }
+
+    public static explicit operator EditCustomerInfoCommand(OrderViewModel orderViewModel)
+    {
+        ArgumentNullException.ThrowIfNull(orderViewModel);
+
+        return new EditCustomerInfoCommand(
+            orderViewModel.Id,
+            orderViewModel.CustomerInfo.Name,
+            orderViewModel.CustomerInfo.Address,
+            orderViewModel.CustomerInfo.Nif,
+            orderViewModel.CustomerInfo.Phone);
+    }
 }

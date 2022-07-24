@@ -24,4 +24,12 @@ public class Customer : Entity
     public string Nif { get; private set; }
 
     public string? Phone { get; private set; }
+
+    public void Edit(string name, string? address, string nif, string? phone)
+    {
+        this.Name = name;
+        this.Address = address;
+        this.Nif = nif;
+        this.Phone = phone;
+    }
 }

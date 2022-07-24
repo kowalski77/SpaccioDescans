@@ -1,17 +1,27 @@
 ﻿@inherits OrderEditBase
 
-<EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.Submit">
-    <div class="row">
-        <div class="col-sm">
-            <CustomerInfo CustomerInfoViewModel="@this.OrderViewModel.CustomerInfo" />
+<SfCard>
+    <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
+        <div class="row">
+            <div class="col-sm">
+                <CustomerInfo Item="@this.OrderViewModel.CustomerInfo" Enabled="@this.IsEditable" />
+            </div>
         </div>
-@*        <div class="col-sm">
-            <Condition Evaluation="@this.ShowOrderItems">
-                <Match>
-                    <Payments OrderViewModel="@this.OrderViewModel" />
-                </Match>
-            </Condition>
-        </div>*@
-    </div>
+        <div class="row">
+            <div class="col-sm d-md-flex justify-content-md-end">
+                <SfCheckBox Label="Editar" @bind-Checked="IsEditable"></SfCheckBox>
+                <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsEditable">Actualizar</SfButton>
+            </div>
+        </div>
+    </EditForm>
+</SfCard>
 
-</EditForm>
+<div class="col-lg-12 control-section">
+    <SfToast ID="toast_order_edit" @ref="@this.ResultToast" Title="Result" Timeout="10000" Icon="e-meeting">
+        <ToastPosition X="Center" />
+        <ToastAnimationSettings>
+            <ToastShowAnimationSettings Effect="ToastEffect.FadeZoomIn"/>
+            <ToastHideAnimationSettings Effect="ToastEffect.FadeZoomOut"/>
+        </ToastAnimationSettings>
+    </SfToast>
+</div>

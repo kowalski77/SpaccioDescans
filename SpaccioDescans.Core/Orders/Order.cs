@@ -66,4 +66,11 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.Pending = this.Total - amountPaid;
     }
+
+    public void EditCustomer(Customer customer)
+    {
+        ArgumentNullException.ThrowIfNull(customer);
+
+        this.Customer.Edit(customer.Name, customer.Address, customer.Nif, customer.Phone);
+    }
 }

@@ -5,26 +5,29 @@
 </div>
 <div class="row">
     <div class="col-sm-12 col-lg-12 col-md-12">
-        <SfTextBox ID="customer-name" Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Name"/>
-        <ValidationMessage For="@(() => this.CustomerInfoViewModel.Name)"></ValidationMessage>
+        <SfTextBox ID="customer-name" Placeholder="Nombre" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.Item.Name" Enabled="@this.Enabled" />
+        <ValidationMessage For="@(() => this.Item.Name)"></ValidationMessage>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6 col-lg-6 col-md-6">
-        <SfTextBox ID="customer-nif" Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Nif" />
-        <ValidationMessage For="@(() => this.CustomerInfoViewModel.Nif)"></ValidationMessage>
+        <SfTextBox ID="customer-nif" Placeholder="NIF" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.Item.Nif" Enabled="@this.Enabled" />
+        <ValidationMessage For="@(() => this.Item.Nif)"></ValidationMessage>
     </div>
     <div class="col-sm-6 col-lg-6 col-md-6">
-        <SfTextBox ID="customer-phone" Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Phone" />
+        <SfTextBox ID="customer-phone" Placeholder="Teléfono" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.Item.Phone" Enabled="@this.Enabled" />
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12 col-lg-12 col-md-12">
-        <SfTextBox ID="customer-address" Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.CustomerInfoViewModel.Address" />
+        <SfTextBox ID="customer-address" Placeholder="Dirección" FloatLabelType="@FloatLabelType.Auto" @bind-Value="this.Item.Address" Enabled="@this.Enabled" />
     </div>
 </div>
 
 @code {
     [Parameter]
-    public CustomerInfoViewModel CustomerInfoViewModel { get; set; } = new();
+    public CustomerInfoViewModel Item { get; set; } = new();
+
+    [Parameter]
+    public bool Enabled { get; set; } = true;
 }

@@ -19,9 +19,8 @@ public abstract class Repository<T> : IRepository<T>
         return this.Context.Set<T>().Add(item).Entity;
     }
 
-    public virtual async Task<T> GetAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> GetAsync(long id, CancellationToken cancellationToken = default)
     {
-        return await this.Context.Set<T>().FindAsync(new object?[] { id }, cancellationToken).ConfigureAwait(false) ??
-               throw new InvalidOperationException($"Entity type: {typeof(T).Name} with id: {id} not found");
+        return await this.Context.Set<T>().FindAsync(new object?[] { id }, cancellationToken).ConfigureAwait(false);
     }
 }

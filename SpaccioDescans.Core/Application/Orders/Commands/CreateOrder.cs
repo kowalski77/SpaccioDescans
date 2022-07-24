@@ -37,7 +37,7 @@ public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, lon
 
         var order = new Order(store, customer, orderDetails, payments);
 
-        _ = this.orderRepository.Save(order);
+        this.orderRepository.Save(order);
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         return order.Id;
@@ -49,6 +49,11 @@ public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, lon
         foreach (var orderDetailItem in orderDetailItems)
         {
             var product = await this.productRepository.GetAsync(orderDetailItem.ProductId);
+            if (product is null)
+            {
+                throw new InvalidOperationException($"Product with id {orderDetailItem.ProductId} does not exist");
+            }
+
             var orderDetail = new OrderDetail(product, OrderQuantity.CreateInstance(orderDetailItem.Quantity), Discount.CreateInstance(orderDetailItem.Discount));
             orderDetailsCollection.Add(orderDetail);
         }
