@@ -22,6 +22,8 @@ public class OrderEditDto
     public CustomerEditDto Customer { get; internal set; } = default!;
 
     public ICollection<PaymentEditDto> Payments { get; internal set; } = new List<PaymentEditDto>();
+
+    public ICollection<OrderDetailEditDto> OrderDetails { get; internal set; } = new List<OrderDetailEditDto>();
 }
 
 public class CustomerEditDto
@@ -40,4 +42,17 @@ public class PaymentEditDto
     public decimal Amount { get; private set; }
 
     public PaymentMethod PaymentMethod { get; private set; }
+}
+
+public class OrderDetailEditDto
+{
+    public int Quantity { get; set; }
+
+    public decimal Discount { get; init; }
+
+    public long ProductId { get; init; }
+
+    public string ProductName { get; init; } = default!;
+
+    public decimal NetPrice { get; init; }
 }
