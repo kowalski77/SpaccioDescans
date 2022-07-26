@@ -58,4 +58,15 @@ public class OrderViewModel
             orderViewModel.CustomerInfo.Nif,
             orderViewModel.CustomerInfo.Phone);
     }
+
+    public static explicit operator EditPaymentCommand(OrderViewModel orderViewModel)
+    {
+        ArgumentNullException.ThrowIfNull(orderViewModel);
+
+        return new EditPaymentCommand(
+            orderViewModel.Id,
+            orderViewModel.CashAmount,
+            orderViewModel.CreditCardAmount,
+            orderViewModel.FinancedAmount);
+    }
 }

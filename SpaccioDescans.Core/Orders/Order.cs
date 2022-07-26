@@ -73,4 +73,13 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.Customer.Edit(customer.Name, customer.Address, customer.Nif, customer.Phone);
     }
+
+    public void EditPayments(params Payment[] payments)
+    {
+        ArgumentNullException.ThrowIfNull(payments);
+
+        this.payments.Clear();
+        this.payments.AddRange(payments);
+        this.SetStatus();
+    }
 }

@@ -44,9 +44,19 @@ public class OrderEditBase : ComponentBase
         this.IsPaymentEditable = false;
     }
 
-    protected Task EditPaymentAsync()
+    protected async Task EditPaymentAsync()
     {
-        return Task.CompletedTask;
+        var command = (EditPaymentCommand)this.OrderViewModel;
+        await this.Mediator.Send(command);
+
+        await this.ResultToast.ShowAsync(new ToastModel
+        {
+            Content = "Pagos actualizados",
+            Height = "20px"
+        });
+
+        this.IsCustomerDataEditable = false;
+        this.IsPaymentEditable = false;
     }
 }
 
