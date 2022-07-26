@@ -16,7 +16,9 @@ public class OrderEditBase : ComponentBase
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
-    protected bool IsEditable { get; set; }
+    protected bool IsCustomerDataEditable { get; set; }
+
+    protected bool IsPaymentEditable { get; set; }
 
     protected SfToast ResultToast { get; set; } = default!;
 
@@ -38,7 +40,8 @@ public class OrderEditBase : ComponentBase
             Content = "Datos del cliente actualizados",
             Height = "20px"
         });
-        this.IsEditable = false;
+        this.IsCustomerDataEditable = false;
+        this.IsPaymentEditable = false;
     }
 
     protected Task EditPaymentAsync()

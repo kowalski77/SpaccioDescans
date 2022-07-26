@@ -19,6 +19,8 @@ public class OrderEditDto
 {
     public long Id { get; init; }
 
+    public decimal SubTotal { get; set; }
+
     public CustomerEditDto Customer { get; internal set; } = default!;
 
     public ICollection<PaymentEditDto> Payments { get; internal set; } = new List<PaymentEditDto>();
