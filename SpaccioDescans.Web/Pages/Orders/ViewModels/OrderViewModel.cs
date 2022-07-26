@@ -12,7 +12,7 @@ public class OrderViewModel
     [ValidateComplexType]
     public CustomerInfoViewModel CustomerInfo { get; set; } = new();
 
-    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; } = new List<OrderDetailViewModel>();
+    public ICollection<OrderDetailViewModel> OrderDetail { get; set; } = new List<OrderDetailViewModel>();
 
     public decimal NetAmount { get; set; }
 
@@ -35,7 +35,7 @@ public class OrderViewModel
             orderViewModel.CustomerInfo.Name, orderViewModel.CustomerInfo.Address,
             orderViewModel.CustomerInfo.Nif, orderViewModel.CustomerInfo.Phone);
 
-        var orderDetailItemCollection = orderViewModel.OrderDetailViewModels.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
+        var orderDetailItemCollection = orderViewModel.OrderDetail.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
 
         var paymentDataCollection = new List<PaymentData>
         {

@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Orders;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Orders.Commands;
 
-public sealed record EditCustomerInfoCommand(long OrderId, string Name, string Address, string Nif, string Phone) : IRequest;
+public sealed record EditCustomerInfoCommand(long OrderId, string Name, string Address, string Nif, string Phone) : ICommand<Unit>;
 
-public class EditCustomerInfoHandler : IRequestHandler<EditCustomerInfoCommand, Unit>
+public class EditCustomerInfoHandler : ICommandHandler<EditCustomerInfoCommand, Unit>
 {
     private readonly IOrderRepository orderRepository;
 

@@ -19,7 +19,7 @@ public class OrderCreateBase : ComponentBase
 
     protected SfToast ConfirmToast { get; set; } = default!;
 
-    protected bool ShowOrderItems => this.OrderViewModel.OrderDetailViewModels.Count > 0;
+    protected bool ShowOrderItems => this.OrderViewModel.OrderDetail.Count > 0;
 
     protected void Submit()
     {
@@ -35,7 +35,7 @@ public class OrderCreateBase : ComponentBase
         this.OrderViewModel.CashAmount = 0;
         this.OrderViewModel.CreditCardAmount = 0;
         this.OrderViewModel.FinancedAmount = 0;
-        this.OrderViewModel.OrderDetailViewModels.Clear();
+        this.OrderViewModel.OrderDetail.Clear();
     }
 
     protected void UpdateTotal(decimal total)

@@ -1,12 +1,12 @@
-﻿using MediatR;
-using SpaccioDescans.Core.Products;
+﻿using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Products.Commands;
 
-public sealed record CreateProductCommand(string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest<long>;
+public sealed record CreateProductCommand(string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : ICommand<long>;
 
-public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
+public sealed class CreateProductHandler : ICommandHandler<CreateProductCommand, long>
 {
     private readonly IProductRepository productRepository;
     private readonly IStoreRepository storeRepository;
@@ -29,7 +29,7 @@ public sealed class CreateProductHandler : IRequestHandler<CreateProductCommand,
             var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
-            product.AddToStore(store, quantity);
+            product.AddToStore(store!, quantity);
         }
 
         var newlyProduct = this.productRepository.Save(product);

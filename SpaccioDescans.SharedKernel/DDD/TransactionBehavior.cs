@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SpaccioDescans.SharedKernel.DDD;
 
 public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+    where TRequest : ICommand<TResponse>
 {
     private readonly IDbContext dbContext;
 

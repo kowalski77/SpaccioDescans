@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Products.Commands;
 
-public sealed record EditProductCommand(long Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : IRequest;
+public sealed record EditProductCommand(long Id, string Vendor, string Name, string Description, string Measures, decimal NetPrice, IEnumerable<StoreQuantity> StoreQuantities) : ICommand<Unit>;
 
-public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
+public sealed class EditProductHandler : ICommandHandler<EditProductCommand, Unit>
 {
     private readonly IProductRepository productRepository;
     private readonly IStoreRepository storeRepository;
@@ -23,6 +24,10 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
 
         var netPrice = Price.CreateInstance(request.NetPrice);
         var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
+        if(product is null)
+        {
+            throw new ArgumentException($"Product with id {request.Id} does not exist");
+        }
 
         product.NetPrice = netPrice;
         product.Name = request.Name;
@@ -35,7 +40,7 @@ public sealed class EditProductHandler : IRequestHandler<EditProductCommand>
             var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
-            product.EditInStore(store, quantity);
+            product.EditInStore(store!, quantity);
         }
 
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

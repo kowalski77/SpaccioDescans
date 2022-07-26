@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using SpaccioDescans.Core.Products;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Products.Commands;
 
-public sealed record DeleteProductCommand(long Id) : IRequest;
+public sealed record DeleteProductCommand(long Id) : ICommand<Unit>;
 
-public sealed class DeleteProductHandler : IRequestHandler<DeleteProductCommand>
+public sealed class DeleteProductHandler : ICommandHandler<DeleteProductCommand, Unit>
 {
     private readonly IProductRepository productRepository;
 

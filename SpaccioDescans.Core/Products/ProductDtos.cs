@@ -10,7 +10,7 @@ public class ProductDto
 
     public string Description { get; init; } = default!;
 
-    public string Meassures { get; init; } = default!;
+    public string Measures { get; init; } = default!;
 
     public decimal NetPrice { get; init; }
 

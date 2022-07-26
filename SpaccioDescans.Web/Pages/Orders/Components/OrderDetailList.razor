@@ -4,7 +4,7 @@
     <b class="spaccio-label">Productos</b>
 </div>
 <div class="col-sm-12 col-lg-12 col-md-12">
-    @foreach (var orderDetail in OrderDetailViewModels)
+    @foreach (var orderDetail in OrderDetails)
     {
         <OrderDetailItem OrderDetailViewModel="orderDetail"
                      OnRemoveOrderDetail="RemoveItem"
@@ -24,7 +24,7 @@
 
 @code {
     [Parameter]
-    public ICollection<OrderDetailViewModel> OrderDetailViewModels { get; set; } = default!;
+    public ICollection<OrderDetailViewModel> OrderDetails { get; set; } = default!;
 
     [Parameter]
     public EventCallback<decimal> OnOrderDetailUpdated { get; set; }
@@ -39,7 +39,7 @@
 
     private async Task UpdateProduct(ProductViewModel product)
     {
-        this.OrderDetailViewModels.Add(new OrderDetailViewModel
+        this.OrderDetails.Add(new OrderDetailViewModel
             {
                 Name = $"{product.Vendor} {product.Name} {product.Measures}",
                 Price = product.Price,
@@ -51,12 +51,12 @@
 
     private async Task RemoveItem(long productId)
     {
-        this.OrderDetailViewModels.Remove(this.OrderDetailViewModels.First(x => x.ProductId == productId));
+        this.OrderDetails.Remove(this.OrderDetails.First(x => x.ProductId == productId));
         await InvokeOnOrderDetailUpdated();
     }
 
     private async Task InvokeOnOrderDetailUpdated()
     {
-        await this.OnOrderDetailUpdated.InvokeAsync(this.OrderDetailViewModels.Sum(x => x.Total));
+        await this.OnOrderDetailUpdated.InvokeAsync(this.OrderDetails.Sum(x => x.Total));
     }
 }

@@ -1,11 +1,11 @@
-﻿using MediatR;
-using SpaccioDescans.Core.Orders;
+﻿using SpaccioDescans.Core.Orders;
 using SpaccioDescans.Core.Products;
 using SpaccioDescans.Core.Stores;
+using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Orders.Commands;
 
-public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : IRequest<long>;
+public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : ICommand<long>;
 
 public sealed record CustomerInfo(string Name, string Address, string Nif, string Phone);
 
@@ -13,7 +13,7 @@ public sealed record OrderDetailItem(long ProductId, long StoreId, int Quantity,
 
 public sealed record PaymentData(PaymentMethod PaymentMethod, decimal Amount);
 
-public sealed class CreateOrderHandler : IRequestHandler<CreateOrderCommand, long>
+public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, long>
 {
     private readonly IOrderRepository orderRepository;
     private readonly IProductRepository productRepository;
