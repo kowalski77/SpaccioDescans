@@ -4,34 +4,40 @@
 <div class="row">
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Cantidad</label>
-        <SfNumericTextBox TValue="int" @bind-value="@this.Quantity" OnChange="@this.OnQuantityUpdated" />
+        <SfNumericTextBox TValue="int" @bind-value="@this.Quantity" OnChange="@this.OnQuantityUpdated" Readonly="!this.IsEnabled" />
     </div>
     <div class="col-sm-3 col-lg-3 col-md-3">
         <label class="spaccio-label">Nombre</label>
-        <SfTextBox @bind-Value="@this.OrderDetailViewModel.Name" Readonly="true" />
+        <SfTextBox @bind-Value="@this.OrderDetail.Name" Readonly="true" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Precio</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Price" Readonly="true" ShowSpinButton="false" />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Price" Readonly="true" ShowSpinButton="false" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Descuento</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated" />
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated" Readonly="!this.IsEnabled" />
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Total</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetailViewModel.Total" Readonly="true" ShowSpinButton="false" />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Total" Readonly="true" ShowSpinButton="false" />
     </div>
-    <div class="col-sm-1 col-lg-1 col-md-1">
-        <br />
-        <SfButton Type="button" CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
-    </div>
+    @if (this.IsEnabled)
+    {
+        <div class="col-sm-1 col-lg-1 col-md-1">
+            <br />
+            <SfButton Type="button" CssClass="e-danger" @onclick="@this.RemoveProduct">Quitar</SfButton>
+        </div>
+    }
 </div>
 
 @code {
 
     [Parameter]
-    public OrderDetailViewModel OrderDetailViewModel { get; set; } = new();
+    public OrderDetailViewModel OrderDetail { get; set; } = new();
+
+    [Parameter]
+    public bool IsEnabled { get; set; } = true;
 
     [Parameter]
     public EventCallback<long> OnRemoveOrderDetail { get; set; }
@@ -45,18 +51,18 @@
 
     private async Task RemoveProduct()
     {
-        await this.OnRemoveOrderDetail.InvokeAsync(this.OrderDetailViewModel.ProductId);
+        await this.OnRemoveOrderDetail.InvokeAsync(this.OrderDetail.ProductId);
     }
 
     private async Task OnDiscountUpdated()
     {
-        this.OrderDetailViewModel.Discount = this.Discount;
+        this.OrderDetail.Discount = this.Discount;
         await this.OnOrderDetailUpdated.InvokeAsync();
     }
 
     private async Task OnQuantityUpdated()
     {
-        this.OrderDetailViewModel.Quantity = this.Quantity;
+        this.OrderDetail.Quantity = this.Quantity;
         await this.OnOrderDetailUpdated.InvokeAsync();
     }
 }

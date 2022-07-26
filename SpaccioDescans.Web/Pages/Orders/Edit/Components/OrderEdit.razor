@@ -15,20 +15,23 @@
         </div>
     </EditForm>
 </SfCard>
-@*<SfCard>
+<SfCard>
     <div class="row">
         <div class="col-sm">
-            <OrderDetailList OrderDetails="@this.OrderViewModel.OrderDetail"/>
+            @foreach (var orderDetail in this.OrderViewModel.OrderDetail)
+            {
+                <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false/>
+            }
         </div>
     </div>
-</SfCard>*@
+</SfCard>
 
 <div class="col-lg-12 control-section">
     <SfToast ID="toast_order_edit" @ref="@this.ResultToast" Title="Result" Timeout="10000" Icon="e-meeting">
         <ToastPosition X="Center" />
         <ToastAnimationSettings>
-            <ToastShowAnimationSettings Effect="ToastEffect.FadeZoomIn"/>
-            <ToastHideAnimationSettings Effect="ToastEffect.FadeZoomOut"/>
+            <ToastShowAnimationSettings Effect="ToastEffect.FadeZoomIn" />
+            <ToastHideAnimationSettings Effect="ToastEffect.FadeZoomOut" />
         </ToastAnimationSettings>
     </SfToast>
 </div>
