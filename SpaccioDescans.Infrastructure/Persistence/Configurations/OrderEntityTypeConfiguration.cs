@@ -16,5 +16,7 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(x => x.Pending).HasPrecision(10, 2);
         builder.Property(x => x.Remarks).IsUnicode(false);
         builder.Property(x => x.Status).HasConversion<string>().HasMaxLength(50);
+
+        builder.HasMany(x => x.Payments).WithOne().OnDelete(DeleteBehavior.Cascade);
     }
 }
