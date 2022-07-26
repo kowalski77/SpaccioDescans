@@ -20,6 +20,8 @@ public class OrderEditBase : ComponentBase
 
     protected SfToast ResultToast { get; set; } = default!;
 
+    protected bool ShowOrderItems => this.OrderViewModel.OrderDetail.Count > 0;
+
     protected override async Task OnInitializedAsync()
     {
         var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
@@ -37,6 +39,11 @@ public class OrderEditBase : ComponentBase
             Height = "20px"
         });
         this.IsEditable = false;
+    }
+
+    protected Task EditPaymentAsync()
+    {
+        return Task.CompletedTask;
     }
 }
 

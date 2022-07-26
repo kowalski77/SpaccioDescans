@@ -20,10 +20,23 @@
         <div class="col-sm">
             @foreach (var orderDetail in this.OrderViewModel.OrderDetail)
             {
-                <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false/>
+                <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false />
             }
         </div>
     </div>
+</SfCard>
+<SfCard>
+    <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditPaymentAsync">
+        <div class="row">
+            <div class="col-sm">
+                <Condition Evaluation="@this.ShowOrderItems">
+                    <Match>
+                        <Payments OrderViewModel="@this.OrderViewModel" />
+                    </Match>
+                </Condition>
+            </div>
+        </div>
+    </EditForm>
 </SfCard>
 
 <div class="col-lg-12 control-section">
