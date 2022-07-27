@@ -191,3 +191,8 @@ form .row {
     padding: 0px !important;
 }
 /* end of sidebar styles */
+
+.space-margin {
+    margin:10px;
+    margin-right: 20px;
+}

@@ -2,28 +2,40 @@
 
 <div class="control-section">
     <div class="row">
-        <h3>Estado: @this.OrderViewModel.OrderStatus</h3>
+        <div class="col-sm">
+            <SfCard>
+                <h3 class="space-margin">Factura nº @this.OrderId - Estado: @this.OrderViewModel.OrderStatus</h3>
+            </SfCard>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm">
             <SfCard>
+                <div class="col-sm d-md-flex justify-content-md-end">
+                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsCustomerDataEditable" CssClass="space-margin"></SfCheckBox>
+                </div>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
                     <CustomerInfo Item="@this.OrderViewModel.CustomerInfo" Enabled="@this.IsCustomerDataEditable" />
-                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsCustomerDataEditable"></SfCheckBox>
-                    <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsCustomerDataEditable">Actualizar</SfButton>
+                    <div class="col-sm d-md-flex justify-content-md-end">
+                        <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsCustomerDataEditable">Actualizar</SfButton>
+                    </div>
                 </EditForm>
             </SfCard>
         </div>
         <div class="col-sm">
             <SfCard>
+                <div class="col-sm d-md-flex justify-content-md-end">
+                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsPaymentEditable" CssClass="space-margin"></SfCheckBox>
+                </div>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditPaymentAsync">
                     <Condition Evaluation="@this.ShowOrderItems">
                         <Match>
-                            <Payments OrderViewModel="@this.OrderViewModel" Enabled="@this.IsPaymentEditable"/>
+                            <Payments OrderViewModel="@this.OrderViewModel" Enabled="@this.IsPaymentEditable" />
                         </Match>
                     </Condition>
-                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsPaymentEditable"></SfCheckBox>
-                    <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsPaymentEditable">Actualizar</SfButton>
+                    <div class="col-sm d-md-flex justify-content-md-end">
+                        <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsPaymentEditable">Actualizar</SfButton>
+                    </div>
                 </EditForm>
             </SfCard>
         </div>
@@ -31,10 +43,19 @@
     <SfCard>
         <div class="row">
             <div class="col-sm">
-                @foreach (var orderDetail in this.OrderViewModel.OrderDetail)
-                {
-                    <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false />
-                }
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <b class="spaccio-label">Productos</b>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="space-margin">
+                    @foreach (var orderDetail in this.OrderViewModel.OrderDetail)
+                    {
+                        <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false />
+                    }
+                </div>
             </div>
         </div>
     </SfCard>
