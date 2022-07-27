@@ -6,7 +6,7 @@ namespace SpaccioDescans.Core.Stores;
 
 public class Store : Entity, IAggregateRoot
 {
-    private List<ProductStore> productStores = new();
+    private readonly List<ProductStore> productStores = new();
 
     private Store() { }
 

@@ -8,7 +8,6 @@ namespace SpaccioDescans.Core.Products;
 public sealed class Product : Entity, IAggregateRoot
 {
     private readonly List<ProductStore> productStores = new();
-    private readonly List<OrderDetail> orderDetails = new();
 
     private Product() { }
 
@@ -34,8 +33,6 @@ public sealed class Product : Entity, IAggregateRoot
     public Price NetPrice { get; internal set; }
 
     public IReadOnlyList<ProductStore> ProductStores => this.productStores;
-
-    public IReadOnlyList<OrderDetail> OrderDetails => this.orderDetails;
 
     public void AddToStore(Store store, Quantity quantity)
     {
