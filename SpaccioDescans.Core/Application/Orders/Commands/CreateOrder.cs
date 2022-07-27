@@ -49,12 +49,8 @@ public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, lon
         foreach (var orderDetailItem in orderDetailItems)
         {
             var product = await this.productRepository.GetAsync(orderDetailItem.ProductId);
-            if (product is null)
-            {
-                throw new InvalidOperationException($"Product with id {orderDetailItem.ProductId} does not exist");
-            }
 
-            var orderDetail = new OrderDetail(product, OrderQuantity.CreateInstance(orderDetailItem.Quantity), Discount.CreateInstance(orderDetailItem.Discount));
+            var orderDetail = new OrderDetail(product!, OrderQuantity.CreateInstance(orderDetailItem.Quantity), Discount.CreateInstance(orderDetailItem.Discount));
             orderDetailsCollection.Add(orderDetail);
         }
 

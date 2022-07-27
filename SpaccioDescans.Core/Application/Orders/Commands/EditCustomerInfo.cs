@@ -20,10 +20,6 @@ public class EditCustomerInfoHandler : ICommandHandler<EditCustomerInfoCommand, 
         ArgumentNullException.ThrowIfNull(request);
 
         var order = await this.orderRepository.GetAsync(request.OrderId, cancellationToken);
-        if(order is null)
-        {
-            throw new InvalidOperationException($"Order with id {request.OrderId} does not exist");
-        }
         
         var customer = new Customer(
             request.Name, 
@@ -31,7 +27,7 @@ public class EditCustomerInfoHandler : ICommandHandler<EditCustomerInfoCommand, 
             request.Nif, 
             request.Phone);
         
-        order.EditCustomer(customer);
+        order!.EditCustomer(customer);
 
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 

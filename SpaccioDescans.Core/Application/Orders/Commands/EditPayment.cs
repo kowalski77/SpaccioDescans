@@ -20,16 +20,12 @@ public sealed record EditPaymentCommandHandler : ICommandHandler<EditPaymentComm
         ArgumentNullException.ThrowIfNull(request);
 
         var order = await this.orderRepository.GetAsync(request.OrderId, cancellationToken);
-        if (order is null)
-        {
-            throw new InvalidOperationException($"Order with id {request.OrderId} does not exist");
-        }
 
         var cash = new Payment(request.Cash, PaymentMethod.Cash);
         var creditCard = new Payment(request.CreditCard, PaymentMethod.CreditCard);
         var financed = new Payment(request.Financed, PaymentMethod.Financed);
 
-        order.EditPayments(cash, creditCard, financed);
+        order!.EditPayments(cash, creditCard, financed);
 
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 

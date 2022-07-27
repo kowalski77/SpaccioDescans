@@ -24,12 +24,8 @@ public sealed class EditProductHandler : ICommandHandler<EditProductCommand, Uni
 
         var netPrice = Price.CreateInstance(request.NetPrice);
         var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
-        if(product is null)
-        {
-            throw new ArgumentException($"Product with id {request.Id} does not exist");
-        }
 
-        product.NetPrice = netPrice;
+        product!.NetPrice = netPrice;
         product.Name = request.Name;
         product.Description = request.Description;
         product.Measures = request.Measures;

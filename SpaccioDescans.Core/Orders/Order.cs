@@ -28,7 +28,7 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.CalculateTotals();
         this.SetStatus();
-        this.AddDomainEvent(new OrderCreated(this.orderDetails.Select(x => x.Product.Id).ToList(), 1));
+        this.AddDomainEvent(new OrderCreated(this.GetProductIds(), 1));
     }
 
     public long Id { get; private set; }
@@ -81,5 +81,17 @@ public sealed class Order : Entity, IAggregateRoot
         this.payments.Clear();
         this.payments.AddRange(payments);
         this.SetStatus();
+    }
+
+    public void Cancel()
+    {
+        this.SoftDeleted = true;
+        this.Status = OrderStatus.Cancelled;
+        this.AddDomainEvent(new OrderCancelled(this.GetProductIds(), 1));
+    }
+
+    private List<long> GetProductIds()
+    {
+        return this.orderDetails.Select(x => x.Product.Id).ToList();
     }
 }

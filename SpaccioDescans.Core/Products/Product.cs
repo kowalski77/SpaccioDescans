@@ -58,4 +58,9 @@ public sealed class Product : Entity, IAggregateRoot
         var productStore = this.productStores.First(x => x.Store.Id == store.Id);
         productStore.Quantity = quantity.Value;
     }
+
+    public void Delete()
+    {
+        this.SoftDeleted = true;
+    }
 }
