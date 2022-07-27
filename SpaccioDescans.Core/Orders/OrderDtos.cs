@@ -21,6 +21,8 @@ public class OrderEditDto
 
     public decimal SubTotal { get; set; }
 
+    public OrderStatus OrderStatus { get; init; }
+
     public CustomerEditDto Customer { get; internal set; } = default!;
 
     public ICollection<PaymentEditDto> Payments { get; internal set; } = new List<PaymentEditDto>();

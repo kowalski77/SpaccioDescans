@@ -2,6 +2,9 @@
 
 <div class="control-section">
     <div class="row">
+        <h3>Estado: @this.OrderViewModel.OrderStatus</h3>
+    </div>
+    <div class="row">
         <div class="col-sm">
             <SfCard>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">

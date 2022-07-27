@@ -27,6 +27,8 @@ public class OrderViewModel
     [Range(0, 100000, ErrorMessage = "El importe pendiente no puede ser negativo.")]
     public decimal PendingAmount => this.TotalAmount - this.CashAmount - this.CreditCardAmount - this.FinancedAmount;
 
+    public OrderStatus OrderStatus { get; set; }
+
     public static explicit operator CreateOrderCommand(OrderViewModel orderViewModel)
     {
         ArgumentNullException.ThrowIfNull(orderViewModel);

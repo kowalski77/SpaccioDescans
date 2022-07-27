@@ -12,6 +12,7 @@ public static class OrderViewModelMapper
         {
             Id = orderEditDto.Id,
             NetAmount = orderEditDto.SubTotal,
+            OrderStatus = orderEditDto.OrderStatus,
             CustomerInfo = new CustomerInfoViewModel
             {
                 Name = orderEditDto.Customer.Name,

@@ -23,7 +23,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
         using var connection = new SqlConnection(this.querySettings.ConnectionString);
         await connection.OpenAsync(cancellationToken);
 
-        var query = $@"select o.Id, o.SubTotal,
+        var query = $@"select o.Id, o.SubTotal, o.Status as OrderStatus,
                         c.Name, c.Address, c.Nif, c.Phone, 
                         p.Amount, p.PaymentMethod, 
                         od.Quantity, od.Discount, pr.Id as ProductId, CONCAT(pr.Vendor, ' ', pr.Name, ' ', pr.Measures) as ProductName, pr.NetPrice
