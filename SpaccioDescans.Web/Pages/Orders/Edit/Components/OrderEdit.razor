@@ -11,9 +11,13 @@
     <div class="row">
         <div class="col-sm">
             <SfCard>
-                <div class="col-sm d-md-flex justify-content-md-end">
-                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsCustomerDataEditable" CssClass="space-margin"></SfCheckBox>
-                </div>
+                <Condition Evaluation="@this.IsCancelled">
+                    <NotMatch>
+                        <div class="col-sm d-md-flex justify-content-md-end">
+                            <SfCheckBox Label="Editar" @bind-Checked="@this.IsCustomerDataEditable" CssClass="space-margin"></SfCheckBox>
+                        </div>
+                    </NotMatch>
+                </Condition>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
                     <CustomerInfo Item="@this.OrderViewModel.CustomerInfo" Enabled="@this.IsCustomerDataEditable" />
                     <div class="col-sm d-md-flex justify-content-md-end">
@@ -24,9 +28,13 @@
         </div>
         <div class="col-sm">
             <SfCard>
-                <div class="col-sm d-md-flex justify-content-md-end">
-                    <SfCheckBox Label="Editar" @bind-Checked="@this.IsPaymentEditable" CssClass="space-margin"></SfCheckBox>
-                </div>
+                <Condition Evaluation="@this.IsCancelled">
+                    <NotMatch>
+                        <div class="col-sm d-md-flex justify-content-md-end">
+                            <SfCheckBox Label="Editar" @bind-Checked="@this.IsPaymentEditable" CssClass="space-margin"></SfCheckBox>
+                        </div>
+                    </NotMatch>
+                </Condition>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditPaymentAsync">
                     <Condition Evaluation="@this.ShowOrderItems">
                         <Match>
@@ -59,6 +67,21 @@
             </div>
         </div>
     </SfCard>
+    <Condition Evaluation="@this.IsCancelled">
+        <NotMatch>
+            <SfCard>
+                <div class="control-section">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="col-sm d-md-flex justify-content-md-end">
+                                <SfButton Type="button" CssClass="e-danger me-md-2" OnClick="@this.CancelOrderAsync">Cancelar</SfButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </SfCard>
+        </NotMatch>
+    </Condition>
 </div>
 
 <div class="col-lg-12 control-section">

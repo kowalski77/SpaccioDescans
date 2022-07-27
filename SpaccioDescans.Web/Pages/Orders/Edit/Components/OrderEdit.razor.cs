@@ -16,6 +16,8 @@ public class OrderEditBase : ComponentBase
 
     [Inject] private IMediator Mediator { get; set; } = default!;
 
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
     protected bool IsCustomerDataEditable { get; set; }
@@ -26,6 +28,8 @@ public class OrderEditBase : ComponentBase
 
     protected bool ShowOrderItems => this.OrderViewModel.OrderDetail.Count > 0;
 
+    protected bool IsCancelled => this.OrderViewModel.OrderStatus == Core.Orders.OrderStatus.Cancelled;
+
     protected override async Task OnInitializedAsync()
     {
         var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
@@ -35,19 +39,19 @@ public class OrderEditBase : ComponentBase
     protected async Task EditClientDataAsync()
     {
         this.MainLayout.StartSpinner();
-        
+
         var command = (EditCustomerInfoCommand)this.OrderViewModel;
         await this.Mediator.Send(command);
 
         this.MainLayout.StopSpinner();
 
-        await this.ResultToast.ShowAsync(new ToastModel 
+        await this.ResultToast.ShowAsync(new ToastModel
         {
             Content = "Datos del cliente actualizados",
             Height = "20px"
         });
-        this.IsCustomerDataEditable = false;
-        this.IsPaymentEditable = false;
+
+        this.DisableEditOperations();
     }
 
     protected async Task EditPaymentAsync()
@@ -65,6 +69,30 @@ public class OrderEditBase : ComponentBase
             Height = "20px"
         });
 
+        this.DisableEditOperations();
+    }
+
+    protected async Task CancelOrderAsync()
+    {
+        this.MainLayout.StartSpinner();
+
+        var command = new CancelOrderCommand(this.OrderViewModel.Id);
+        await this.Mediator.Send(command);
+
+        this.MainLayout.StopSpinner();
+
+        await this.ResultToast.ShowAsync(new ToastModel
+        {
+            Content = "Factura cancelada",
+            Height = "20px"
+        });
+
+        this.DisableEditOperations();
+        this.NavigationManager.NavigateTo(this.NavigationManager.Uri, forceLoad: true);
+    }
+
+    private void DisableEditOperations()
+    {
         this.IsCustomerDataEditable = false;
         this.IsPaymentEditable = false;
     }
