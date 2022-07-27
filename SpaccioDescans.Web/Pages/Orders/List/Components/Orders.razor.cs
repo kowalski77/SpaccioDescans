@@ -28,11 +28,15 @@ public class OrdersBase : ComponentBase
         this.Orders = new Collection<OrderItemViewModel>(viewModels);
     }
 
-    protected async Task ShowOrderAsync(long id)
+    protected void ShowOrder(long id)
     {
         // TODO: config file
         var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={id}";
-        await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
+
+        _ = Task.Run(async () =>
+        {
+            await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        });
     }
 
     protected void NavigateToOrderEdit(long id)

@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
+using SpaccioDescans.Web.Shared;
 using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
 
 public class OrderCreateBase : ComponentBase
 {
+    [CascadingParameter] public MainLayout MainLayout { get; set; } = default!;
+
     [Inject] private IMediator Mediator { get; set; } = default!;
 
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
@@ -47,9 +50,12 @@ public class OrderCreateBase : ComponentBase
     {
         this.ConfirmDialogVisibility = false;
 
+        this.MainLayout.StartSpinner();
+
         var command = (CreateOrderCommand)this.OrderViewModel;
         var orderId = await this.Mediator.Send(command);
 
+        this.MainLayout.StopSpinner();
         this.Clear();
         await this.ShowOrderCreatedNotificationAsync(orderId);
     }
@@ -64,6 +70,10 @@ public class OrderCreateBase : ComponentBase
 
         // TODO: config file
         var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={orderId}";
-        await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        
+        _ = Task.Run(async () =>
+        {
+            await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        });
     }
 }

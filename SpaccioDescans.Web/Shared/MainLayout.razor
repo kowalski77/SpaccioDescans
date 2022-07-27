@@ -3,6 +3,26 @@
 <PageTitle>SpaccioDescans</PageTitle>
 
 <div>
-    <NavMenu/>
-    <div>@Body</div>
+    <NavMenu />
+    <CascadingValue Value="@this">
+        <div>@Body</div>
+        <SfSpinner @bind-Visible="@IsSpinnerEnabled" CssClass="e-spin-overlay">
+        </SfSpinner>
+    </CascadingValue>
 </div>
+
+@code {
+    private bool IsSpinnerEnabled { get; set; }
+
+    public void StartSpinner()
+    {
+        this.IsSpinnerEnabled = true;
+        this.StateHasChanged();
+    }
+
+    public void StopSpinner()
+    {
+        this.IsSpinnerEnabled = false;
+        this.StateHasChanged();
+    }
+}

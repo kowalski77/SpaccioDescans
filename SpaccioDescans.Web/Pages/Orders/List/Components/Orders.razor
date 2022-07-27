@@ -16,7 +16,7 @@
             <Template>
                 @{
                     var order = (OrderItemViewModel)context;
-                    <SfButton CssClass="e-info" @onclick="@(async () =>await this.ShowOrderAsync(order.Id))">Ver</SfButton>
+                    <SfButton CssClass="e-info" @onclick="@(() =>this.ShowOrder(order.Id))">Ver</SfButton>
                     <SfButton CssClass="e-info" @onclick="@(() =>this.NavigateToOrderEdit(order.Id))">Editar</SfButton>
                 }
             </Template>
