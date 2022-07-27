@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Stores;
 
 namespace SpaccioDescans.Core.Application.Orders.Events;
 
@@ -7,22 +7,23 @@ public sealed record OrderCreated(IEnumerable<long> ProductIds, int StoreId) : I
 
 public class OrderCreatedHandler : INotificationHandler<OrderCreated>
 {
-    private readonly IProductRepository productRepository;
+    private readonly IStoreRepository storeRepository;
 
-    public OrderCreatedHandler(IProductRepository productRepository)
+    public OrderCreatedHandler(IStoreRepository storeRepository)
     {
-        this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+        this.storeRepository = storeRepository;
     }
 
     public async Task Handle(OrderCreated notification, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(notification);
 
+        var store = await this.storeRepository.GetAsync(notification.StoreId, cancellationToken);
+
         foreach (var productId in notification.ProductIds)
         {
-            var product = await this.productRepository.GetAsync(productId, cancellationToken);
-            var store = product!.ProductStores.First(x => x.StoreId == notification.StoreId);
-            store.Quantity--;
+            var productStore = store!.ProductStores.First(x => x.ProductId == productId);
+            productStore.Quantity--;
         }
     }
 }

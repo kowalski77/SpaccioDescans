@@ -18,7 +18,5 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
         });
 
         builder.HasQueryFilter(x => !x.SoftDeleted);
-
-        builder.Navigation(x => x.ProductStores).AutoInclude();
     }
 }

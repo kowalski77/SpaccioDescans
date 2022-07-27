@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core.Orders;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaccioDescans.Core.Orders;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 
@@ -19,6 +20,7 @@ public sealed class OrderRepository : Repository<Order>, IOrderRepository
         await this.Context.Entry(order).Reference(x => x.Customer).LoadAsync(cancellationToken);
         await this.Context.Entry(order).Collection(x => x.Payments).LoadAsync(cancellationToken);
         await this.Context.Entry(order).Collection(x => x.OrderDetails).LoadAsync(cancellationToken);
+        await this.Context.Entry(order).Collection(x => x.OrderDetails).Query().Include(x => x.Product).LoadAsync(cancellationToken);
 
         return order;
     }

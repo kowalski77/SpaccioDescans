@@ -19,4 +19,17 @@ public sealed class StoreRepository : Repository<Store>, IStoreRepository
 
         return await this.Context.Stores.FirstAsync(x => x.Id == tenantId, cancellationToken);
     }
+
+    public override async Task<Store?> GetAsync(long id, CancellationToken cancellationToken = default)
+    {
+        var store = await this.Context.Stores.FindAsync(new object?[] { id }, cancellationToken);
+        if (store is null)
+        {
+            return null;
+        }
+
+        await this.Context.Entry(store).Collection(x => x.ProductStores).LoadAsync(cancellationToken);
+
+        return store;
+    }
 }
