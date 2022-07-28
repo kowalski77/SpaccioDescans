@@ -1,5 +1,4 @@
 ﻿#pragma warning disable 8618
-using SpaccioDescans.Core.Orders;
 using SpaccioDescans.Core.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
@@ -22,17 +21,30 @@ public sealed class Product : Entity, IAggregateRoot
 
     public long Id { get; private set; }
 
-    public string Vendor { get; internal set; }
+    public string Vendor { get; private set; }
 
-    public string Name { get; internal set; }
+    public string Name { get; private set; }
 
-    public string Description { get; internal set; }
+    public string Description { get; private set; }
 
-    public string Measures { get; internal set; }
+    public string Measures { get; private set; }
 
-    public Price NetPrice { get; internal set; }
+    public Price NetPrice { get; private set; }
 
     public IReadOnlyList<ProductStore> ProductStores => this.productStores;
+
+    public void Edit(string vendor, string name, string description, string measures)
+    {
+        this.Vendor = vendor;
+        this.Name = name;
+        this.Description = description;
+        this.Measures = measures;
+    }
+
+    public void EditPrice(Price netPrice)
+    {
+        this.NetPrice = netPrice ?? throw new ArgumentNullException(nameof(netPrice));
+    }   
 
     public void AddToStore(Store store, Quantity quantity)
     {

@@ -22,14 +22,11 @@ public sealed class EditProductHandler : ICommandHandler<EditProductCommand, Uni
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var netPrice = Price.CreateInstance(request.NetPrice);
         var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
+        var netPrice = Price.CreateInstance(request.NetPrice);
 
-        product!.NetPrice = netPrice;
-        product.Name = request.Name;
-        product.Description = request.Description;
-        product.Measures = request.Measures;
-        product.Vendor = request.Vendor;
+        product!.Edit(request.Vendor, request.Name, request.Description, request.Measures);
+        product.EditPrice(netPrice);
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
