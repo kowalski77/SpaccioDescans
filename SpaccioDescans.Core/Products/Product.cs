@@ -41,7 +41,7 @@ public sealed class Product : Entity, IAggregateRoot
         this.Measures = measures;
     }
 
-    public void EditPrice(Price netPrice)
+    public void Edit(Price netPrice)
     {
         this.NetPrice = netPrice ?? throw new ArgumentNullException(nameof(netPrice));
     }   
@@ -59,7 +59,7 @@ public sealed class Product : Entity, IAggregateRoot
         });
     }
 
-    public void EditInStore(Store store, Quantity quantity)
+    public void EditQuantityInStore(Store store, Quantity quantity)
     {
         ArgumentNullException.ThrowIfNull(store);
         ArgumentNullException.ThrowIfNull(quantity);
