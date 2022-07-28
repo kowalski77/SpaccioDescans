@@ -20,9 +20,13 @@
                 </Condition>
                 <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
                     <CustomerInfo Item="@this.OrderViewModel.CustomerInfo" Enabled="@this.IsCustomerDataEditable" />
-                    <div class="col-sm d-md-flex justify-content-md-end">
-                        <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsCustomerDataEditable">Actualizar</SfButton>
-                    </div>
+                    <Condition Evaluation="@this.IsCancelled">
+                        <NotMatch>
+                            <div class="col-sm d-md-flex justify-content-md-end">
+                                <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsCustomerDataEditable">Actualizar</SfButton>
+                            </div>
+                        </NotMatch>
+                    </Condition>
                 </EditForm>
             </SfCard>
         </div>
@@ -41,9 +45,13 @@
                             <Payments OrderViewModel="@this.OrderViewModel" Enabled="@this.IsPaymentEditable" />
                         </Match>
                     </Condition>
-                    <div class="col-sm d-md-flex justify-content-md-end">
-                        <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsPaymentEditable">Actualizar</SfButton>
-                    </div>
+                    <Condition Evaluation="@this.IsCancelled">
+                        <NotMatch>
+                            <div class="col-sm d-md-flex justify-content-md-end">
+                                <SfButton Type="submit" CssClass="e-success me-md-2" Disabled="!this.IsPaymentEditable">Actualizar</SfButton>
+                            </div>
+                        </NotMatch>
+                    </Condition>
                 </EditForm>
             </SfCard>
         </div>
@@ -59,10 +67,7 @@
         <div class="row">
             <div class="col-sm">
                 <div class="space-margin">
-                    @foreach (var orderDetail in this.OrderViewModel.OrderDetail)
-                    {
-                        <OrderDetailItem OrderDetail="@orderDetail" IsEnabled=false />
-                    }
+                    <OrderSummary OrderDetails="@this.OrderViewModel.OrderDetail" />
                 </div>
             </div>
         </div>
@@ -74,7 +79,7 @@
                     <div class="row">
                         <div class="col-sm">
                             <div class="col-sm d-md-flex justify-content-md-end">
-                                <SfButton Type="button" CssClass="e-danger me-md-2" OnClick="@this.CancelOrderAsync">Cancelar</SfButton>
+                                <SfButton Type="button" CssClass="e-danger me-md-2" OnClick="@this.ShowCancelOrderDialog">Cancelar</SfButton>
                             </div>
                         </div>
                     </div>
@@ -82,6 +87,19 @@
             </SfCard>
         </NotMatch>
     </Condition>
+</div>
+
+<div id="target" class="col-lg-12 control-section">
+    <SfDialog Width="400px" ShowCloseIcon="true" @bind-Visible="@this.ConfirmDialogVisibility" AllowPrerender="true" IsModal="true">
+        <DialogTemplates>
+            <Header> Confirmación</Header>
+            <Content> ¿Estás seguro/a de que deseas cancelar la factura? </Content>
+        </DialogTemplates>
+        <DialogButtons>
+            <DialogButton Content="Aceptar" IsPrimary="true" OnClick="@this.CancelOrderAsync" />
+            <DialogButton Content="Cancelar" IsPrimary="false" OnClick="@(() => this.ConfirmDialogVisibility = false)" />
+        </DialogButtons>
+    </SfDialog>
 </div>
 
 <div class="col-lg-12 control-section">

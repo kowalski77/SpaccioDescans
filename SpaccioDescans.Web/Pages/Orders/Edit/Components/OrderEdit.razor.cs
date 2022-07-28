@@ -25,6 +25,8 @@ public class OrderEditBase : ComponentBase
 
     protected bool IsPaymentEditable { get; set; }
 
+    protected bool ConfirmDialogVisibility { get; set; }
+
     protected SfToast ResultToast { get; set; } = default!;
 
     protected bool ShowOrderItems => this.OrderViewModel.OrderDetail.Count > 0;
@@ -73,8 +75,14 @@ public class OrderEditBase : ComponentBase
         this.DisableEditOperations();
     }
 
+    protected void ShowCancelOrderDialog()
+    {
+        this.ConfirmDialogVisibility = true;
+    }
+
     protected async Task CancelOrderAsync()
     {
+        this.ConfirmDialogVisibility = false;
         this.MainLayout.StartSpinner();
 
         var command = new CancelOrderCommand(this.OrderViewModel.Id);
@@ -88,7 +96,6 @@ public class OrderEditBase : ComponentBase
             Height = "20px"
         });
 
-        this.DisableEditOperations();
         this.NavigationManager.NavigateTo(this.NavigationManager.Uri, forceLoad: true);
     }
 

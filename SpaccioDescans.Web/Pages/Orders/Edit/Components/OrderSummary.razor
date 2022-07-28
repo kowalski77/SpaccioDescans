@@ -1,0 +1,7 @@
+﻿
+<SfGrid DataSource="@this.OrderDetails" />
+
+@code {
+    [Parameter]
+    public ICollection<OrderDetailViewModel>? OrderDetails { get; set; }
+}
