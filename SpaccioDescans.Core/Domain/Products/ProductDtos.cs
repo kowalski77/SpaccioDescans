@@ -1,4 +1,4 @@
-﻿namespace SpaccioDescans.Core.Products;
+﻿namespace SpaccioDescans.Core.Domain.Products;
 
 public class ProductDto
 {

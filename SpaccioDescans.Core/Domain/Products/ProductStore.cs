@@ -1,6 +1,6 @@
-﻿using SpaccioDescans.Core.Stores;
+﻿using SpaccioDescans.Core.Domain.Stores;
 
-namespace SpaccioDescans.Core.Products;
+namespace SpaccioDescans.Core.Domain.Products;
 
 public class ProductStore
 {

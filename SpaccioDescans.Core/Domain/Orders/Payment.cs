@@ -1,6 +1,6 @@
 ﻿using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Orders;
+namespace SpaccioDescans.Core.Domain.Orders;
 
 public class Payment : Entity
 {

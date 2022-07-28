@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SpaccioDescans.Core.Orders;
+using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Orders.Commands;

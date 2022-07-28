@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SpaccioDescans.Core.Orders;
+using SpaccioDescans.Core.Domain.Orders;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 

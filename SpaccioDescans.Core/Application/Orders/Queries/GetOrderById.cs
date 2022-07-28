@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 using Dapper;
 using MediatR;
-using SpaccioDescans.Core.Orders;
+using SpaccioDescans.Core.Domain.Orders;
 
 namespace SpaccioDescans.Core.Application.Orders.Queries;
 

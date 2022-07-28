@@ -1,8 +1,8 @@
 ﻿#pragma warning disable 8618
-using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Domain.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Orders;
+namespace SpaccioDescans.Core.Domain.Orders;
 
 public class OrderDetail : Entity
 {
@@ -25,7 +25,7 @@ public class OrderDetail : Entity
 
     public Discount Discount { get; private set; }
 
-    public decimal SubTotal => this.Discount.Value > 0 ? 
-        this.Product.NetPrice.Value - (this.Product.NetPrice.Value / this.Discount.Value) : 
+    public decimal SubTotal => this.Discount.Value > 0 ?
+        this.Product.NetPrice.Value - this.Product.NetPrice.Value / this.Discount.Value :
         this.Product.NetPrice.Value;
 }

@@ -1,6 +1,6 @@
-﻿using SpaccioDescans.Core.Orders;
-using SpaccioDescans.Core.Products;
-using SpaccioDescans.Core.Stores;
+﻿using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Products;
+using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Orders.Commands;

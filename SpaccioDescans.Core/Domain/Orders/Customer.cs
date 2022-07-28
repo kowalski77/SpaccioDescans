@@ -1,7 +1,7 @@
 ﻿#pragma warning disable 8618
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Orders;
+namespace SpaccioDescans.Core.Domain.Orders;
 
 public class Customer : Entity
 {

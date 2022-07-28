@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using SpaccioDescans.Core.Orders;
-using SpaccioDescans.Core.Products;
-using SpaccioDescans.Core.Stores;
+using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Products;
+using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.Infrastructure.Persistence.Configurations;
 using SpaccioDescans.SharedKernel.DDD;
 

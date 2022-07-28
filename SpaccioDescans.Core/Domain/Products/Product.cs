@@ -1,8 +1,8 @@
 ﻿#pragma warning disable 8618
-using SpaccioDescans.Core.Stores;
+using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Products;
+namespace SpaccioDescans.Core.Domain.Products;
 
 public sealed class Product : Entity, IAggregateRoot
 {
@@ -44,7 +44,7 @@ public sealed class Product : Entity, IAggregateRoot
     public void Edit(Price netPrice)
     {
         this.NetPrice = netPrice ?? throw new ArgumentNullException(nameof(netPrice));
-    }   
+    }
 
     public void AddToStore(Store store, Quantity quantity)
     {

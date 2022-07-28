@@ -1,4 +1,4 @@
-﻿namespace SpaccioDescans.Core.Orders;
+﻿namespace SpaccioDescans.Core.Domain.Orders;
 
 public enum PaymentMethod
 {

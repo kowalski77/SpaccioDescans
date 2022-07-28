@@ -1,9 +1,9 @@
 ﻿#pragma warning disable 8618
-using SpaccioDescans.Core.Orders;
-using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Products;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Stores;
+namespace SpaccioDescans.Core.Domain.Stores;
 
 public class Store : Entity, IAggregateRoot
 {

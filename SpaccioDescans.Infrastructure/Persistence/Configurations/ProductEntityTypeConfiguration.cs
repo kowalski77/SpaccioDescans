@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Domain.Products;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Configurations;
 

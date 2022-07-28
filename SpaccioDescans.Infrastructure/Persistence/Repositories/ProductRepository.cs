@@ -1,4 +1,4 @@
-﻿using SpaccioDescans.Core.Products;
+﻿using SpaccioDescans.Core.Domain.Products;
 
 namespace SpaccioDescans.Infrastructure.Persistence.Repositories;
 

@@ -1,6 +1,6 @@
 ﻿using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Products;
+namespace SpaccioDescans.Core.Domain.Products;
 
 public interface IProductRepository : IRepository<Product>
 {

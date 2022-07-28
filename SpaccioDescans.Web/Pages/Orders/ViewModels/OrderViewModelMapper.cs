@@ -1,4 +1,4 @@
-﻿using SpaccioDescans.Core.Orders;
+﻿using SpaccioDescans.Core.Domain.Orders;
 
 namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 

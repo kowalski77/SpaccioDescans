@@ -1,9 +1,9 @@
 ﻿#pragma warning disable 8618
 using SpaccioDescans.Core.Application.Orders.Events;
-using SpaccioDescans.Core.Stores;
+using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Orders;
+namespace SpaccioDescans.Core.Domain.Orders;
 
 public sealed class Order : Entity, IAggregateRoot
 {
@@ -56,7 +56,7 @@ public sealed class Order : Entity, IAggregateRoot
     private void CalculateTotals()
     {
         this.SubTotal = this.orderDetails.Sum(x => x.SubTotal);
-        this.Total = this.SubTotal + (this.SubTotal * SpaccioConstants.Vat / 100);
+        this.Total = this.SubTotal + this.SubTotal * SpaccioConstants.Vat / 100;
     }
 
     private void SetStatus()

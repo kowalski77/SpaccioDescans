@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
-using SpaccioDescans.Core.Products;
+using SpaccioDescans.Core.Domain.Products;
 
 namespace SpaccioDescans.Web.Pages.Products;
 

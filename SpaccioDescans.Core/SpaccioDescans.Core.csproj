@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Stores\" />
-		<Folder Include="Products\" />
+		<Folder Include="Domain\Stores\" />
+		<Folder Include="Domain\Products\" />
 	</ItemGroup>
 
 	<ItemGroup>
