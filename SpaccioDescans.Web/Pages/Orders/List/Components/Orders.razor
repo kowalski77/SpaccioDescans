@@ -1,23 +1,25 @@
 ﻿@inherits OrdersBase
 
 <SfGrid DataSource="@this.Orders"
+        Toolbar="@(new List<object>() { "Print", "ExcelExport" })"
+        AllowExcelExport="true"
         @ref="@this.Grid"
         AllowPaging="true" AllowSorting="true" AllowFiltering="true"
         AllowResizing="true">
     <GridPageSettings PageSize="10" />
+    <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="OrderItemViewModel"></GridEvents>
     <GridColumns>
         <GridColumn Field="@nameof(OrderItemViewModel.Id)" HeaderText="Id" IsPrimaryKey="true" Width="100" />
         <GridColumn Field="@nameof(OrderItemViewModel.Customer)" HeaderText="Cliente" IsPrimaryKey="true" Width="100" />
-        <GridColumn Field="@nameof(OrderItemViewModel.CreatedAt)" HeaderText="Fecha" Width="100" />
+        <GridColumn Field="@nameof(OrderItemViewModel.CreatedAt)" Format="d" HeaderText="Fecha" Width="100" />
         <GridColumn Field="@nameof(OrderItemViewModel.Store)" HeaderText="Tienda" Width="100" />
         <GridColumn Field="@nameof(OrderItemViewModel.OrderStatus)" HeaderText="Estado" Width="100" />
         <GridColumn Field="@nameof(OrderItemViewModel.Total)" HeaderText="Total" Width="100" />
-        <GridColumn Width="100" AllowFiltering="false">
+        <GridColumn Width="100" AllowSearching="false">
             <Template>
                 @{
                     var order = (OrderItemViewModel)context;
-                    <SfButton CssClass="e-info" @onclick="@(() =>this.ShowOrder(order.Id))">Ver</SfButton>
-                    <SfButton CssClass="e-info" @onclick="@(() =>this.NavigateToOrderEdit(order.Id))">Editar</SfButton>
+                    <div><a href="#" @onclick="@(() =>this.NavigateToOrderEdit(order.Id))">Editar</a></div>
                 }
             </Template>
         </GridColumn>

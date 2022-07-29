@@ -1,18 +1,16 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Queries;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Navigations;
 
 namespace SpaccioDescans.Web.Pages.Orders.List.Components;
 
 public class OrdersBase : ComponentBase
 {
     [Inject] private IMediator Mediator { get; set; } = default!;
-
-    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
@@ -28,20 +26,15 @@ public class OrdersBase : ComponentBase
         this.Orders = new Collection<OrderItemViewModel>(viewModels);
     }
 
-    protected void ShowOrder(long id)
-    {
-        // TODO: config file
-        var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={id}";
-
-        _ = Task.Run(async () =>
-        {
-            await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
-        });
-    }
-
     protected void NavigateToOrderEdit(long id)
     {
         this.NavigationManager.NavigateTo($"/orders/edit/{id}");
     }
+
+    protected async Task ToolbarClickHandler(ClickEventArgs _)
+    {
+        await this.Grid.ExportToExcelAsync();
+    }
+
 }
 

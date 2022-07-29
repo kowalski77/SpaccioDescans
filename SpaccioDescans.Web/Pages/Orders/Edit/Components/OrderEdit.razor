@@ -1,16 +1,14 @@
 ﻿@inherits OrderEditBase
 
 <div class="control-section">
-    <div class="row">
-        <div class="col-sm">
-            <SfCard>
-                <h3 class="space-margin">Factura nº @this.OrderId - Estado: @this.OrderViewModel.OrderStatus</h3>
-            </SfCard>
+    <SfCard CssClass="spaccio-card">
+        <div class="row" style="margin-bottom:10px;">
+            <h3 class="space-margin">Factura nº @this.OrderId - Estado: @this.OrderViewModel.OrderStatus</h3>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <SfCard>
+    </SfCard>
+    <SfCard CssClass="spaccio-card">
+        <div class="row">
+            <div class="col-sm">
                 <Condition Evaluation="@this.IsCancelled">
                     <NotMatch>
                         <div class="col-sm d-md-flex justify-content-md-end">
@@ -18,7 +16,7 @@
                         </div>
                     </NotMatch>
                 </Condition>
-                <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
+                <EditForm Model="@this.OrderViewModel" OnValidSubmit="@this.EditClientDataAsync">
                     <CustomerInfo Item="@this.OrderViewModel.CustomerInfo" Enabled="@this.IsCustomerDataEditable" />
                     <Condition Evaluation="@this.IsCancelled">
                         <NotMatch>
@@ -28,10 +26,8 @@
                         </NotMatch>
                     </Condition>
                 </EditForm>
-            </SfCard>
-        </div>
-        <div class="col-sm">
-            <SfCard>
+            </div>
+            <div class="col-sm">
                 <Condition Evaluation="@this.IsCancelled">
                     <NotMatch>
                         <div class="col-sm d-md-flex justify-content-md-end">
@@ -39,7 +35,7 @@
                         </div>
                     </NotMatch>
                 </Condition>
-                <EditForm class="control-section" Model="@this.OrderViewModel" OnValidSubmit="@this.EditPaymentAsync">
+                <EditForm Model="@this.OrderViewModel" OnValidSubmit="@this.EditPaymentAsync">
                     <Condition Evaluation="@this.ShowOrderItems">
                         <Match>
                             <Payments OrderViewModel="@this.OrderViewModel" Enabled="@this.IsPaymentEditable" />
@@ -53,28 +49,20 @@
                         </NotMatch>
                     </Condition>
                 </EditForm>
-            </SfCard>
-        </div>
-    </div>
-    <SfCard>
-        <div class="row">
-            <div class="col-sm">
-                <div class="col-sm-12 col-lg-12 col-md-12">
-                    <b class="spaccio-label">Productos</b>
-                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm">
-                <div class="space-margin">
+        <div class="col-sm">
+            <div style="margin-bottom:10px;">
+                <b class="spaccio-label">Productos</b>
+            </div>
+            <div class="row">
+                <div class="col-sm">
                     <OrderSummary OrderDetails="@this.OrderViewModel.OrderDetail" />
                 </div>
             </div>
         </div>
-    </SfCard>
-    <Condition Evaluation="@this.IsCancelled">
-        <NotMatch>
-            <SfCard>
+        <Condition Evaluation="@this.IsCancelled">
+            <NotMatch>
                 <div class="control-section">
                     <div class="row">
                         <div class="col-sm">
@@ -84,9 +72,9 @@
                         </div>
                     </div>
                 </div>
-            </SfCard>
-        </NotMatch>
-    </Condition>
+            </NotMatch>
+        </Condition>
+    </SfCard>
 </div>
 
 <div id="target" class="col-lg-12 control-section">
