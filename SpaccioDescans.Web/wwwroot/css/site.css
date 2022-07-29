@@ -152,7 +152,6 @@ form .row {
 
 .e-sidebar span.e-icons {
     color: #c0c2c5;
-    line-height: 2
 }
 
 .e-open .e-icons {
@@ -164,14 +163,21 @@ form .row {
     font-size: 15px;
 }
 
+.sidebar-menu {
+    margin-top: 5px;
+    text-align: center;
+    text-align: left;
+    padding-left: 25px;
+    color: #c0c2c5;
+}
+
 .sidebar-item {
     text-align: center;
-    border-bottom: 1px #e5e5e58a solid;
 }
 
 .e-sidebar.e-open .sidebar-item {
     text-align: left;
-    padding-left: 15px;
+    padding-left: 55px;
     color: #c0c2c5;
 }
 
