@@ -15,13 +15,11 @@ public sealed class Order : Entity, IAggregateRoot
     public Order(Store store, Customer customer,
         IEnumerable<OrderDetail> orderDetailList, IEnumerable<Payment> paymentList)
     {
-        ArgumentNullException.ThrowIfNull(store);
-        ArgumentNullException.ThrowIfNull(customer);
         ArgumentNullException.ThrowIfNull(orderDetailList);
         ArgumentNullException.ThrowIfNull(paymentList);
 
-        this.Store = store;
-        this.Customer = customer;
+        this.Store = store ?? throw new ArgumentNullException(nameof(store));
+        this.Customer = customer ?? throw new ArgumentNullException(nameof(customer));
         this.Date = DateTime.Now;
         this.orderDetails = orderDetailList.ToList();
         this.payments = paymentList.ToList();

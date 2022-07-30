@@ -10,9 +10,9 @@ public class OrderDetail : Entity
 
     public OrderDetail(Product product, OrderQuantity quantity, Discount discount)
     {
-        this.Product = product;
-        this.Quantity = quantity;
-        this.Discount = discount;
+        this.Product = product ?? throw new ArgumentNullException(nameof(product));
+        this.Quantity = quantity ?? throw new ArgumentNullException(nameof(quantity));
+        this.Discount = discount ?? throw new ArgumentNullException(nameof(discount));
     }
 
     public long Id { get; private set; }
