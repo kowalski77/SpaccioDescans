@@ -1,4 +1,4 @@
-﻿<SfSidebar Width="200px" DockSize="72px" IsOpen="true" EnableGestures="false">
+﻿<SfSidebar Width="12%" DockSize="72px" IsOpen="true" EnableGestures="false">
     <ChildContent>
         <SfAccordion ID="main-menu" Height="100%">
             <AccordionItems>
@@ -38,6 +38,9 @@
                             <ContentTemplate>
                                 <form action="/Identity/Account/logout" method="post">
                                     <ul>
+                                        <li class="sidebar-item">
+                                            <p>@context.User.Identity.Name</p>
+                                        </li>
                                         <li class="sidebar-item">
                                             <input class="nav-link btn btn-link" type="submit" value="Cerrar" />
                                         </li>
