@@ -1,5 +1,7 @@
 ﻿@page "/orders/edit/{orderId:long}"
 
+@attribute [Authorize]
+
 <PageTitle>Editar Factura nº @this.OrderId</PageTitle>
 
 <SfBreadcrumb>
