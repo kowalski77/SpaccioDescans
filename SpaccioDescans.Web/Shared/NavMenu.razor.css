@@ -8,11 +8,6 @@ li {
     list-style-type: none !important;
 }
 
-.text-content {
-    font-size: 30px;
-    padding: 3rem;
-}
-
 .e-tbar-search-icon:before {
     content: "\ec0d";
     color: white;

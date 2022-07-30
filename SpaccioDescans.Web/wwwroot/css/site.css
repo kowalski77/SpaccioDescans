@@ -212,3 +212,9 @@ form .row {
 .spaccio-card{
     padding:10px;
 }
+
+.spaccio-content {
+    background: #1f2937;
+    text-align: center;
+    margin-top: 150px;
+}
