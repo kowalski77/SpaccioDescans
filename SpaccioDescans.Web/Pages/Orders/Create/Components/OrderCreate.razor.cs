@@ -71,9 +71,9 @@ public class OrderCreateBase : ComponentBase
         // TODO: config file
         var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={orderId}";
         
-        _ = Task.Run(async () =>
-        {
-            await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
-        });
+        //_ = Task.Run(async () =>
+        //{
+        //    await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        //});
     }
 }

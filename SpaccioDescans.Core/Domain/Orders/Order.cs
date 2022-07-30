@@ -53,18 +53,18 @@ public sealed class Order : Entity, IAggregateRoot
 
     public decimal Pending { get; private set; }
 
+    private decimal AmountPaid => this.payments.Sum(x => x.Amount);
+
     private void CalculateTotals()
     {
-        this.SubTotal = this.orderDetails.Sum(x => x.SubTotal);
+        this.SubTotal = this.orderDetails.Sum(x => x.Total);
         this.Total = this.SubTotal + this.SubTotal * SpaccioConstants.Vat / 100;
+        this.Pending = this.Total - this.AmountPaid;
     }
 
     private void SetStatus()
     {
-        var amountPaid = this.payments.Sum(x => x.Amount);
-        this.Status = amountPaid == this.Total ? OrderStatus.Completed : OrderStatus.Pending;
-
-        this.Pending = this.Total - amountPaid;
+        this.Status = this.AmountPaid == this.Total ? OrderStatus.Completed : OrderStatus.Pending;
     }
 
     public void EditCustomer(Customer customer)

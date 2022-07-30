@@ -25,7 +25,9 @@ public class OrderDetail : Entity
 
     public Discount Discount { get; private set; }
 
-    public decimal SubTotal => this.Discount.Value > 0 ?
-        this.Product.NetPrice.Value - this.Product.NetPrice.Value / this.Discount.Value :
-        this.Product.NetPrice.Value;
+    public decimal SubTotal => this.Product.NetPrice.Value * this.Quantity.Value;
+
+    public decimal Total => this.Discount.Value > 0 ? 
+        this.SubTotal - this.SubTotal / this.Discount.Value : 
+        this.SubTotal;
 }
