@@ -1,15 +1,9 @@
-﻿<SfSidebar @ref="sidebarObj" Width="200px" DockSize="72px" EnableDock="true" @bind-IsOpen="sidebarToggle">
+﻿<SfSidebar Width="200px" DockSize="72px" IsOpen="true" EnableGestures="false">
     <ChildContent>
         <SfAccordion ID="main-menu" Height="100%">
             <AccordionItems>
                 <AuthorizeView>
                     <Authorized>
-                        <ul>
-                            <li class="sidebar-menu" id="toggle" @onclick="Toggle">
-                                <span class="e-icons expand"></span>
-                                <span class="e-text" title="menu">Menu</span>
-                            </li>
-                        </ul>
                         <AccordionItem Header="Inicio" IconCss="e-dashboard e-icons" Expanded="true">
                             <ContentTemplate>
                                 <ul>
