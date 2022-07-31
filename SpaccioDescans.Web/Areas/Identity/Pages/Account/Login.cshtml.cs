@@ -1,10 +1,14 @@
 ﻿#nullable disable
 
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SpaccioDescans.Core.Domain.Stores;
 
 namespace SpaccioDescans.Web.Areas.Identity.Pages.Account;
 
@@ -12,10 +16,12 @@ public class LoginModel : PageModel
 {
     private readonly ILogger<LoginModel> logger;
     private readonly SignInManager<IdentityUser> signInManager;
+    private readonly IStoreService storeService;
 
-    public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+    public LoginModel(SignInManager<IdentityUser> signInManager, IStoreService storeService, ILogger<LoginModel> logger)
     {
         this.signInManager = signInManager;
+        this.storeService = storeService;
         this.logger = logger;
     }
 
@@ -52,6 +58,10 @@ public class LoginModel : PageModel
         await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
         this.ReturnUrl = returnUrl;
+
+        var stores = await this.storeService.GetStoresAsync();
+        var items = stores.Select(item => new SelectListItem(item.Name, item.Id.ToString(CultureInfo.InvariantCulture))).ToList();
+        this.Input.SelectListItems = new Collection<SelectListItem>(items);
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -68,6 +78,7 @@ public class LoginModel : PageModel
         var result = await this.signInManager.PasswordSignInAsync(this.Input.UserName, this.Input.Password, this.Input.RememberMe, false);
         if (result.Succeeded)
         {
+            this.storeService.SetUserStore(this.Input.UserName, this.Input.StoreId);
             this.logger.LogInformation("User logged in.");
             return this.LocalRedirect(returnUrl);
         }
@@ -109,5 +120,10 @@ public class LoginModel : PageModel
         /// </summary>
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public int StoreId { get; set; }
+
+        [Display(Name = "Tienda")]
+        public Collection<SelectListItem> SelectListItems { get; set; }
     }
 }
