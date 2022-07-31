@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using SpaccioDescans.Core.Domain.Stores
 
 <PageTitle>Inicio</PageTitle>
 
@@ -10,4 +11,28 @@
 
 <div class="spaccio-content">
     <img alt="Spaccio Descanso logo" src="img/spaccio.png"/>
+    <div class="spaccio-header">@this.Store?.Name, @this.Store?.Address</div>
 </div>
+
+@code {
+    [Inject] private IStoreService StoreService { get; set; } = default!;
+
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
+
+    private Store? Store { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var user = authenticationState.User.Identity ??
+            throw new ArgumentNullException(nameof(authenticationState.User.Identity));
+
+        if (!user.IsAuthenticated)
+        {
+            return;
+        }
+
+        this.Store = await this.StoreService.GetStoreByUserAsync(user.Name!);
+    }
+}

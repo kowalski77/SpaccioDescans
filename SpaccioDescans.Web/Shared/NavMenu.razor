@@ -4,13 +4,18 @@
             <AccordionItems>
                 <AuthorizeView>
                     <Authorized>
-                        <AccordionItem Header="Inicio" IconCss="e-dashboard e-icons" Expanded="true">
+                        <AccordionItem Header="Sesión" IconCss="e-dashboard e-icons" Expanded="true">
                             <ContentTemplate>
-                                <ul>
-                                    <li class="sidebar-item">
-                                        <NavLink class="e-text nav-link" href="/">Resumen</NavLink>
-                                    </li>
-                                </ul>
+                                <form action="/Identity/Account/logout" method="post">
+                                    <ul>
+                                        <li class="sidebar-item">
+                                            <p>Hola, @context.User.Identity?.Name</p>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <input class="nav-link btn btn-link" type="submit" value="Cerrar" />
+                                        </li>
+                                    </ul>
+                                </form>
                             </ContentTemplate>
                         </AccordionItem>
                         <AccordionItem Header="Inventario" IconCss="e-dashboard e-icons" Expanded="true">
@@ -34,20 +39,6 @@
                                 </ul>
                             </ContentTemplate>
                         </AccordionItem>
-                        <AccordionItem Header="Sesión" IconCss="e-dashboard e-icons" Expanded="true">
-                            <ContentTemplate>
-                                <form action="/Identity/Account/logout" method="post">
-                                    <ul>
-                                        <li class="sidebar-item">
-                                            <p>@context.User.Identity.Name</p>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <input class="nav-link btn btn-link" type="submit" value="Cerrar" />
-                                        </li>
-                                    </ul>
-                                </form>
-                            </ContentTemplate>
-                        </AccordionItem>
                     </Authorized>
                     <NotAuthorized>
                         <AccordionItem Header="Sesión" IconCss="e-dashboard e-icons" Expanded="true">
@@ -63,14 +54,3 @@
         </SfAccordion>
     </ChildContent>
 </SfSidebar>
-
-@code {
-    private SfSidebar sidebarObj = default!;
-
-    private bool sidebarToggle;
-
-    private void Toggle()
-    {
-        sidebarToggle = !sidebarToggle;
-    }
-}

@@ -218,3 +218,11 @@ form .row {
     text-align: center;
     padding: 150px;
 }
+
+.spaccio-header {
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 20px;
+}

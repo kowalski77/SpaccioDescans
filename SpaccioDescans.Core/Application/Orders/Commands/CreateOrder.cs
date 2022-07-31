@@ -17,23 +17,20 @@ public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, lon
 {
     private readonly IOrderRepository orderRepository;
     private readonly IProductRepository productRepository;
-    private readonly IStoreRepository storeRepository;
-    private readonly IStoreCache storeCache;
+    private readonly IStoreService storeService;
 
-    public CreateOrderHandler(IOrderRepository orderRepository, IProductRepository productRepository, IStoreRepository storeRepository, IStoreCache storeCache)
+    public CreateOrderHandler(IOrderRepository orderRepository, IProductRepository productRepository, IStoreService storeService)
     {
         this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-        this.storeRepository = storeRepository ?? throw new ArgumentNullException(nameof(storeRepository));
-        this.storeCache = storeCache ?? throw new ArgumentNullException(nameof(storeCache));
+        this.storeService = storeService ?? throw new ArgumentNullException(nameof(storeService));
     }
 
     public async Task<long> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var storeId = this.storeCache.GetUserStore(request.User);
-        var store = await this.storeRepository.GetByIdAsync(storeId, cancellationToken);
+        var store = await this.storeService.GetStoreByUserAsync(request.User);
         var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.Nif, request.CustomerInfo.Phone);
         var orderDetails = await this.GetOrderDetails(request.OrderDetailItems);
         var payments = request.PaymentDataCollection.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));

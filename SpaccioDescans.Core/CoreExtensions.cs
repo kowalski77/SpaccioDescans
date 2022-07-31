@@ -16,5 +16,6 @@ public static class CoreExtensions
         };
         services.AddSingleton(querySettings);
         services.AddSingleton<IStoreCache, StoreCache>();
+        services.AddScoped<IStoreService, StoreService>();
     }
 }

@@ -12,7 +12,7 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.Services.AddAuthentication("Identity.Application")
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.ExpireTimeSpan = TimeSpan.FromSeconds(10);// here 2
     });
 
 // UI
