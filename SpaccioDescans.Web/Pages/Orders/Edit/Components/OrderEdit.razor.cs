@@ -43,7 +43,7 @@ public class OrderEditBase : ComponentBase
     {
         this.MainLayout.StartSpinner();
 
-        var command = (EditCustomerInfoCommand)this.OrderViewModel;
+        var command = this.OrderViewModel.AsEditCustomerInfoCommand();
         await this.Mediator.Send(command);
 
         this.MainLayout.StopSpinner();
@@ -61,7 +61,7 @@ public class OrderEditBase : ComponentBase
     {
         this.MainLayout.StartSpinner();
         
-        var command = (EditPaymentCommand)this.OrderViewModel;
+        var command = this.OrderViewModel.AsEditPaymentCommand();
         await this.Mediator.Send(command);
 
         this.MainLayout.StopSpinner();

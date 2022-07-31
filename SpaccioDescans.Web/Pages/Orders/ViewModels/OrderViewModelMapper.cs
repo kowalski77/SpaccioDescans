@@ -1,4 +1,5 @@
-﻿using SpaccioDescans.Core.Domain.Orders;
+﻿using SpaccioDescans.Core.Application.Orders.Commands;
+using SpaccioDescans.Core.Domain.Orders;
 
 namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 
@@ -32,5 +33,52 @@ public static class OrderViewModelMapper
             CreditCardAmount = orderEditDto.Payments.First(x => x.PaymentMethod == PaymentMethod.CreditCard).Amount,
             FinancedAmount = orderEditDto.Payments.First(x => x.PaymentMethod == PaymentMethod.Financed).Amount
         };
+    }
+
+    public static CreateOrderCommand AsCreateOrderCommand(this OrderViewModel order, string userName)
+    {
+        ArgumentNullException.ThrowIfNull(order);
+        if (string.IsNullOrEmpty(userName))
+        {
+            throw new ArgumentException($"'{nameof(userName)}' cannot be null or empty.", nameof(userName));
+        }
+
+        var customerInfo = new CustomerInfo(
+            order.CustomerInfo.Name, order.CustomerInfo.Address,
+            order.CustomerInfo.Nif, order.CustomerInfo.Phone);
+
+        var orderDetailItemCollection = order.OrderDetail.Select(x => new OrderDetailItem(x.ProductId, x.StoreId, x.Quantity, x.Discount));
+
+        var paymentDataCollection = new List<PaymentData>
+        {
+            new(PaymentMethod.CreditCard, order.CreditCardAmount),
+            new(PaymentMethod.Cash, order.CashAmount),
+            new(PaymentMethod.Financed, order.FinancedAmount)
+        };
+
+        return new CreateOrderCommand(userName, customerInfo, orderDetailItemCollection, paymentDataCollection);
+    }
+
+    public static EditCustomerInfoCommand AsEditCustomerInfoCommand(this OrderViewModel order)
+    {
+        ArgumentNullException.ThrowIfNull(order);
+
+        return new EditCustomerInfoCommand(
+            order.Id,
+            order.CustomerInfo.Name,
+            order.CustomerInfo.Address,
+            order.CustomerInfo.Nif,
+            order.CustomerInfo.Phone);
+    }
+
+    public static EditPaymentCommand AsEditPaymentCommand(this OrderViewModel order)
+    {
+        ArgumentNullException.ThrowIfNull(order);
+
+        return new EditPaymentCommand(
+            order.Id,
+            order.CashAmount,
+            order.CreditCardAmount,
+            order.FinancedAmount);
     }
 }

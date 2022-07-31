@@ -16,13 +16,15 @@ public class LoginModel : PageModel
 {
     private readonly ILogger<LoginModel> logger;
     private readonly SignInManager<IdentityUser> signInManager;
-    private readonly IStoreService storeService;
+    private readonly IStoreRepository storeRepository;
+    private readonly IStoreCache storeCache;
 
-    public LoginModel(SignInManager<IdentityUser> signInManager, IStoreService storeService, ILogger<LoginModel> logger)
+    public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IStoreRepository storeRepository, IStoreCache storeCache)
     {
         this.signInManager = signInManager;
-        this.storeService = storeService;
         this.logger = logger;
+        this.storeRepository = storeRepository;
+        this.storeCache = storeCache;
     }
 
     /// <summary>
@@ -59,7 +61,7 @@ public class LoginModel : PageModel
 
         this.ReturnUrl = returnUrl;
 
-        var stores = await this.storeService.GetStoresAsync();
+        var stores = await this.storeRepository.GetAllAsync();
         var items = stores.Select(item => new SelectListItem(item.Name, item.Id.ToString(CultureInfo.InvariantCulture))).ToList();
         this.Input.SelectListItems = new Collection<SelectListItem>(items);
     }
@@ -78,7 +80,7 @@ public class LoginModel : PageModel
         var result = await this.signInManager.PasswordSignInAsync(this.Input.UserName, this.Input.Password, this.Input.RememberMe, false);
         if (result.Succeeded)
         {
-            this.storeService.SetUserStore(this.Input.UserName, this.Input.StoreId);
+            this.storeCache.SetUserStore(this.Input.UserName, this.Input.StoreId);
             this.logger.LogInformation("User logged in.");
             return this.LocalRedirect(returnUrl);
         }

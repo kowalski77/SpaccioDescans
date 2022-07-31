@@ -5,7 +5,7 @@ using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Core.Application.Orders.Commands;
 
-public sealed record CreateOrderCommand(CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : ICommand<long>;
+public sealed record CreateOrderCommand(string User, CustomerInfo CustomerInfo, IEnumerable<OrderDetailItem> OrderDetailItems, IEnumerable<PaymentData> PaymentDataCollection) : ICommand<long>;
 
 public sealed record CustomerInfo(string Name, string Address, string Nif, string Phone);
 
@@ -18,19 +18,22 @@ public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, lon
     private readonly IOrderRepository orderRepository;
     private readonly IProductRepository productRepository;
     private readonly IStoreRepository storeRepository;
+    private readonly IStoreCache storeCache;
 
-    public CreateOrderHandler(IOrderRepository orderRepository, IProductRepository productRepository, IStoreRepository storeRepository)
+    public CreateOrderHandler(IOrderRepository orderRepository, IProductRepository productRepository, IStoreRepository storeRepository, IStoreCache storeCache)
     {
         this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         this.storeRepository = storeRepository ?? throw new ArgumentNullException(nameof(storeRepository));
+        this.storeCache = storeCache ?? throw new ArgumentNullException(nameof(storeCache));
     }
 
     public async Task<long> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var store = await this.storeRepository.GetByIdAsync(1, cancellationToken);
+        var storeId = this.storeCache.GetUserStore(request.User);
+        var store = await this.storeRepository.GetByIdAsync(storeId, cancellationToken);
         var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.Nif, request.CustomerInfo.Phone);
         var orderDetails = await this.GetOrderDetails(request.OrderDetailItems);
         var payments = request.PaymentDataCollection.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));

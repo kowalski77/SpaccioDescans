@@ -3,7 +3,7 @@ using SpaccioDescans.Core.Domain.Stores;
 
 namespace SpaccioDescans.Core.Application.Orders.Events;
 
-public sealed record OrderCreated(IEnumerable<long> ProductIds, int StoreId) : INotification;
+public sealed record OrderCreated(IEnumerable<long> ProductIds, long StoreId) : INotification;
 
 public class OrderCreatedHandler : INotificationHandler<OrderCreated>
 {

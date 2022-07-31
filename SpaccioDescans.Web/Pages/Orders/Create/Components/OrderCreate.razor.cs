@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
-using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
 using Syncfusion.Blazor.Notifications;
@@ -15,6 +15,8 @@ public class OrderCreateBase : ComponentBase
     [Inject] private IMediator Mediator { get; set; } = default!;
 
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
@@ -52,7 +54,10 @@ public class OrderCreateBase : ComponentBase
 
         this.MainLayout.StartSpinner();
 
-        var command = (CreateOrderCommand)this.OrderViewModel;
+        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authenticationState.User.Identity?.Name!;
+        
+        var command = this.OrderViewModel.AsCreateOrderCommand(userName);
         var orderId = await this.Mediator.Send(command);
 
         this.MainLayout.StopSpinner();
