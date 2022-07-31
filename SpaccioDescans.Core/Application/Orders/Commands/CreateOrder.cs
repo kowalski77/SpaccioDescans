@@ -30,12 +30,12 @@ public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, lon
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var store = await this.storeRepository.GetCurrentStore(cancellationToken);
+        var store = await this.storeRepository.GetByIdAsync(1, cancellationToken);
         var customer = new Customer(request.CustomerInfo.Name, request.CustomerInfo.Address, request.CustomerInfo.Nif, request.CustomerInfo.Phone);
         var orderDetails = await this.GetOrderDetails(request.OrderDetailItems);
         var payments = request.PaymentDataCollection.Select(paymentData => new Payment(paymentData.Amount, paymentData.PaymentMethod));
 
-        var order = new Order(store, customer, orderDetails, payments);
+        var order = new Order(store!, customer, orderDetails, payments);
 
         this.orderRepository.Save(order);
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
@@ -48,7 +48,7 @@ public sealed class CreateOrderHandler : ICommandHandler<CreateOrderCommand, lon
         var orderDetailsCollection = new List<OrderDetail>();
         foreach (var orderDetailItem in orderDetailItems)
         {
-            var product = await this.productRepository.GetAsync(orderDetailItem.ProductId);
+            var product = await this.productRepository.GetByIdAsync(orderDetailItem.ProductId);
 
             var orderDetail = new OrderDetail(product!, OrderQuantity.CreateInstance(orderDetailItem.Quantity), Discount.CreateInstance(orderDetailItem.Discount));
             orderDetailsCollection.Add(orderDetail);

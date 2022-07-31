@@ -22,7 +22,7 @@ public sealed class EditProductHandler : ICommandHandler<EditProductCommand, Uni
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
+        var product = await this.productRepository.GetByIdAsync(request.Id, cancellationToken);
 
         var netPrice = Price.CreateInstance(request.NetPrice);
 
@@ -31,7 +31,7 @@ public sealed class EditProductHandler : ICommandHandler<EditProductCommand, Uni
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
-            var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
+            var store = await this.storeRepository.GetByIdAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
             product.EditQuantityInStore(store!, quantity);

@@ -9,7 +9,7 @@ public sealed class OrderRepository : Repository<Order>, IOrderRepository
     {
     }
 
-    public override async Task<Order?> GetAsync(long id, CancellationToken cancellationToken = default)
+    public override async Task<Order?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var order = await this.Context.Orders.FindAsync(new object?[] { id }, cancellationToken);
         if(order is null)

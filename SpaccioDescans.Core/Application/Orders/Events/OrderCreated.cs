@@ -18,7 +18,7 @@ public class OrderCreatedHandler : INotificationHandler<OrderCreated>
     {
         ArgumentNullException.ThrowIfNull(notification);
 
-        var store = await this.storeRepository.GetAsync(notification.StoreId, cancellationToken);
+        var store = await this.storeRepository.GetByIdAsync(notification.StoreId, cancellationToken);
 
         foreach (var productId in notification.ProductIds)
         {

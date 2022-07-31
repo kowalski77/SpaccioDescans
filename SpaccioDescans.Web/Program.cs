@@ -1,10 +1,7 @@
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Infrastructure;
-using SpaccioDescans.Infrastructure.Persistence;
 using SpaccioDescans.Web.Areas.Identity.Support;
 using Syncfusion.Blazor;
 
@@ -19,9 +16,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
-
-builder.Services.Configure<TenantConfiguration>(builder.Configuration.GetSection(nameof(TenantConfiguration)));
-builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantConfiguration>>().Value);
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);

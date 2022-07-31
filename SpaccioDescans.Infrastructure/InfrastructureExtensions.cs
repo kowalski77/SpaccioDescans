@@ -28,7 +28,6 @@ public static class InfrastructureExtensions
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<SpaccioContext>();
 
-        services.AddSingleton<ITenantProvider, ConfigurationTenantProvider>();
         services.AddDbContext<SpaccioContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>

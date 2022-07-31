@@ -19,7 +19,7 @@ public abstract class Repository<T> : IRepository<T>
         return this.Context.Set<T>().Add(item).Entity;
     }
 
-    public virtual async Task<T?> GetAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         return await this.Context.Set<T>().FindAsync(new object?[] { id }, cancellationToken).ConfigureAwait(false);
     }

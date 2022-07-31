@@ -26,7 +26,7 @@ public sealed class CreateProductHandler : ICommandHandler<CreateProductCommand,
 
         foreach (var storeQuantity in request.StoreQuantities)
         {
-            var store = await this.storeRepository.GetAsync(storeQuantity.StoreCode, cancellationToken);
+            var store = await this.storeRepository.GetByIdAsync(storeQuantity.StoreCode, cancellationToken);
             var quantity = Quantity.CreateInstance(storeQuantity.Quantity);
 
             product.AddToStore(store!, quantity);

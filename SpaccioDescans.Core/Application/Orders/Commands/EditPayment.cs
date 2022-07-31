@@ -19,7 +19,7 @@ public sealed record EditPaymentCommandHandler : ICommandHandler<EditPaymentComm
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var order = await this.orderRepository.GetAsync(request.OrderId, cancellationToken);
+        var order = await this.orderRepository.GetByIdAsync(request.OrderId, cancellationToken);
 
         var cash = new Payment(request.Cash, PaymentMethod.Cash);
         var creditCard = new Payment(request.CreditCard, PaymentMethod.CreditCard);

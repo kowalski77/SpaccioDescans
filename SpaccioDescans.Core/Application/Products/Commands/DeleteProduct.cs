@@ -19,7 +19,7 @@ public sealed class DeleteProductHandler : ICommandHandler<DeleteProductCommand,
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var product = await this.productRepository.GetAsync(request.Id, cancellationToken);
+        var product = await this.productRepository.GetByIdAsync(request.Id, cancellationToken);
         product!.Delete();
 
         await this.productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

@@ -19,7 +19,7 @@ public sealed class CancelOrderCommandHandler : ICommandHandler<CancelOrderComma
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var order = await this.orderRepository.GetAsync(request.Id, cancellationToken);
+        var order = await this.orderRepository.GetByIdAsync(request.Id, cancellationToken);
         order!.Cancel();
 
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
