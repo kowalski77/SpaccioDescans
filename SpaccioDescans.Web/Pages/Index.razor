@@ -10,8 +10,8 @@
 </SfBreadcrumb>
 
 <div class="spaccio-content">
-    <img alt="Spaccio Descanso logo" src="img/spaccio.png"/>
-    <div class="spaccio-header">@this.Store?.Name, @this.Store?.Address</div>
+    <img alt="Spaccio Descanso logo" src="img/spaccio.png" />
+    <div class="spaccio-header">@this.StoreDescription</div>
 </div>
 
 @code {
@@ -20,6 +20,10 @@
     [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
     private Store? Store { get; set; }
+
+    private string StoreDescription => this.Store is not null ? 
+        $"{this.Store.Name}, {this.Store.Address}" : 
+        string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
