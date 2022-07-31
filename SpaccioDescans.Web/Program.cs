@@ -9,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
 
 // Add services to the container.
-builder.Services.AddAuthentication("Identity.Application").AddCookie();
+builder.Services.AddAuthentication("Identity.Application")
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
 
 // UI
 builder.Services.AddRazorPages();
