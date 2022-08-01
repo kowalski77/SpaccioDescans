@@ -16,7 +16,7 @@ public class OrderItemViewModel
 
     public decimal Total { get; set; }
 
-    public static explicit operator OrderItemViewModel(OrderDto orderDto)
+    public static explicit operator OrderItemViewModel(OrderSummaryDto orderDto)
     {
         ArgumentNullException.ThrowIfNull(orderDto);
 

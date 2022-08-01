@@ -5,9 +5,9 @@ using SpaccioDescans.Core.Domain.Orders;
 
 namespace SpaccioDescans.Core.Application.Orders.Queries;
 
-public sealed record GetOrdersQuery : IRequest<IEnumerable<OrderDto>>;
+public sealed record GetOrdersQuery : IRequest<IEnumerable<OrderSummaryDto>>;
 
-public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, IEnumerable<OrderDto>>
+public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, IEnumerable<OrderSummaryDto>>
 {
     private readonly QuerySettings querySettings;
 
@@ -16,7 +16,7 @@ public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, IEnumerable<Orde
         this.querySettings = querySettings;
     }
 
-    public async Task<IEnumerable<OrderDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<OrderSummaryDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -29,7 +29,7 @@ public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, IEnumerable<Orde
                             inner join Stores s
                             on o.StoreId = s.Id";
 
-        var orders = await connection.QueryAsync<OrderDto>(query);
+        var orders = await connection.QueryAsync<OrderSummaryDto>(query);
 
         return orders;
     }

@@ -5,7 +5,7 @@ namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 public static class OrderViewModelMapper
 {
-    public static OrderViewModel AsOrderViewModel(this OrderEditDto orderEditDto)
+    public static OrderViewModel AsOrderViewModel(this OrderDto orderEditDto)
     {
         ArgumentNullException.ThrowIfNull(orderEditDto);
 

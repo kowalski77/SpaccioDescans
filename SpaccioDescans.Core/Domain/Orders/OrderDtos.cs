@@ -1,6 +1,6 @@
 ﻿namespace SpaccioDescans.Core.Domain.Orders;
 
-public class OrderDto
+public class OrderSummaryDto
 {
     public long Id { get; init; }
 
@@ -15,7 +15,7 @@ public class OrderDto
     public decimal Total { get; init; }
 }
 
-public class OrderEditDto
+public class OrderDto
 {
     public long Id { get; init; }
 
@@ -23,14 +23,14 @@ public class OrderEditDto
 
     public OrderStatus OrderStatus { get; init; }
 
-    public CustomerEditDto Customer { get; internal set; } = default!;
+    public CustomerDto Customer { get; internal set; } = default!;
 
-    public ICollection<PaymentEditDto> Payments { get; internal set; } = new List<PaymentEditDto>();
+    public ICollection<PaymentDto> Payments { get; internal set; } = new List<PaymentDto>();
 
-    public ICollection<OrderDetailEditDto> OrderDetails { get; internal set; } = new List<OrderDetailEditDto>();
+    public ICollection<OrderDetailDto> OrderDetails { get; internal set; } = new List<OrderDetailDto>();
 }
 
-public class CustomerEditDto
+public class CustomerDto
 {
     public string Name { get; init; } = default!;
 
@@ -41,14 +41,14 @@ public class CustomerEditDto
     public string Phone { get; init; } = default!;
 }
 
-public class PaymentEditDto
+public class PaymentDto
 {
     public decimal Amount { get; private set; }
 
     public PaymentMethod PaymentMethod { get; private set; }
 }
 
-public class OrderDetailEditDto
+public class OrderDetailDto
 {
     public int Quantity { get; set; }
 
