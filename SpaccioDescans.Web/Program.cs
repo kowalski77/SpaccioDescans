@@ -3,6 +3,7 @@ using SpaccioDescans.Core;
 using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Web.Areas.Identity.Support;
+using SpaccioDescans.Web.Invoices;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddSingleton(_ => new InvoiceFactory(new Dictionary<InvoiceType, IInvoiceProvider> 
+{
+    { InvoiceType.DeliveryNote, new DeliveryNoteProvider() }
+}));
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);

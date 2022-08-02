@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Application.Orders.Queries;
-using SpaccioDescans.Core.Application.Services;
 using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.Core.Domain.Stores;
+using SpaccioDescans.Web.Invoices;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
 using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Notifications;
-using CustomerInfo = SpaccioDescans.Core.Application.Services.CustomerInfo;
 
 namespace SpaccioDescans.Web.Pages.Orders.Edit.Components;
 
@@ -26,8 +25,10 @@ public class OrderEditBase : ComponentBase
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
     [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-    
+
     [Inject] private IStoreService StoreService { get; set; } = default!;
+
+    [Inject] private InvoiceFactory InvoiceFactory { get; set; } = default!;
 
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
@@ -72,7 +73,7 @@ public class OrderEditBase : ComponentBase
     protected async Task EditPaymentAsync()
     {
         this.MainLayout.StartSpinner();
-        
+
         var command = this.OrderViewModel.AsEditPaymentCommand();
         await this.Mediator.Send(command);
 
@@ -114,61 +115,17 @@ public class OrderEditBase : ComponentBase
     protected async Task PrintDeliveryNoteAsync()
     {
         this.MainLayout.StartSpinner();
+
+        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authenticationState.User.Identity?.Name!;
+        var store = await this.StoreService.GetStoreByUserAsync(userName);
         
-        var headerInfo = await this.GetHeaderInfoAsync();
-        var customerInfo = this.GetCustomerInfo();
-        var orderDetailInfo = this.GetOrderDetailInfo();
-
-        var filePath = Path.Combine("Files", "invoices.xls");
-        using var invoiceBuilder = InvoiceBuilder.Create(filePath, new DeliveryNoteParser());
-
-        var stream = invoiceBuilder
-            .AddHeader(headerInfo)
-            .AddCustomer(customerInfo)
-            .AddOrderDetails(orderDetailInfo)
-            .Build();
+        var invoiceProvider = this.InvoiceFactory.CreateInvoiceProvider(InvoiceType.DeliveryNote);
+        var stream = invoiceProvider.GetInvoiceStream(store, this.OrderViewModel);
 
         await this.JSRuntime.SaveAs($"albaran_{this.OrderId}.xls", stream.ToArray());
 
         this.MainLayout.StopSpinner();
-    }
-
-    private async Task<HeaderInfo> GetHeaderInfoAsync()
-    {
-        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userName = authenticationState.User.Identity?.Name!;
-        var store = await this.StoreService.GetStoreByUserAsync(userName);
-
-        return new HeaderInfo
-        {
-            Name = store.Owner,
-            Address = store.Address,
-            FiscalId = store.Nif,
-            InvoiceId = this.OrderId
-        };
-    }
-
-    private CustomerInfo GetCustomerInfo()
-    {
-        return new CustomerInfo
-        {
-            Nif = this.OrderViewModel.CustomerInfo.Nif,
-            Name = this.OrderViewModel.CustomerInfo.Name,
-            Address = this.OrderViewModel.CustomerInfo.Address,
-            Phone = this.OrderViewModel.CustomerInfo.Phone
-        };
-    }
-
-    private IEnumerable<OrderDetailInfo> GetOrderDetailInfo()
-    {
-        return this.OrderViewModel.OrderDetail.Select(detail => new OrderDetailInfo
-        {
-            Quantity = detail.Quantity,
-            ProductDescription = detail.Name,
-            Discount = (double)detail.Discount,
-            NetPrice = (double)detail.Price,
-            Total = (double)detail.Total
-        });
     }
 
     private void DisableEditOperations()
