@@ -15,6 +15,7 @@ public static class CoreExtensions
             ConnectionString = configuration.GetConnectionString("DefaultConnection")
         };
         services.AddSingleton(querySettings);
+
         services.AddSingleton<IStoreCache, StoreCache>();
         services.AddScoped<IStoreService, StoreService>();
     }

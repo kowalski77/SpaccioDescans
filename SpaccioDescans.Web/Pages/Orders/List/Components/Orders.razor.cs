@@ -1,10 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Queries;
+using SpaccioDescans.Core.Application.Services;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
+using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
+using Syncfusion.XlsIO;
 
 namespace SpaccioDescans.Web.Pages.Orders.List.Components;
 
@@ -35,6 +39,5 @@ public class OrdersBase : ComponentBase
     {
         await this.Grid.ExportToExcelAsync();
     }
-
 }
 

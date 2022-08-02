@@ -38,4 +38,10 @@
 		<UpToDateCheckInput Remove="Shared\Condition.razor" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Include="Files\invoices.xls">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>
