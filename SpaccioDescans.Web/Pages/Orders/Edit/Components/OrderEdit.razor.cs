@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Application.Orders.Queries;
 using SpaccioDescans.Core.Application.Services;
 using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
 using SpaccioDescans.Web.Support;
@@ -22,6 +24,10 @@ public class OrderEditBase : ComponentBase
     [Inject] private IMediator Mediator { get; set; } = default!;
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
+    
+    [Inject] private IStoreService StoreService { get; set; } = default!;
 
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
@@ -107,33 +113,58 @@ public class OrderEditBase : ComponentBase
 
     protected async Task PrintInvoiceAsync()
     {
+        var headerInfo = await this.GetHeaderInfoAsync();
+        var customerInfo = this.GetCustomerInfo();
+        var orderDetailInfo = this.GetOrderDetailInfo();
+
         var filePath = Path.Combine("Files", "invoices.xls");
-
-        var header = new HeaderInfo
-        {
-            InvoiceId = (int)this.OrderId,
-            Name = "Jesse Pinkman",
-            Address = "Calle de la Paz, #1",
-            City = "Alburquerque",
-            FiscalId = "1111111x"
-        };
-
-        var customerInfo = new CustomerInfo
-        {
-            Nif = "78945613z",
-            Name = "Walter White",
-            Address = "Big street, #1, New York",
-            Phone = "321654987"
-        };
-
         using var invoiceBuilder = InvoiceBuilder.Create(filePath, new DeliveryNoteParser());
 
         var stream = invoiceBuilder
-            .AddHeader(header)
+            .AddHeader(headerInfo)
             .AddCustomer(customerInfo)
+            .AddOrderDetails(orderDetailInfo)
             .Build();
 
         await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
+    }
+
+    private async Task<HeaderInfo> GetHeaderInfoAsync()
+    {
+        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authenticationState.User.Identity?.Name!;
+        var store = await this.StoreService.GetStoreByUserAsync(userName);
+
+        return new HeaderInfo
+        {
+            Name = store.Owner,
+            Address = store.Address,
+            FiscalId = store.Nif,
+            InvoiceId = this.OrderId
+        };
+    }
+
+    private CustomerInfo GetCustomerInfo()
+    {
+        return new CustomerInfo
+        {
+            Nif = this.OrderViewModel.CustomerInfo.Nif,
+            Name = this.OrderViewModel.CustomerInfo.Name,
+            Address = this.OrderViewModel.CustomerInfo.Address,
+            Phone = this.OrderViewModel.CustomerInfo.Phone
+        };
+    }
+
+    private IEnumerable<OrderDetailInfo> GetOrderDetailInfo()
+    {
+        return this.OrderViewModel.OrderDetail.Select(detail => new OrderDetailInfo
+        {
+            Quantity = detail.Quantity,
+            ProductDescription = detail.Name,
+            Discount = (double)detail.Discount,
+            NetPrice = (double)detail.Price,
+            Total = (double)detail.Total
+        });
     }
 
     private void DisableEditOperations()

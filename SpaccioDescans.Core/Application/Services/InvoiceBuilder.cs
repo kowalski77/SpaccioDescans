@@ -61,7 +61,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         return this;
     }
 
-    public IInvoiceBuilder AddOrderDetail(IEnumerable<OrderDetailInfo> orderDetailInfos)
+    public IInvoiceBuilder AddOrderDetails(IEnumerable<OrderDetailInfo> orderDetailInfos)
     {
         ArgumentNullException.ThrowIfNull(orderDetailInfos);
 

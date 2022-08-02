@@ -17,7 +17,6 @@ public class DeliveryNoteParser : InvoiceParser
         worksheet.Range["C3"].Text = header.Name;
         worksheet.Range["G4"].Text = header.FiscalId;
         worksheet.Range["C6"].Text = header.Address;
-        worksheet.Range["C7"].Text = header.City;
     }
 
     public override void ParseCustomer(IWorksheet worksheet, CustomerInfo customerInfo)
@@ -40,9 +39,7 @@ public class DeliveryNoteParser : InvoiceParser
         foreach (var orderInfo in orderInfos)
         {
             worksheet.Range[$"C{row}"].Number = orderInfo.Quantity;
-            worksheet.Range[$"E{row}"].Text = orderInfo.Meassure;
-            worksheet.Range[$"G{row}"].Text = orderInfo.Description;
-            worksheet.Range[$"M{row}"].Text = orderInfo.Vendor;
+            worksheet.Range[$"E{row}"].Text = orderInfo.ProductDescription;
             worksheet.Range[$"N{row}"].Number = orderInfo.NetPrice;
             worksheet.Range[$"O{row}"].Number = orderInfo.Discount;
             worksheet.Range[$"S{row}"].Number = orderInfo.Total;

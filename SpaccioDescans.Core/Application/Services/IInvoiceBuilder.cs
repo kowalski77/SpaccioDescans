@@ -10,7 +10,7 @@ public interface IInvoiceBuilder : IDisposable
 
     IInvoiceBuilder AddCustomer(CustomerInfo customerInfo);
 
-    IInvoiceBuilder AddOrderDetail(IEnumerable<OrderDetailInfo> orderDetailInfos);
+    IInvoiceBuilder AddOrderDetails(IEnumerable<OrderDetailInfo> orderDetailInfos);
 
     MemoryStream Build();
 }
