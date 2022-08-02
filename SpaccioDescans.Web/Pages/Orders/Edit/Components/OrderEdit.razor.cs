@@ -111,7 +111,7 @@ public class OrderEditBase : ComponentBase
         this.NavigationManager.NavigateTo(this.NavigationManager.Uri, forceLoad: true);
     }
 
-    protected async Task PrintInvoiceAsync()
+    protected async Task PrintDeliveryNoteAsync()
     {
         this.MainLayout.StartSpinner();
         
