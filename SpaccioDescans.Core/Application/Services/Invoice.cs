@@ -2,7 +2,9 @@
 
 public class Header
 {
-    public string? Name { get; set; }
+    public int InvoiceId { get; init; }
+
+    public string? Name { get; init; }
 
     public string? FiscalId { get; init; }
 

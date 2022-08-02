@@ -5,9 +5,10 @@ namespace SpaccioDescans.Core.Application.Services;
 public interface IInvoiceBuilder : IDisposable
 {
     IInvoiceBuilder SetExcelVersion(ExcelVersion version);
-    
-    IInvoiceBuilder SetWorksheet(int worksheet);
+
+    IInvoiceBuilder AddHeader(Header header);
+
+    IInvoiceBuilder AddCustomer(CustomerInfo customerInfo);
 
     MemoryStream Build();
-    IInvoiceBuilder AddHeader(Header header);
 }

@@ -8,23 +8,30 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     private readonly FileStream? fileStream;
     private readonly IApplication? application;
     private readonly IWorkbook? workbook;
-    
-    private IWorksheet worksheet;
+    private readonly InvoiceParser invoiceParser;
+    private readonly IWorksheet worksheet;
 
-    private InvoiceBuilder(string invoiceTemplatePath)
+    private InvoiceBuilder(string invoiceTemplatePath, InvoiceParser invoiceParser)
     {
+        if (string.IsNullOrWhiteSpace(invoiceTemplatePath))
+        {
+            throw new ArgumentException($"'{nameof(invoiceTemplatePath)}' cannot be null or whitespace.", nameof(invoiceTemplatePath));
+        }
+
+        this.invoiceParser = invoiceParser ?? throw new ArgumentNullException(nameof(invoiceParser));
+        
         this.excelEngine = new ExcelEngine();
         this.application = excelEngine.Excel;
         this.application.DefaultVersion = ExcelVersion.Excel97to2003;
         
         this.fileStream = new FileStream(invoiceTemplatePath, FileMode.Open);
         this.workbook = this.application.Workbooks.Open(this.fileStream);
-        this.worksheet = workbook.Worksheets[0];
+        this.worksheet = workbook.Worksheets[invoiceParser.WorksheetNumber];
     }
 
-    public static IInvoiceBuilder Create(string invoiceTemplatePath)
+    public static IInvoiceBuilder Create(string invoiceTemplatePath, InvoiceParser invoiceParser)
     {
-        return new InvoiceBuilder(invoiceTemplatePath);
+        return new InvoiceBuilder(invoiceTemplatePath, invoiceParser);
     }
 
     public IInvoiceBuilder SetExcelVersion(ExcelVersion version)
@@ -36,21 +43,20 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         return this;
     }
 
-    public IInvoiceBuilder SetWorksheet(int worksheet)
+    public IInvoiceBuilder AddHeader(Header header)
     {
-        this.worksheet = this.workbook!.Worksheets[worksheet];
+        ArgumentNullException.ThrowIfNull(header);
+        
+        this.invoiceParser.ParseHeader(this.worksheet, header);
 
         return this;
     }
 
-    public IInvoiceBuilder AddHeader(Header header)
+    public IInvoiceBuilder AddCustomer(CustomerInfo customerInfo)
     {
-        ArgumentNullException.ThrowIfNull(header);
+        ArgumentNullException.ThrowIfNull(customerInfo);
 
-        this.worksheet.Range["C3"].Text = header.Name;
-        this.worksheet.Range["G4"].Text = header.FiscalId;
-        this.worksheet.Range["C6"].Text = header.Address;
-        this.worksheet.Range["C7"].Text = header.City;
+        this.invoiceParser.ParseCustomer(this.worksheet, customerInfo);
 
         return this;
     }

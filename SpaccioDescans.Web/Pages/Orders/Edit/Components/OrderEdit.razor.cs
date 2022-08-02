@@ -10,6 +10,7 @@ using SpaccioDescans.Web.Shared;
 using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Notifications;
 using Syncfusion.XlsIO;
+using CustomerInfo = SpaccioDescans.Core.Application.Services.CustomerInfo;
 
 namespace SpaccioDescans.Web.Pages.Orders.Edit.Components;
 
@@ -108,19 +109,29 @@ public class OrderEditBase : ComponentBase
     protected async Task PrintInvoiceAsync()
     {
         var filePath = Path.Combine("Files", "invoices.xls");
-        using var invoiceBuilder = InvoiceBuilder.Create(filePath);
 
         var header = new Header
         {
+            InvoiceId = (int)this.OrderId,
             Name = "Jesse Pinkman",
             Address = "Calle de la Paz, #1",
             City = "Alburquerque",
             FiscalId = "1111111x"
         };
 
+        var customerInfo = new CustomerInfo
+        {
+            Nif = "78945613z",
+            Name = "Walter White",
+            Address = "Big street, #1, New York",
+            Phone = "321654987"
+        };
+
+        using var invoiceBuilder = InvoiceBuilder.Create(filePath, new DeliveryNote());
+
         var stream = invoiceBuilder
-            .SetWorksheet(5)
             .AddHeader(header)
+            .AddCustomer(customerInfo)
             .Build();
 
         await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
