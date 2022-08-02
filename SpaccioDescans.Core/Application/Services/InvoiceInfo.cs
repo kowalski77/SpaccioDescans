@@ -1,6 +1,6 @@
 ﻿namespace SpaccioDescans.Core.Application.Services;
 
-public class Header
+public class HeaderInfo
 {
     public int InvoiceId { get; init; }
 
@@ -22,4 +22,21 @@ public class CustomerInfo
     public string? Nif { get; init; }
 
     public string? Phone { get; init; }
+}
+
+public class OrderDetailInfo
+{
+    public int Quantity { get; init; }
+
+    public string? Meassure { get; init; }
+
+    public string? Description { get; init; }
+
+    public string? Vendor { get; init; }
+
+    public double NetPrice { get; init; }
+
+    public double Discount { get; init; }
+
+    public double Total { get; init; }
 }

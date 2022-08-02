@@ -9,7 +9,6 @@ using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
 using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Notifications;
-using Syncfusion.XlsIO;
 using CustomerInfo = SpaccioDescans.Core.Application.Services.CustomerInfo;
 
 namespace SpaccioDescans.Web.Pages.Orders.Edit.Components;
@@ -110,7 +109,7 @@ public class OrderEditBase : ComponentBase
     {
         var filePath = Path.Combine("Files", "invoices.xls");
 
-        var header = new Header
+        var header = new HeaderInfo
         {
             InvoiceId = (int)this.OrderId,
             Name = "Jesse Pinkman",
@@ -127,7 +126,7 @@ public class OrderEditBase : ComponentBase
             Phone = "321654987"
         };
 
-        using var invoiceBuilder = InvoiceBuilder.Create(filePath, new DeliveryNote());
+        using var invoiceBuilder = InvoiceBuilder.Create(filePath, new DeliveryNoteParser());
 
         var stream = invoiceBuilder
             .AddHeader(header)

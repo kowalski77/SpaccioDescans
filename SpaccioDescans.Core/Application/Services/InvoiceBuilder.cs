@@ -43,7 +43,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         return this;
     }
 
-    public IInvoiceBuilder AddHeader(Header header)
+    public IInvoiceBuilder AddHeader(HeaderInfo header)
     {
         ArgumentNullException.ThrowIfNull(header);
         
@@ -57,6 +57,15 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         ArgumentNullException.ThrowIfNull(customerInfo);
 
         this.invoiceParser.ParseCustomer(this.worksheet, customerInfo);
+
+        return this;
+    }
+
+    public IInvoiceBuilder AddOrderDetail(IEnumerable<OrderDetailInfo> orderDetailInfos)
+    {
+        ArgumentNullException.ThrowIfNull(orderDetailInfos);
+
+        this.invoiceParser.ParseOrderDetail(this.worksheet, orderDetailInfos);
 
         return this;
     }

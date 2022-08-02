@@ -11,7 +11,9 @@ public abstract class InvoiceParser
 
     public int WorksheetNumber { get; set; }
 
-    public abstract void ParseHeader(IWorksheet worksheet, Header header);
+    public abstract void ParseHeader(IWorksheet worksheet, HeaderInfo header);
 
     public abstract void ParseCustomer(IWorksheet worksheet, CustomerInfo customerInfo);
+
+    public abstract void ParseOrderDetail(IWorksheet worksheet, IEnumerable<OrderDetailInfo> orderInfos);
 }
