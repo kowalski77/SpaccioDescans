@@ -113,6 +113,8 @@ public class OrderEditBase : ComponentBase
 
     protected async Task PrintInvoiceAsync()
     {
+        this.MainLayout.StartSpinner();
+        
         var headerInfo = await this.GetHeaderInfoAsync();
         var customerInfo = this.GetCustomerInfo();
         var orderDetailInfo = this.GetOrderDetailInfo();
@@ -126,7 +128,9 @@ public class OrderEditBase : ComponentBase
             .AddOrderDetails(orderDetailInfo)
             .Build();
 
-        await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
+        await this.JSRuntime.SaveAs($"albaran_{this.OrderId}.xls", stream.ToArray());
+
+        this.MainLayout.StopSpinner();
     }
 
     private async Task<HeaderInfo> GetHeaderInfoAsync()
