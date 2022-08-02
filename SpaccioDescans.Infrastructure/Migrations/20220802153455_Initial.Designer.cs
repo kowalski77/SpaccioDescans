@@ -12,8 +12,8 @@ using SpaccioDescans.Infrastructure.Persistence;
 namespace SpaccioDescans.Infrastructure.Migrations
 {
     [DbContext(typeof(SpaccioContext))]
-    [Migration("20220726151126_OrderPaymentDeleteBehavior")]
-    partial class OrderPaymentDeleteBehavior
+    [Migration("20220802153455_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,7 +226,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Customer", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Customer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,15 +255,12 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,9 +297,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Total")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
@@ -316,7 +310,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.OrderDetail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -333,9 +327,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -345,7 +336,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Payment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -368,9 +359,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -378,7 +366,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Products.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -401,9 +389,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Vendor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -413,7 +398,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Products.ProductStore", b =>
                 {
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
@@ -431,7 +416,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.ToTable("ProductStore");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Stores.Store", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,15 +428,24 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nif")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -461,18 +455,22 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            Address = "Carretera de Terrassa",
+                            Address = "Carretera de Terrassa, 377 local 1, C.P. 08205 - Sabadell (Barcelona)",
+                            Email = "spaccio.descanso@hotmail.com",
                             Name = "Tienda 1",
-                            SoftDeleted = false,
-                            TenantId = 0
+                            Nif = "47170665B",
+                            Owner = "Yasmina Aranda Díaz",
+                            SoftDeleted = false
                         },
                         new
                         {
                             Id = 2L,
-                            Address = "Avenida de Matadepera",
+                            Address = "Avenida de Matadepera, 171, C.P. 08207 - Sabadell (Barcelona)",
+                            Email = "spaccio.descanso@hotmail.com",
                             Name = "Tienda 2",
-                            SoftDeleted = false,
-                            TenantId = 0
+                            Nif = "47170665B",
+                            Owner = "Esteban Aranda Manzano",
+                            SoftDeleted = false
                         });
                 });
 
@@ -527,15 +525,15 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Order", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Orders.Customer", "Customer")
+                    b.HasOne("SpaccioDescans.Core.Domain.Orders.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SpaccioDescans.Core.Stores.Store", "Store")
+                    b.HasOne("SpaccioDescans.Core.Domain.Stores.Store", "Store")
                         .WithMany()
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -546,21 +544,21 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.OrderDetail", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.OrderDetail", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Orders.Order", "Order")
+                    b.HasOne("SpaccioDescans.Core.Domain.Orders.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
-                        .WithMany("OrderDetails")
+                    b.HasOne("SpaccioDescans.Core.Domain.Products.Product", "Product")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("SpaccioDescans.Core.Orders.Discount", "Discount", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Domain.Orders.Discount", "Discount", b1 =>
                         {
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
@@ -578,7 +576,7 @@ namespace SpaccioDescans.Infrastructure.Migrations
                                 .HasForeignKey("OrderDetailId");
                         });
 
-                    b.OwnsOne("SpaccioDescans.Core.Orders.OrderQuantity", "Quantity", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Domain.Orders.OrderQuantity", "Quantity", b1 =>
                         {
                             b1.Property<long>("OrderDetailId")
                                 .HasColumnType("bigint");
@@ -607,17 +605,17 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Payment", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Payment", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Orders.Order", null)
+                    b.HasOne("SpaccioDescans.Core.Domain.Orders.Order", null)
                         .WithMany("Payments")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Products.Product", b =>
                 {
-                    b.OwnsOne("SpaccioDescans.Core.Products.Price", "NetPrice", b1 =>
+                    b.OwnsOne("SpaccioDescans.Core.Domain.Products.Price", "NetPrice", b1 =>
                         {
                             b1.Property<long>("ProductId")
                                 .HasColumnType("bigint");
@@ -639,13 +637,13 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.ProductStore", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Products.ProductStore", b =>
                 {
-                    b.HasOne("SpaccioDescans.Core.Products.Product", "Product")
+                    b.HasOne("SpaccioDescans.Core.Domain.Products.Product", "Product")
                         .WithMany("ProductStores")
                         .HasForeignKey("ProductId");
 
-                    b.HasOne("SpaccioDescans.Core.Stores.Store", "Store")
+                    b.HasOne("SpaccioDescans.Core.Domain.Stores.Store", "Store")
                         .WithMany("ProductStores")
                         .HasForeignKey("StoreId");
 
@@ -654,21 +652,19 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Orders.Order", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Orders.Order", b =>
                 {
                     b.Navigation("OrderDetails");
 
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Products.Product", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Products.Product", b =>
                 {
-                    b.Navigation("OrderDetails");
-
                     b.Navigation("ProductStores");
                 });
 
-            modelBuilder.Entity("SpaccioDescans.Core.Stores.Store", b =>
+            modelBuilder.Entity("SpaccioDescans.Core.Domain.Stores.Store", b =>
                 {
                     b.Navigation("ProductStores");
                 });

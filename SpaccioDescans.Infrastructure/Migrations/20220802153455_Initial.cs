@@ -58,7 +58,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Address = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
                     Nif = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
                     Phone = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -77,7 +76,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Measures = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NetPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -92,8 +90,10 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nif = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -221,7 +221,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     SubTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Pending = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -274,7 +273,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Quantity = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -303,7 +301,6 @@ namespace SpaccioDescans.Infrastructure.Migrations
                     Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
                     SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -313,18 +310,19 @@ namespace SpaccioDescans.Infrastructure.Migrations
                         name: "FK_Payment_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Stores",
-                columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { 1L, "Carretera de Terrassa", "Tienda 1", false, 0 });
+                columns: new[] { "Id", "Address", "Email", "Name", "Nif", "Owner", "SoftDeleted" },
+                values: new object[] { 1L, "Carretera de Terrassa, 377 local 1, C.P. 08205 - Sabadell (Barcelona)", "spaccio.descanso@hotmail.com", "Tienda 1", "47170665B", "Yasmina Aranda Díaz", false });
 
             migrationBuilder.InsertData(
                 table: "Stores",
-                columns: new[] { "Id", "Address", "Name", "SoftDeleted", "TenantId" },
-                values: new object[] { 2L, "Avenida de Matadepera", "Tienda 2", false, 0 });
+                columns: new[] { "Id", "Address", "Email", "Name", "Nif", "Owner", "SoftDeleted" },
+                values: new object[] { 2L, "Avenida de Matadepera, 171, C.P. 08207 - Sabadell (Barcelona)", "spaccio.descanso@hotmail.com", "Tienda 2", "47170665B", "Esteban Aranda Manzano", false });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
