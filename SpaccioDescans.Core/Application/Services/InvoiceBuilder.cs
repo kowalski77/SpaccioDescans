@@ -9,7 +9,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     private readonly IApplication? application;
     private readonly IWorkbook? workbook;
     
-    private IWorksheet? worksheet;
+    private IWorksheet worksheet;
 
     private InvoiceBuilder(string invoiceTemplatePath)
     {
@@ -39,6 +39,18 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     public IInvoiceBuilder SetWorksheet(int worksheet)
     {
         this.worksheet = this.workbook!.Worksheets[worksheet];
+
+        return this;
+    }
+
+    public IInvoiceBuilder AddHeader(Header header)
+    {
+        ArgumentNullException.ThrowIfNull(header);
+
+        this.worksheet.Range["C3"].Text = header.Name;
+        this.worksheet.Range["G4"].Text = header.FiscalId;
+        this.worksheet.Range["C6"].Text = header.Address;
+        this.worksheet.Range["C7"].Text = header.City;
 
         return this;
     }

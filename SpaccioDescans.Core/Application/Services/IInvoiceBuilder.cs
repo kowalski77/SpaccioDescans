@@ -9,4 +9,5 @@ public interface IInvoiceBuilder : IDisposable
     IInvoiceBuilder SetWorksheet(int worksheet);
 
     MemoryStream Build();
+    IInvoiceBuilder AddHeader(Header header);
 }

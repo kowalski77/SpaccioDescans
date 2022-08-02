@@ -1,11 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SpaccioDescans.Core.Application.Orders.Commands;
 using SpaccioDescans.Core.Application.Orders.Queries;
+using SpaccioDescans.Core.Application.Services;
 using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
+using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Notifications;
+using Syncfusion.XlsIO;
 
 namespace SpaccioDescans.Web.Pages.Orders.Edit.Components;
 
@@ -18,6 +22,8 @@ public class OrderEditBase : ComponentBase
     [Inject] private IMediator Mediator { get; set; } = default!;
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
     protected OrderViewModel OrderViewModel { get; private set; } = new();
 
@@ -97,6 +103,27 @@ public class OrderEditBase : ComponentBase
         });
 
         this.NavigationManager.NavigateTo(this.NavigationManager.Uri, forceLoad: true);
+    }
+
+    protected async Task PrintInvoiceAsync()
+    {
+        var filePath = Path.Combine("Files", "invoices.xls");
+        using var invoiceBuilder = InvoiceBuilder.Create(filePath);
+
+        var header = new Header
+        {
+            Name = "Jesse Pinkman",
+            Address = "Calle de la Paz, #1",
+            City = "Alburquerque",
+            FiscalId = "1111111x"
+        };
+
+        var stream = invoiceBuilder
+            .SetWorksheet(5)
+            .AddHeader(header)
+            .Build();
+
+        await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
     }
 
     private void DisableEditOperations()

@@ -40,4 +40,3 @@ public class OrdersBase : ComponentBase
         await this.Grid.ExportToExcelAsync();
     }
 }
-
