@@ -34,3 +34,18 @@ public class OrderDetailInfo
 
     public double Total { get; init; }
 }
+
+public class PaymentInfo
+{
+    public double Cash { get; init; }
+
+    public double CreditCard { get; init; }
+
+    public double Financed { get; init; }
+
+    public double Net { get; init; }
+
+    public double Total { get; init; }
+
+    public double Pending { get; init; }
+}

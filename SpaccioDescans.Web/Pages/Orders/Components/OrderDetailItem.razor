@@ -12,15 +12,15 @@
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Precio</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Price" Readonly="true" ShowSpinButton="false" />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Price" Readonly="true" ShowSpinButton="false" Currency="EUR"/>
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Descuento</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated" Readonly="!this.IsEnabled" />
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.Discount" OnChange="@this.OnDiscountUpdated" Readonly="!this.IsEnabled" Min="0" Max="100" Currency="EUR"/>
     </div>
     <div class="col-sm-2 col-lg-2 col-md-2">
         <label class="spaccio-label">Total</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Total" Readonly="true" ShowSpinButton="false" />
+        <SfNumericTextBox TValue="decimal" Format="c2" Value="@this.OrderDetail.Total" Readonly="true" ShowSpinButton="false" Currency="EUR"/>
     </div>
     @if (this.IsEnabled)
     {

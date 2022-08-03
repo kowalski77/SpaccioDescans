@@ -12,5 +12,7 @@ public interface IInvoiceBuilder : IDisposable
 
     IInvoiceBuilder AddOrderDetails(IEnumerable<OrderDetailInfo> orderDetailInfos);
 
+    IInvoiceBuilder AddPayment(PaymentInfo payment);
+
     MemoryStream Build();
 }

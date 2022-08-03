@@ -16,4 +16,6 @@ public abstract class InvoiceParser
     public abstract void ParseCustomer(IWorksheet worksheet, CustomerInfo customerInfo);
 
     public abstract void ParseOrderDetail(IWorksheet worksheet, IEnumerable<OrderDetailInfo> orderInfos);
+
+    public abstract void ParsePayment(IWorksheet worksheet, PaymentInfo paymentInfo);
 }

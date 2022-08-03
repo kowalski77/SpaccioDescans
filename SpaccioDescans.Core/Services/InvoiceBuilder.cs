@@ -70,6 +70,15 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         return this;
     }
 
+    public IInvoiceBuilder AddPayment(PaymentInfo payment)
+    {
+        ArgumentNullException.ThrowIfNull(payment);
+
+        this.invoiceParser.ParsePayment(this.worksheet, payment);
+
+        return this;
+    }
+
     public MemoryStream Build()
     {
         using var stream = new MemoryStream();

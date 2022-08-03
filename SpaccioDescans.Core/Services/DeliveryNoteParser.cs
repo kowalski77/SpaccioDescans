@@ -46,4 +46,17 @@ public class DeliveryNoteParser : InvoiceParser
             row++;
         }
     }
+
+    public override void ParsePayment(IWorksheet worksheet, PaymentInfo paymentInfo)
+    {
+        ArgumentNullException.ThrowIfNull(worksheet);
+        ArgumentNullException.ThrowIfNull(paymentInfo);
+
+        worksheet.Range["S38"].Number = paymentInfo.Net;
+        worksheet.Range["S40"].Number = paymentInfo.Total;
+        worksheet.Range["S43"].Number = paymentInfo.Pending;
+        worksheet.Range["H40"].Number = paymentInfo.Cash;
+        worksheet.Range["H41"].Number = paymentInfo.CreditCard;
+        worksheet.Range["H42"].Number = paymentInfo.Financed;
+    }
 }

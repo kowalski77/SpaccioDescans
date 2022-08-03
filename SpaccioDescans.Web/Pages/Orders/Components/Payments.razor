@@ -6,31 +6,31 @@
 <div class="row">
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Tarjeta</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.CreditCardAmount" Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.CreditCardAmount" Enabled="@this.Enabled" Min="0" Max="100000"  Currency="EUR"/>
     </div>
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Neto</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.NetAmount"  Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.NetAmount"  Enabled="@this.Enabled" Currency="EUR"/>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Efectivo</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.OrderViewModel.CashAmount"  Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-value="@this.OrderViewModel.CashAmount"  Enabled="@this.Enabled" Min="0" Max="100000" Currency="EUR"/>
     </div>
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Total (+ 21% IVA)</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.TotalAmount"  Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.TotalAmount"  Enabled="@this.Enabled" Currency="EUR"/>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Crédito</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.FinancedAmount"  Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" @bind-Value="@this.OrderViewModel.FinancedAmount"  Enabled="@this.Enabled" Min="0" Max="100000" Currency="EUR" />
     </div>
     <div class="col-sm-6 col-lg-6 col-md-6">
         <label class="spaccio-label">Pendiente</label>
-        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.PendingAmount"  Enabled="@this.Enabled"/>
+        <SfNumericTextBox TValue="decimal" Format="c2" Readonly="true" ShowSpinButton="false" Value="@this.OrderViewModel.PendingAmount"  Enabled="@this.Enabled" Currency="EUR"/>
         <ValidationMessage For="@(() => this.OrderViewModel.PendingAmount)"></ValidationMessage>
     </div>
 </div>

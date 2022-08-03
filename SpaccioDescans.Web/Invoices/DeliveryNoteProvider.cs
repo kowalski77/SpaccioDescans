@@ -14,6 +14,7 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
         var headerInfo = GetHeaderInfoAsync(store, order);
         var customerInfo = GetCustomerInfo(order);
         var orderDetailInfo = GetOrderDetailInfo(order);
+        var paymentInfo = GetPaymentInfo(order);
 
         using var invoiceBuilder = InvoiceBuilder.Create(this.FilePath, new DeliveryNoteParser());
 
@@ -21,6 +22,7 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
             .AddHeader(headerInfo)
             .AddCustomer(customerInfo)
             .AddOrderDetails(orderDetailInfo)
+            .AddPayment(paymentInfo)
             .Build();
 
         return stream;
@@ -58,5 +60,18 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
             NetPrice = (double)detail.Price,
             Total = (double)detail.Total
         });
+    }
+
+    private static PaymentInfo GetPaymentInfo(OrderViewModel order)
+    {
+        return new PaymentInfo
+        {
+            Cash = (double)order.CashAmount,
+            CreditCard = (double)order.CreditCardAmount,
+            Financed = (double)order.FinancedAmount,
+            Net = (double)order.NetAmount,
+            Total = (double)order.TotalAmount,
+            Pending = (double)order.PendingAmount
+        };
     }
 }
