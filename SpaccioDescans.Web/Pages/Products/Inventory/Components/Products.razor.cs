@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using SpaccioDescans.Core.Application.Products.Commands;
-using SpaccioDescans.Core.Application.Products.Queries;
+using SpaccioDescans.Core.Domain.Products.Commands;
+using SpaccioDescans.Core.Domain.Products.Queries;
 using Syncfusion.Blazor.Grids;
 using Action = Syncfusion.Blazor.Grids.Action;
 
@@ -34,7 +34,7 @@ public class ProductsBase : ComponentBase
     private async Task DeleteAsync(ActionEventArgs<ProductViewModel> arg)
     {
         var command = new DeleteProductCommand(arg.Data.Id);
-        _ = await this.Mediator.Send(command);
+        await this.Mediator.Send(command);
     }
 
     private async Task SaveAsync(ActionEventArgs<ProductViewModel> arg)
@@ -49,7 +49,7 @@ public class ProductsBase : ComponentBase
         else
         {
             var command = (EditProductCommand)arg.Data;
-            _ = await this.Mediator.Send(command);
+            await this.Mediator.Send(command);
         }
     }
 

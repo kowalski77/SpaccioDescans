@@ -1,6 +1,6 @@
 ﻿using Syncfusion.XlsIO;
 
-namespace SpaccioDescans.Core.Application.Services;
+namespace SpaccioDescans.Core.Services;
 
 public sealed class InvoiceBuilder : IInvoiceBuilder
 {
@@ -19,13 +19,13 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         }
 
         this.invoiceParser = invoiceParser ?? throw new ArgumentNullException(nameof(invoiceParser));
-        
+
         this.excelEngine = new ExcelEngine();
         this.application = excelEngine.Excel;
         this.application.DefaultVersion = ExcelVersion.Excel97to2003;
-        
+
         this.fileStream = new FileStream(invoiceTemplatePath, FileMode.Open);
-        this.workbook = this.application.Workbooks.Open(this.fileStream);
+        this.workbook = this.application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand);
         this.worksheet = workbook.Worksheets[invoiceParser.WorksheetNumber];
     }
 
@@ -46,7 +46,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     public IInvoiceBuilder AddHeader(HeaderInfo header)
     {
         ArgumentNullException.ThrowIfNull(header);
-        
+
         this.invoiceParser.ParseHeader(this.worksheet, header);
 
         return this;
@@ -81,6 +81,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
 
     public void Dispose()
     {
+        this.workbook?.Close();
         this.excelEngine?.Dispose();
         this.fileStream?.Dispose();
     }

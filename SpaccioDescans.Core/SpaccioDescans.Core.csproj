@@ -15,10 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Domain\Products\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\SpaccioDescans.SharedKernel\SpaccioDescans.SharedKernel.csproj" />
 	</ItemGroup>
 

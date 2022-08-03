@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application.Products.Commands;
 using SpaccioDescans.Core.Domain.Products;
+using SpaccioDescans.Core.Domain.Products.Commands;
 
 namespace SpaccioDescans.Web.Pages.Products;
 
@@ -21,10 +21,10 @@ public class ProductViewModel
     [DataType(DataType.Currency), Range(1, 10000)]
     public decimal Price { get; set; }
 
-    [Range(0,100)]
+    [Range(0, 100)]
     public int QuantityStoreOne { get; set; }
 
-    [Range(0,100)]
+    [Range(0, 100)]
     public int QuantityStoreTwo { get; set; }
 
     public static explicit operator ProductViewModel(ProductDto productDto)

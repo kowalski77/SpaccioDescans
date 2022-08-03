@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
-using SpaccioDescans.Core.Application.Orders.Commands;
-using SpaccioDescans.Core.Application.Orders.Queries;
 using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Orders.Commands;
+using SpaccioDescans.Core.Domain.Orders.Queries;
 using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.Web.Invoices;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;

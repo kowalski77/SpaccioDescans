@@ -3,7 +3,7 @@ using Dapper;
 using MediatR;
 using SpaccioDescans.Core.Domain.Products;
 
-namespace SpaccioDescans.Core.Application.Products.Queries;
+namespace SpaccioDescans.Core.Domain.Products.Queries;
 
 public sealed record GetProductsQuery : IRequest<IEnumerable<ProductDto>>;
 
@@ -40,7 +40,7 @@ public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnum
         {
             var product = g.First();
             product.ProductStores = g.Select(x => x.ProductStores.First()).ToList();
-            
+
             return product;
         });
 

@@ -3,7 +3,7 @@ using Dapper;
 using MediatR;
 using SpaccioDescans.Core.Domain.Orders;
 
-namespace SpaccioDescans.Core.Application.Orders.Queries;
+namespace SpaccioDescans.Core.Domain.Orders.Queries;
 
 public sealed record GetOrderByIdQuery(long Id) : IRequest<OrderDto>;
 

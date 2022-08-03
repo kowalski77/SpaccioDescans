@@ -1,6 +1,6 @@
 using MediatR;
 using SpaccioDescans.Core;
-using SpaccioDescans.Core.Application.Products.Commands;
+using SpaccioDescans.Core.Domain.Products.Commands;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Web.Areas.Identity.Support;
 using SpaccioDescans.Web.Invoices;

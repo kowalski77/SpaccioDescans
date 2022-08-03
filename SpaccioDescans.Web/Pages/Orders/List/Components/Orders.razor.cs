@@ -1,14 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using SpaccioDescans.Core.Application.Orders.Queries;
-using SpaccioDescans.Core.Application.Services;
+using SpaccioDescans.Core.Domain.Orders.Queries;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
-using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
-using Syncfusion.XlsIO;
 
 namespace SpaccioDescans.Web.Pages.Orders.List.Components;
 

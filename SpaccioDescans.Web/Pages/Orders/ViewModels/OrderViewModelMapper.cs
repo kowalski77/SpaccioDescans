@@ -1,5 +1,5 @@
-﻿using SpaccioDescans.Core.Application.Orders.Commands;
-using SpaccioDescans.Core.Domain.Orders;
+﻿using SpaccioDescans.Core.Domain.Orders;
+using SpaccioDescans.Core.Domain.Orders.Commands;
 
 namespace SpaccioDescans.Web.Pages.Orders.ViewModels;
 

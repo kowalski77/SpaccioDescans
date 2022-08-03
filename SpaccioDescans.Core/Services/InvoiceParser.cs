@@ -1,6 +1,6 @@
 ﻿using Syncfusion.XlsIO;
 
-namespace SpaccioDescans.Core.Application.Services;
+namespace SpaccioDescans.Core.Services;
 
 public abstract class InvoiceParser
 {

@@ -2,7 +2,7 @@
 using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Application.Orders.Commands;
+namespace SpaccioDescans.Core.Domain.Orders.Commands;
 
 public sealed record EditCustomerInfoCommand(long OrderId, string Name, string Address, string Nif, string Phone) : ICommand<Unit>;
 
@@ -20,13 +20,13 @@ public class EditCustomerInfoHandler : ICommandHandler<EditCustomerInfoCommand, 
         ArgumentNullException.ThrowIfNull(request);
 
         var order = await this.orderRepository.GetByIdAsync(request.OrderId, cancellationToken);
-        
+
         var customer = new Customer(
-            request.Name, 
-            request.Address, 
-            request.Nif, 
+            request.Name,
+            request.Address,
+            request.Nif,
             request.Phone);
-        
+
         order!.EditCustomer(customer);
 
         await this.orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

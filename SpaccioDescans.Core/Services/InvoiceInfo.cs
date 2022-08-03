@@ -1,4 +1,4 @@
-﻿namespace SpaccioDescans.Core.Application.Services;
+﻿namespace SpaccioDescans.Core.Services;
 
 public class HeaderInfo
 {

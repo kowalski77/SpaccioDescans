@@ -2,7 +2,7 @@
 using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.SharedKernel.DDD;
 
-namespace SpaccioDescans.Core.Application.Orders.Commands;
+namespace SpaccioDescans.Core.Domain.Orders.Commands;
 
 public sealed record CancelOrderCommand(long Id) : ICommand<Unit>;
 
