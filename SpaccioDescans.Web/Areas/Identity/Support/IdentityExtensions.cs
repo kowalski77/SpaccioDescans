@@ -8,6 +8,11 @@ public static class IdentityExtensions
     {
         ArgumentNullException.ThrowIfNull(host);
 
+        if (!host.Environment.IsDevelopment())
+        {
+            return;
+        }
+
         using var scope = host.Services.CreateAsyncScope();
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();

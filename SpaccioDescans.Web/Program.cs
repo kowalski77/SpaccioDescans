@@ -21,7 +21,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
-builder.Services.AddSingleton(_ => new InvoiceFactory(new Dictionary<InvoiceType, IInvoiceProvider> 
+builder.Services.AddSingleton(_ => new InvoiceFactory(new Dictionary<InvoiceType, IInvoiceProvider>
 {
     { InvoiceType.DeliveryNote, new DeliveryNoteProvider() }
 }));
@@ -49,6 +49,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/Identity/Account/Register", context => Task.Run(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+app.MapPost("/Identity/Account/Register", context => Task.Run(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

@@ -1,5 +1,4 @@
-﻿using SpaccioDescans.Core.Domain.Orders;
-using SpaccioDescans.Core.Domain.Products;
+﻿using SpaccioDescans.Core.Domain.Products;
 using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.SharedKernel.DDD;
 
