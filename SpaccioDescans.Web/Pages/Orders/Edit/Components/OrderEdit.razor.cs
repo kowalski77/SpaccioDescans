@@ -116,14 +116,26 @@ public class OrderEditBase : ComponentBase
     {
         this.MainLayout.StartSpinner();
 
-        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userName = authenticationState.User.Identity?.Name!;
-        var store = await this.StoreService.GetStoreByUserAsync(userName);
-        
-        var invoiceProvider = this.InvoiceFactory.CreateInvoiceProvider(InvoiceType.DeliveryNote);
-        var stream = invoiceProvider.GetInvoiceStream(store, this.OrderViewModel);
+        var store = await this.GetStoreAsync();
+        var invoiceInfo = InvoiceMappers.Map(this.OrderViewModel, store);
+
+        var stream = this.InvoiceFactory.GetInvoiceStream(invoiceInfo, InvoiceType.DeliveryNote);
 
         await this.JSRuntime.SaveAs($"albaran_{this.OrderId}.xls", stream.ToArray());
+
+        this.MainLayout.StopSpinner();
+    }
+
+    protected async Task PrintCustomerInvoiceAsync()
+    {
+        this.MainLayout.StartSpinner();
+
+        var store = await this.GetStoreAsync();
+        var invoiceInfo = InvoiceMappers.Map(this.OrderViewModel, store);
+
+        var stream = this.InvoiceFactory.GetInvoiceStream(invoiceInfo, InvoiceType.CustomerInvoice);
+
+        await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
 
         this.MainLayout.StopSpinner();
     }
@@ -132,6 +144,15 @@ public class OrderEditBase : ComponentBase
     {
         this.IsCustomerDataEditable = false;
         this.IsPaymentEditable = false;
+    }
+
+    private async Task<Store> GetStoreAsync()
+    {
+        var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = authenticationState.User.Identity?.Name!;
+        var store = await this.StoreService.GetStoreByUserAsync(userName);
+
+        return store;
     }
 }
 

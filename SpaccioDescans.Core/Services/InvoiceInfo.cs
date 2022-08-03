@@ -1,5 +1,7 @@
 ﻿namespace SpaccioDescans.Core.Services;
 
+public record InvoiceInfo(HeaderInfo Header, CustomerInfo Customer, IEnumerable<OrderDetailInfo> OrderDetails, PaymentInfo Payment);
+
 public class HeaderInfo
 {
     public long InvoiceId { get; init; }

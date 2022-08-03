@@ -21,10 +21,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
-builder.Services.AddSingleton(_ => new InvoiceFactory(new Dictionary<InvoiceType, IInvoiceProvider>
-{
-    { InvoiceType.DeliveryNote, new DeliveryNoteProvider() }
-}));
+builder.Services.AddSingleton<InvoiceFactory>();
 
 // BE
 builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly);

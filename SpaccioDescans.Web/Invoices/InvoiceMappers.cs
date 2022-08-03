@@ -4,31 +4,22 @@ using SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 namespace SpaccioDescans.Web.Invoices;
 
-public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
+public static class InvoiceMappers
 {
-    public MemoryStream GetInvoiceStream(Store store, OrderViewModel order)
+    public static InvoiceInfo Map(OrderViewModel order, Store store)
     {
         ArgumentNullException.ThrowIfNull(store);
         ArgumentNullException.ThrowIfNull(order);
 
-        var headerInfo = GetHeaderInfoAsync(store, order);
-        var customerInfo = GetCustomerInfo(order);
-        var orderDetailInfo = GetOrderDetailInfo(order);
-        var paymentInfo = GetPaymentInfo(order);
-
-        using var invoiceBuilder = InvoiceBuilder.Create(this.FilePath, new DeliveryNoteParser());
-
-        var stream = invoiceBuilder
-            .AddHeader(headerInfo)
-            .AddCustomer(customerInfo)
-            .AddOrderDetails(orderDetailInfo)
-            .AddPayment(paymentInfo)
-            .Build();
-
-        return stream;
+        return new InvoiceInfo(
+            MapHeaderInfo(order, store), 
+            MapCustomerInfo(order), 
+            MapOrderDetailsInfo(order), 
+            MapPaymentInfo(order));
     }
 
-    private static HeaderInfo GetHeaderInfoAsync(Store store, OrderViewModel order)
+    
+    private static HeaderInfo MapHeaderInfo(OrderViewModel order, Store store)
     {
         return new HeaderInfo
         {
@@ -39,7 +30,7 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
         };
     }
 
-    private static CustomerInfo GetCustomerInfo(OrderViewModel order)
+    private static CustomerInfo MapCustomerInfo(OrderViewModel order)
     {
         return new CustomerInfo
         {
@@ -50,7 +41,7 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
         };
     }
 
-    private static IEnumerable<OrderDetailInfo> GetOrderDetailInfo(OrderViewModel order)
+    private static IEnumerable<OrderDetailInfo> MapOrderDetailsInfo(OrderViewModel order)
     {
         return order.OrderDetail.Select(detail => new OrderDetailInfo
         {
@@ -62,7 +53,7 @@ public sealed class DeliveryNoteProvider : InvoiceProvider, IInvoiceProvider
         });
     }
 
-    private static PaymentInfo GetPaymentInfo(OrderViewModel order)
+    private static PaymentInfo MapPaymentInfo(OrderViewModel order)
     {
         return new PaymentInfo
         {

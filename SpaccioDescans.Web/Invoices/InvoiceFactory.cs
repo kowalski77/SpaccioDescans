@@ -1,18 +1,34 @@
-﻿namespace SpaccioDescans.Web.Invoices;
+﻿using SpaccioDescans.Core.Services;
 
-public class InvoiceFactory
+namespace SpaccioDescans.Web.Invoices;
+
+public sealed class InvoiceFactory
 {
-    private readonly Dictionary<InvoiceType, IInvoiceProvider> strategies;
+    private readonly string filePath = Path.Combine("Files", "invoices.xls");
 
-    public InvoiceFactory(Dictionary<InvoiceType, IInvoiceProvider> strategies)
+    public MemoryStream GetInvoiceStream(InvoiceInfo info, InvoiceType invoiceType)
     {
-        this.strategies = strategies ?? throw new ArgumentNullException(nameof(strategies));
+        ArgumentNullException.ThrowIfNull(info);
+
+        using var invoiceBuilder = InvoiceBuilder.Create(this.filePath, GetInvoiceParser(invoiceType));
+
+        var stream = invoiceBuilder
+            .AddHeader(info.Header)
+            .AddCustomer(info.Customer)
+            .AddOrderDetails(info.OrderDetails)
+            .AddPayment(info.Payment)
+            .Build();
+
+        return stream;
     }
 
-    public IInvoiceProvider CreateInvoiceProvider(InvoiceType invoiceType)
+    private static InvoiceParser GetInvoiceParser(InvoiceType invoiceType)
     {
-        return this.strategies.TryGetValue(invoiceType, out var strategy) ?
-            strategy :
-            throw new InvalidOperationException("Could not create the invoice provider");
+        return invoiceType switch
+        {
+            InvoiceType.DeliveryNote => new DeliveryNoteParser(),
+            InvoiceType.CustomerInvoice => new CustomerInvoiceParser(),
+            _ => throw new ArgumentException($"Unknown invoice type: {invoiceType}"),
+        };
     }
 }

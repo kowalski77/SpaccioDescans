@@ -3,6 +3,6 @@
 public enum InvoiceType
 {
     DeliveryNote,
-    ClientInvoice,
+    CustomerInvoice,
     StoreInvoice
 }
