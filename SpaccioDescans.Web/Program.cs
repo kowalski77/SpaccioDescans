@@ -1,6 +1,7 @@
 using MediatR;
 using SpaccioDescans.Core;
 using SpaccioDescans.Core.Domain.Products.Commands;
+using SpaccioDescans.Core.Services;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Web.Areas.Identity.Support;
 using SpaccioDescans.Web.Invoices;
@@ -21,6 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddSingleton<IInvoiceBuilder>(_ => new InvoiceBuilder(Path.Combine("Files", "invoices.xls")));
 builder.Services.AddSingleton<InvoiceFactory>();
 
 // BE

@@ -4,21 +4,20 @@ namespace SpaccioDescans.Core.Services;
 
 public sealed class InvoiceBuilder : IInvoiceBuilder
 {
-    private readonly ExcelEngine? excelEngine;
-    private readonly FileStream? fileStream;
-    private readonly IApplication? application;
-    private readonly IWorkbook? workbook;
-    private readonly InvoiceParser invoiceParser;
-    private readonly IWorksheet worksheet;
+    private readonly ExcelEngine excelEngine;
+    private readonly FileStream fileStream;
+    private readonly IApplication application;
+    private readonly IWorkbook workbook;
+    
+    private IWorksheet worksheet;
+    private InvoiceParser invoiceParser;
 
-    private InvoiceBuilder(string invoiceTemplatePath, InvoiceParser invoiceParser)
+    public InvoiceBuilder(string invoiceTemplatePath)
     {
         if (string.IsNullOrWhiteSpace(invoiceTemplatePath))
         {
             throw new ArgumentException($"'{nameof(invoiceTemplatePath)}' cannot be null or whitespace.", nameof(invoiceTemplatePath));
         }
-
-        this.invoiceParser = invoiceParser ?? throw new ArgumentNullException(nameof(invoiceParser));
 
         this.excelEngine = new ExcelEngine();
         this.application = excelEngine.Excel;
@@ -26,19 +25,16 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
 
         this.fileStream = new FileStream(invoiceTemplatePath, FileMode.Open);
         this.workbook = this.application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand);
-        this.worksheet = workbook.Worksheets[invoiceParser.WorksheetNumber];
+
+        // default parser is DeliverNote
+        this.invoiceParser = new DeliveryNoteParser();
+        this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
     }
 
-    public static IInvoiceBuilder Create(string invoiceTemplatePath, InvoiceParser invoiceParser)
+    public IInvoiceBuilder SetParser(InvoiceParser invoiceParser)
     {
-        return new InvoiceBuilder(invoiceTemplatePath, invoiceParser);
-    }
-
-    public IInvoiceBuilder SetExcelVersion(ExcelVersion version)
-    {
-        ArgumentNullException.ThrowIfNull(version);
-
-        this.application!.DefaultVersion = version;
+        this.invoiceParser = invoiceParser;
+        this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
 
         return this;
     }
