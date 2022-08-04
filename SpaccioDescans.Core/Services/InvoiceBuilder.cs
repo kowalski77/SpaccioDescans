@@ -8,9 +8,12 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     private readonly FileStream fileStream;
     private readonly IApplication application;
     private readonly IWorkbook workbook;
+
+    private readonly List<Action> worksheetActions = new();
     
     private IWorksheet worksheet;
     private InvoiceParser invoiceParser;
+    private Action? parserAction;
 
     public InvoiceBuilder(string invoiceTemplatePath)
     {
@@ -31,10 +34,15 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
     }
 
-    public IInvoiceBuilder SetParser(InvoiceParser invoiceParser)
+    public IInvoiceBuilder WithParser(InvoiceParser invoiceParser)
     {
-        this.invoiceParser = invoiceParser;
-        this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
+        void ParserAction()
+        {
+            this.invoiceParser = invoiceParser;
+            this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
+        }
+
+        this.parserAction = ParserAction;
 
         return this;
     }
@@ -43,7 +51,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     {
         ArgumentNullException.ThrowIfNull(header);
 
-        this.invoiceParser.ParseHeader(this.worksheet, header);
+        this.worksheetActions.Add(() => this.invoiceParser.ParseHeader(this.worksheet, header));
 
         return this;
     }
@@ -52,8 +60,8 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     {
         ArgumentNullException.ThrowIfNull(customerInfo);
 
-        this.invoiceParser.ParseCustomer(this.worksheet, customerInfo);
-
+        this.worksheetActions.Add(() => this.invoiceParser.ParseCustomer(this.worksheet, customerInfo));
+        
         return this;
     }
 
@@ -61,7 +69,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     {
         ArgumentNullException.ThrowIfNull(orderDetailInfos);
 
-        this.invoiceParser.ParseOrderDetail(this.worksheet, orderDetailInfos);
+        this.worksheetActions.Add(() => this.invoiceParser.ParseOrderDetail(this.worksheet, orderDetailInfos));
 
         return this;
     }
@@ -70,13 +78,21 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     {
         ArgumentNullException.ThrowIfNull(payment);
 
-        this.invoiceParser.ParsePayment(this.worksheet, payment);
+        this.worksheetActions.Add(() => this.invoiceParser.ParsePayment(this.worksheet, payment));
 
         return this;
     }
 
     public MemoryStream Build()
     {
+        this.parserAction?.Invoke();
+        foreach (var worksheetAction in this.worksheetActions)
+        {
+            worksheetAction.Invoke();
+        }
+        this.parserAction = null;
+        this.worksheetActions.Clear();  
+        
         using var stream = new MemoryStream();
 
         workbook!.SaveAs(stream);

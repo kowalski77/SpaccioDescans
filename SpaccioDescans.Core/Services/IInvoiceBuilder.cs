@@ -4,7 +4,7 @@ namespace SpaccioDescans.Core.Services;
 
 public interface IInvoiceBuilder : IDisposable
 {
-    IInvoiceBuilder SetParser(InvoiceParser invoiceParser);
+    IInvoiceBuilder WithParser(InvoiceParser invoiceParser);
 
     IInvoiceBuilder AddHeader(HeaderInfo header);
 

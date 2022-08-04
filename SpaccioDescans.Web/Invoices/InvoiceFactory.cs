@@ -4,8 +4,6 @@ namespace SpaccioDescans.Web.Invoices;
 
 public sealed class InvoiceFactory
 {
-    private readonly string filePath = Path.Combine("Files", "invoices.xls");
-
     private readonly IInvoiceBuilder invoiceBuilder;
 
     public InvoiceFactory(IInvoiceBuilder invoiceBuilder)
@@ -18,11 +16,11 @@ public sealed class InvoiceFactory
         ArgumentNullException.ThrowIfNull(info);
 
         var stream = invoiceBuilder
-            .SetParser(GetInvoiceParser(invoiceType))
             .AddHeader(info.Header)
             .AddCustomer(info.Customer)
             .AddOrderDetails(info.OrderDetails)
             .AddPayment(info.Payment)
+            .WithParser(GetInvoiceParser(invoiceType))
             .Build();
 
         return stream;
