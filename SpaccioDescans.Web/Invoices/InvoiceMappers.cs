@@ -18,7 +18,6 @@ public static class InvoiceMappers
             MapPaymentInfo(order));
     }
 
-    
     private static HeaderInfo MapHeaderInfo(OrderViewModel order, Store store)
     {
         return new HeaderInfo
