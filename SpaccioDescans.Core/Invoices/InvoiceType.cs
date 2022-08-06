@@ -1,4 +1,4 @@
-﻿namespace SpaccioDescans.Web.Invoices;
+﻿namespace SpaccioDescans.Core.Invoices;
 
 public enum InvoiceType
 {

@@ -1,4 +1,4 @@
-﻿namespace SpaccioDescans.Core.Services;
+﻿namespace SpaccioDescans.Core.Invoices;
 
 public record InvoiceInfo(HeaderInfo Header, CustomerInfo Customer, IEnumerable<OrderDetailInfo> OrderDetails, PaymentInfo Payment);
 

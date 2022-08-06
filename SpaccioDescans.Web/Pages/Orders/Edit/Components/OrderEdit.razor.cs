@@ -6,6 +6,7 @@ using SpaccioDescans.Core.Domain.Orders;
 using SpaccioDescans.Core.Domain.Orders.Commands;
 using SpaccioDescans.Core.Domain.Orders.Queries;
 using SpaccioDescans.Core.Domain.Stores;
+using SpaccioDescans.Core.Invoices;
 using SpaccioDescans.Web.Invoices;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
@@ -119,7 +120,7 @@ public class OrderEditBase : ComponentBase
         var store = await this.GetStoreAsync();
         var invoiceInfo = InvoiceMappers.Map(this.OrderViewModel, store);
 
-        var stream = this.InvoiceFactory.GetInvoiceStream(invoiceInfo, InvoiceType.DeliveryNote);
+        var stream = this.InvoiceFactory.GetInvoice<DeliveryNote>(invoiceInfo);
 
         await this.JSRuntime.SaveAs($"albaran_{this.OrderId}.xls", stream.ToArray());
 
@@ -133,7 +134,7 @@ public class OrderEditBase : ComponentBase
         var store = await this.GetStoreAsync();
         var invoiceInfo = InvoiceMappers.Map(this.OrderViewModel, store);
 
-        var stream = this.InvoiceFactory.GetInvoiceStream(invoiceInfo, InvoiceType.CustomerInvoice);
+        var stream = this.InvoiceFactory.GetInvoice<CustomerInvoice>(invoiceInfo);
 
         await this.JSRuntime.SaveAs($"factura_{this.OrderId}.xls", stream.ToArray());
 

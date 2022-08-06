@@ -1,5 +1,5 @@
 ﻿using SpaccioDescans.Core.Domain.Stores;
-using SpaccioDescans.Core.Services;
+using SpaccioDescans.Core.Invoices;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 
 namespace SpaccioDescans.Web.Invoices;
