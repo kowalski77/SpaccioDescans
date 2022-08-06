@@ -8,7 +8,6 @@ public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
 
     private readonly ExcelEngine excelEngine;
     private readonly FileStream fileStream;
-
     private readonly Lazy<IWorkbook> workbookLazy;
 
     public SyncfusionWorkbookFacade(InvoiceSettings invoiceSettings)
@@ -23,7 +22,7 @@ public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
         this.workbookLazy = new Lazy<IWorkbook>(() => application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand));
     }
 
-    public IWorkbook Workbook => this.workbookLazy.Value;
+    private IWorkbook Workbook => this.workbookLazy.Value;
 
     public void SetWorksheetNumber(int worksheetNumber)
     {

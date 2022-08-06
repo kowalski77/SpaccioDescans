@@ -1,11 +1,7 @@
-﻿using Syncfusion.XlsIO;
-
-namespace SpaccioDescans.Core.Invoices;
+﻿namespace SpaccioDescans.Core.Invoices;
 
 public interface IWorkbookFacade
 {
-    IWorkbook Workbook { get; }
-
     void AddNumber(string cell, double number);
 
     void AddText(string cell, string text);
