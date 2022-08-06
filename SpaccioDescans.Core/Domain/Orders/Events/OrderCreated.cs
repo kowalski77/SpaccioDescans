@@ -3,7 +3,7 @@ using SpaccioDescans.Core.Domain.Stores;
 
 namespace SpaccioDescans.Core.Domain.Orders.Events;
 
-public sealed record OrderCreated(IEnumerable<long> ProductIds, long StoreId) : INotification;
+public sealed record OrderCreated(IEnumerable<ProductQuantity> ProductQuantities, long StoreId) : INotification;
 
 public class OrderCreatedHandler : INotificationHandler<OrderCreated>
 {
@@ -20,10 +20,10 @@ public class OrderCreatedHandler : INotificationHandler<OrderCreated>
 
         var store = await this.storeRepository.GetByIdAsync(notification.StoreId, cancellationToken);
 
-        foreach (var productId in notification.ProductIds)
+        foreach (var productQuantity in notification.ProductQuantities)
         {
-            var productStore = store!.ProductStores.First(x => x.ProductId == productId);
-            productStore.Quantity--;
+            var productStore = store!.ProductStores.First(x => x.ProductId == productQuantity.ProductId);
+            productStore.Quantity -= productQuantity.Quantity;
         }
     }
 }

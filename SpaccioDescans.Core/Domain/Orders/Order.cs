@@ -26,7 +26,7 @@ public sealed class Order : Entity, IAggregateRoot
 
         this.CalculateTotals();
         this.SetStatus();
-        this.AddDomainEvent(new OrderCreated(this.GetProductIds(), store.Id));
+        this.AddDomainEvent(new OrderCreated(this.GetProductQuantities(), store.Id));
     }
 
     public long Id { get; private set; }
@@ -85,11 +85,11 @@ public sealed class Order : Entity, IAggregateRoot
     {
         this.SoftDeleted = true;
         this.Status = OrderStatus.Cancelled;
-        this.AddDomainEvent(new OrderCancelled(this.GetProductIds(), this.Store.Id));
+        this.AddDomainEvent(new OrderCancelled(this.GetProductQuantities(), this.Store.Id));
     }
 
-    private List<long> GetProductIds()
+    private List<ProductQuantity> GetProductQuantities()
     {
-        return this.orderDetails.Select(x => x.Product.Id).ToList();
+        return this.orderDetails.Select(x => new ProductQuantity(x.Product.Id, x.Quantity.Value)).ToList();
     }
 }
