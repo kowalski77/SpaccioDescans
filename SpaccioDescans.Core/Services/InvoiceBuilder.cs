@@ -10,9 +10,9 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
     private readonly IWorkbook workbook;
 
     private readonly List<Action> worksheetActions = new();
-    
-    private IWorksheet worksheet;
-    private InvoiceParser invoiceParser;
+
+    private IWorksheet worksheet = default!;
+    private InvoiceParser invoiceParser = default!;
     private Action? parserAction;
 
     public InvoiceBuilder(string invoiceTemplatePath)
@@ -23,15 +23,13 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         }
 
         this.excelEngine = new ExcelEngine();
-        this.application = excelEngine.Excel;
+        this.application = this.excelEngine.Excel;
         this.application.DefaultVersion = ExcelVersion.Excel97to2003;
 
         this.fileStream = new FileStream(invoiceTemplatePath, FileMode.Open);
         this.workbook = this.application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand);
 
-        // default parser is DeliverNote
-        this.invoiceParser = new DeliveryNoteParser();
-        this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
+        this.SetDefaultParser();
     }
 
     public IInvoiceBuilder WithParser(InvoiceParser invoiceParser)
@@ -39,7 +37,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         void ParserAction()
         {
             this.invoiceParser = invoiceParser;
-            this.worksheet = workbook.Worksheets[this.invoiceParser.WorksheetNumber];
+            this.worksheet = this.workbook.Worksheets[this.invoiceParser.WorksheetNumber];
         }
 
         this.parserAction = ParserAction;
@@ -61,7 +59,7 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         ArgumentNullException.ThrowIfNull(customerInfo);
 
         this.worksheetActions.Add(() => this.invoiceParser.ParseCustomer(this.worksheet, customerInfo));
-        
+
         return this;
     }
 
@@ -90,12 +88,13 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         {
             worksheetAction.Invoke();
         }
-        this.parserAction = null;
-        this.worksheetActions.Clear();  
         
+        this.SetDefaultParser();
+        this.worksheetActions.Clear();
+
         using var stream = new MemoryStream();
 
-        workbook!.SaveAs(stream);
+        this.workbook!.SaveAs(stream);
 
         return stream;
     }
@@ -105,5 +104,11 @@ public sealed class InvoiceBuilder : IInvoiceBuilder
         this.workbook?.Close();
         this.excelEngine?.Dispose();
         this.fileStream?.Dispose();
+    }
+
+    private void SetDefaultParser()
+    {
+        this.invoiceParser = new DeliveryNoteParser();
+        this.worksheet = this.workbook.Worksheets[this.invoiceParser.WorksheetNumber];
     }
 }
