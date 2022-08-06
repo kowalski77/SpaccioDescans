@@ -8,10 +8,10 @@ public static class InvoiceExtensions
 {
     public static IServiceCollection AddInvoiceService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IWorkbookFacade, WorkbookFacade>(_ =>
+        services.AddSingleton<IWorkbookFacade, SyncfusionWorkbookFacade>(_ =>
         {
             var invoiceSettings = configuration.GetSection(nameof(InvoiceSettings)).Get<InvoiceSettings>();
-            return new WorkbookFacade(invoiceSettings);
+            return new SyncfusionWorkbookFacade(invoiceSettings);
         });
 
         services.AddScoped(sp =>

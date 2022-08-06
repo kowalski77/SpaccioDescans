@@ -1,19 +1,15 @@
-﻿using Syncfusion.XlsIO;
-
-namespace SpaccioDescans.Core.Invoices;
+﻿namespace SpaccioDescans.Core.Invoices;
 
 public abstract class Invoice : IInvoice
 {
-    private readonly IWorkbookFacade invoiceFacade;
-
     protected Invoice(IWorkbookFacade invoiceFacade)
     {
-        this.invoiceFacade = invoiceFacade ?? throw new ArgumentNullException(nameof(invoiceFacade));
+        this.InvoiceFacade = invoiceFacade ?? throw new ArgumentNullException(nameof(invoiceFacade));
     }
 
-    protected IWorksheet Worksheet { get; private set; } = default!;
-
     protected abstract int WorksheetNumber { get; }
+
+    public IWorkbookFacade InvoiceFacade { get; }
 
     public abstract void AddHeader(HeaderInfo header);
 
@@ -26,18 +22,16 @@ public abstract class Invoice : IInvoice
     public MemoryStream Create(InvoiceInfo invoiceInfo)
     {
         ArgumentNullException.ThrowIfNull(invoiceInfo);
-        
-        this.Worksheet = this.invoiceFacade.Workbook.Worksheets[this.WorksheetNumber];
+
+        this.InvoiceFacade.SetWorksheetNumber(this.WorksheetNumber);
 
         this.AddHeader(invoiceInfo.Header);
         this.AddCustomer(invoiceInfo.Customer);
         this.AddOrderDetails(invoiceInfo.OrderDetails);
         this.AddPayment(invoiceInfo.Payment);
 
-        using var stream = new MemoryStream();
+        var stream = this.InvoiceFacade.Save();
 
-        this.invoiceFacade.Workbook.SaveAs(stream);
-        
         return stream;
     }
 }

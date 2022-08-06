@@ -13,20 +13,20 @@ public class CustomerInvoice : Invoice
     {
         ArgumentNullException.ThrowIfNull(header);
 
-        this.Worksheet.Range["B4"].Text = header.Name;
-        this.Worksheet.Range["L4"].Text = header.FiscalId;
-        this.Worksheet.Range["N4"].Number = header.InvoiceId;
-        this.Worksheet.Range["B6"].Text = header.Address;
+        this.InvoiceFacade.AddText("B4", header.Name);
+        this.InvoiceFacade.AddText("L4", header.FiscalId);
+        this.InvoiceFacade.AddNumber("N4", header.InvoiceId);
+        this.InvoiceFacade.AddText("B6", header.Address);
     }
 
     public override void AddCustomer(CustomerInfo customerInfo)
     {
         ArgumentNullException.ThrowIfNull(customerInfo);
 
-        this.Worksheet.Range["M10"].Text = customerInfo.Name;
-        this.Worksheet.Range["M11"].Text = customerInfo.Nif;
-        this.Worksheet.Range["M13"].Text = customerInfo.Address;
-        this.Worksheet.Range["M14"].Text = customerInfo.Phone;
+        this.InvoiceFacade.AddText("M10", customerInfo.Name);
+        this.InvoiceFacade.AddText("M11", customerInfo.Nif);
+        this.InvoiceFacade.AddText("M13", customerInfo.Address);
+        this.InvoiceFacade.AddText("M14", customerInfo.Phone);
     }
 
     public override void AddOrderDetails(IEnumerable<OrderDetailInfo> orderInfos)
@@ -36,11 +36,11 @@ public class CustomerInvoice : Invoice
         var row = 19;
         foreach (var orderInfo in orderInfos)
         {
-            this.Worksheet.Range[$"B{row}"].Number = orderInfo.Quantity;
-            this.Worksheet.Range[$"F{row}"].Text = orderInfo.ProductDescription;
-            this.Worksheet.Range[$"M{row}"].Number = orderInfo.NetPrice;
-            this.Worksheet.Range[$"N{row}"].Number = orderInfo.Discount;
-            this.Worksheet.Range[$"R{row}"].Number = orderInfo.Total;
+            this.InvoiceFacade.AddNumber($"B{row}", orderInfo.Quantity);
+            this.InvoiceFacade.AddText($"F{row}", orderInfo.ProductDescription);
+            this.InvoiceFacade.AddNumber($"M{row}", orderInfo.NetPrice);
+            this.InvoiceFacade.AddNumber($"N{row}", orderInfo.Discount);
+            this.InvoiceFacade.AddNumber($"R{row}", orderInfo.Total);
             row++;
         }
     }
@@ -49,7 +49,7 @@ public class CustomerInvoice : Invoice
     {
         ArgumentNullException.ThrowIfNull(paymentInfo);
 
-        this.Worksheet.Range["R44"].Number = paymentInfo.Net;
-        this.Worksheet.Range["R49"].Number = paymentInfo.Total;
+        this.InvoiceFacade.AddNumber("R44", paymentInfo.Net);
+        this.InvoiceFacade.AddNumber("R49", paymentInfo.Total);
     }
 }

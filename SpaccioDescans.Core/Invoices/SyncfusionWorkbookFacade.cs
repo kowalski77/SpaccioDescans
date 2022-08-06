@@ -2,14 +2,16 @@
 
 namespace SpaccioDescans.Core.Invoices;
 
-public sealed class WorkbookFacade : IWorkbookFacade, IDisposable
+public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
 {
+    private int worksheetNumber;
+
     private readonly ExcelEngine excelEngine;
     private readonly FileStream fileStream;
 
     private readonly Lazy<IWorkbook> workbookLazy;
 
-    public WorkbookFacade(InvoiceSettings invoiceSettings)
+    public SyncfusionWorkbookFacade(InvoiceSettings invoiceSettings)
     {
         ArgumentNullException.ThrowIfNull(invoiceSettings);
 
@@ -22,7 +24,33 @@ public sealed class WorkbookFacade : IWorkbookFacade, IDisposable
     }
 
     public IWorkbook Workbook => this.workbookLazy.Value;
-    
+
+    public void SetWorksheetNumber(int worksheetNumber)
+    {
+        this.worksheetNumber = worksheetNumber;
+    }
+
+    public void AddText(string cell, string text)
+    {
+        var worksheet = this.Workbook.Worksheets[this.worksheetNumber];
+        worksheet.Range[cell].Text = text;
+    }
+
+    public void AddNumber(string cell, double number)
+    {
+        var worksheet = this.Workbook.Worksheets[this.worksheetNumber];
+        worksheet.Range[cell].Number = number;
+    }
+
+    public MemoryStream Save()
+    {
+        using var stream = new MemoryStream();
+
+        this.Workbook.SaveAs(stream);
+
+        return stream;
+    }
+
     public void Dispose()
     {
         this.Workbook?.Close();

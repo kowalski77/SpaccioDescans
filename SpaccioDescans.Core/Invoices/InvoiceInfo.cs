@@ -6,29 +6,29 @@ public class HeaderInfo
 {
     public long InvoiceId { get; init; }
 
-    public string? Name { get; init; }
+    public string Name { get; init; } = string.Empty;
 
-    public string? FiscalId { get; init; }
+    public string FiscalId { get; init; } = string.Empty;
 
-    public string? Address { get; init; }
+    public string Address { get; init; } = string.Empty;
 }
 
 public class CustomerInfo
 {
-    public string? Name { get; init; }
+    public string Name { get; init; } = string.Empty;
 
-    public string? Address { get; init; }
+    public string Address { get; init; } = string.Empty;
 
-    public string? Nif { get; init; }
+    public string Nif { get; init; } = string.Empty;
 
-    public string? Phone { get; init; }
+    public string Phone { get; init; } = string.Empty;
 }
 
 public class OrderDetailInfo
 {
     public int Quantity { get; init; }
 
-    public string? ProductDescription { get; init; }
+    public string ProductDescription { get; init; } = string.Empty;
 
     public double NetPrice { get; init; }
 

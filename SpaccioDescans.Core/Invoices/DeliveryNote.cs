@@ -13,20 +13,20 @@ public class DeliveryNote : Invoice
     {
         ArgumentNullException.ThrowIfNull(header);
 
-        this.Worksheet.Range["S7"].Number = header.InvoiceId;
-        this.Worksheet.Range["C3"].Text = header.Name;
-        this.Worksheet.Range["G4"].Text = header.FiscalId;
-        this.Worksheet.Range["C6"].Text = header.Address;
+        this.InvoiceFacade.AddNumber("S7", (int)header.InvoiceId);
+        this.InvoiceFacade.AddText("C3", header.Name);
+        this.InvoiceFacade.AddText("G4", header.FiscalId);
+        this.InvoiceFacade.AddText("C6", header.Address);
     }
 
     public override void AddCustomer(CustomerInfo customerInfo)
     {
         ArgumentNullException.ThrowIfNull(customerInfo);
 
-        this.Worksheet.Range["N10"].Text = customerInfo.Name;
-        this.Worksheet.Range["N11"].Text = customerInfo.Nif;
-        this.Worksheet.Range["N12"].Text = customerInfo.Address;
-        this.Worksheet.Range["N13"].Text = customerInfo.Phone;
+        this.InvoiceFacade.AddText("N10", customerInfo.Name);
+        this.InvoiceFacade.AddText("N11", customerInfo.Nif);
+        this.InvoiceFacade.AddText("N12", customerInfo.Address);
+        this.InvoiceFacade.AddText("N13", customerInfo.Phone);
     }
 
     public override void AddOrderDetails(IEnumerable<OrderDetailInfo> orderInfos)
@@ -36,11 +36,12 @@ public class DeliveryNote : Invoice
         var row = 16;
         foreach (var orderInfo in orderInfos)
         {
-            this.Worksheet.Range[$"C{row}"].Number = orderInfo.Quantity;
-            this.Worksheet.Range[$"E{row}"].Text = orderInfo.ProductDescription;
-            this.Worksheet.Range[$"N{row}"].Number = orderInfo.NetPrice;
-            this.Worksheet.Range[$"O{row}"].Number = orderInfo.Discount;
-            this.Worksheet.Range[$"S{row}"].Number = orderInfo.Total;
+            this.InvoiceFacade.AddNumber($"C{row}", orderInfo.Quantity);
+            this.InvoiceFacade.AddText($"E{row}", orderInfo.ProductDescription);
+            this.InvoiceFacade.AddNumber($"N{row}", orderInfo.NetPrice);
+            this.InvoiceFacade.AddNumber($"O{row}", orderInfo.Discount);
+            this.InvoiceFacade.AddNumber($"S{row}", orderInfo.Total);
+
             row++;
         }
     }
@@ -49,11 +50,11 @@ public class DeliveryNote : Invoice
     {
         ArgumentNullException.ThrowIfNull(paymentInfo);
 
-        this.Worksheet.Range["S38"].Number = paymentInfo.Net;
-        this.Worksheet.Range["S40"].Number = paymentInfo.Total;
-        this.Worksheet.Range["S43"].Number = paymentInfo.Pending;
-        this.Worksheet.Range["H40"].Number = paymentInfo.Cash;
-        this.Worksheet.Range["H41"].Number = paymentInfo.CreditCard;
-        this.Worksheet.Range["H42"].Number = paymentInfo.Financed;
+        this.InvoiceFacade.AddNumber("S38", paymentInfo.Net);
+        this.InvoiceFacade.AddNumber("S40", paymentInfo.Total);
+        this.InvoiceFacade.AddNumber("S43", paymentInfo.Pending);
+        this.InvoiceFacade.AddNumber("H40", paymentInfo.Cash);
+        this.InvoiceFacade.AddNumber("H41", paymentInfo.CreditCard);
+        this.InvoiceFacade.AddNumber("H42", paymentInfo.Financed);
     }
 }
