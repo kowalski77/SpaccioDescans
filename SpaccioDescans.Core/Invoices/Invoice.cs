@@ -4,12 +4,12 @@ public abstract class Invoice : IInvoice
 {
     protected Invoice(IWorkbookFacade invoiceFacade)
     {
-        this.InvoiceFacade = invoiceFacade ?? throw new ArgumentNullException(nameof(invoiceFacade));
+        this.WorkbookFacade = invoiceFacade ?? throw new ArgumentNullException(nameof(invoiceFacade));
     }
 
     protected abstract int WorksheetNumber { get; }
 
-    public IWorkbookFacade InvoiceFacade { get; }
+    public IWorkbookFacade WorkbookFacade { get; }
 
     public abstract void AddHeader(HeaderInfo header);
 
@@ -23,14 +23,14 @@ public abstract class Invoice : IInvoice
     {
         ArgumentNullException.ThrowIfNull(invoiceInfo);
 
-        this.InvoiceFacade.SetWorksheetNumber(this.WorksheetNumber);
+        this.WorkbookFacade.SetWorksheetNumber(this.WorksheetNumber);
 
         this.AddHeader(invoiceInfo.Header);
         this.AddCustomer(invoiceInfo.Customer);
         this.AddOrderDetails(invoiceInfo.OrderDetails);
         this.AddPayment(invoiceInfo.Payment);
 
-        var stream = this.InvoiceFacade.Save();
+        var stream = this.WorkbookFacade.Save();
 
         return stream;
     }

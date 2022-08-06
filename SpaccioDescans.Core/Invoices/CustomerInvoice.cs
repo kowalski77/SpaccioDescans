@@ -2,8 +2,8 @@
 
 public class CustomerInvoice : Invoice
 {
-    public CustomerInvoice(IWorkbookFacade invoiceFacade)
-        : base(invoiceFacade)
+    public CustomerInvoice(IWorkbookFacade workbookFacade)
+        : base(workbookFacade)
     {
     }
 
@@ -13,20 +13,20 @@ public class CustomerInvoice : Invoice
     {
         ArgumentNullException.ThrowIfNull(header);
 
-        this.InvoiceFacade.AddText("B4", header.Name);
-        this.InvoiceFacade.AddText("L4", header.FiscalId);
-        this.InvoiceFacade.AddNumber("N4", header.InvoiceId);
-        this.InvoiceFacade.AddText("B6", header.Address);
+        this.WorkbookFacade.AddText("B4", header.Name);
+        this.WorkbookFacade.AddText("L4", header.FiscalId);
+        this.WorkbookFacade.AddNumber("N4", header.InvoiceId);
+        this.WorkbookFacade.AddText("B6", header.Address);
     }
 
     public override void AddCustomer(CustomerInfo customerInfo)
     {
         ArgumentNullException.ThrowIfNull(customerInfo);
 
-        this.InvoiceFacade.AddText("M10", customerInfo.Name);
-        this.InvoiceFacade.AddText("M11", customerInfo.Nif);
-        this.InvoiceFacade.AddText("M13", customerInfo.Address);
-        this.InvoiceFacade.AddText("M14", customerInfo.Phone);
+        this.WorkbookFacade.AddText("M10", customerInfo.Name);
+        this.WorkbookFacade.AddText("M11", customerInfo.Nif);
+        this.WorkbookFacade.AddText("M13", customerInfo.Address);
+        this.WorkbookFacade.AddText("M14", customerInfo.Phone);
     }
 
     public override void AddOrderDetails(IEnumerable<OrderDetailInfo> orderInfos)
@@ -36,11 +36,11 @@ public class CustomerInvoice : Invoice
         var row = 19;
         foreach (var orderInfo in orderInfos)
         {
-            this.InvoiceFacade.AddNumber($"B{row}", orderInfo.Quantity);
-            this.InvoiceFacade.AddText($"F{row}", orderInfo.ProductDescription);
-            this.InvoiceFacade.AddNumber($"M{row}", orderInfo.NetPrice);
-            this.InvoiceFacade.AddNumber($"N{row}", orderInfo.Discount);
-            this.InvoiceFacade.AddNumber($"R{row}", orderInfo.Total);
+            this.WorkbookFacade.AddNumber($"B{row}", orderInfo.Quantity);
+            this.WorkbookFacade.AddText($"F{row}", orderInfo.ProductDescription);
+            this.WorkbookFacade.AddNumber($"M{row}", orderInfo.NetPrice);
+            this.WorkbookFacade.AddNumber($"N{row}", orderInfo.Discount);
+            this.WorkbookFacade.AddNumber($"R{row}", orderInfo.Total);
             row++;
         }
     }
@@ -49,7 +49,7 @@ public class CustomerInvoice : Invoice
     {
         ArgumentNullException.ThrowIfNull(paymentInfo);
 
-        this.InvoiceFacade.AddNumber("R44", paymentInfo.Net);
-        this.InvoiceFacade.AddNumber("R49", paymentInfo.Total);
+        this.WorkbookFacade.AddNumber("R44", paymentInfo.Net);
+        this.WorkbookFacade.AddNumber("R49", paymentInfo.Total);
     }
 }
