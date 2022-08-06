@@ -5,10 +5,10 @@ namespace SpaccioDescans.Core.Invoices;
 public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
 {
     private int worksheetNumber;
+    private readonly IWorkbook workbook;
 
     private readonly ExcelEngine excelEngine;
     private readonly FileStream fileStream;
-    private readonly Lazy<IWorkbook> workbookLazy;
 
     public SyncfusionWorkbookFacade(InvoiceSettings invoiceSettings)
     {
@@ -19,10 +19,8 @@ public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
         application.DefaultVersion = ExcelVersion.Excel97to2003;
 
         this.fileStream = new FileStream(invoiceSettings.TemplatePath, FileMode.Open);
-        this.workbookLazy = new Lazy<IWorkbook>(() => application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand));
+        this.workbook = application.Workbooks.Open(this.fileStream, ExcelParseOptions.ParseWorksheetsOnDemand);
     }
-
-    private IWorkbook Workbook => this.workbookLazy.Value;
 
     public void SetWorksheetNumber(int worksheetNumber)
     {
@@ -31,13 +29,13 @@ public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
 
     public void AddText(string cell, string text)
     {
-        var worksheet = this.Workbook.Worksheets[this.worksheetNumber];
+        var worksheet = this.workbook.Worksheets[this.worksheetNumber];
         worksheet.Range[cell].Text = text;
     }
 
     public void AddNumber(string cell, double number)
     {
-        var worksheet = this.Workbook.Worksheets[this.worksheetNumber];
+        var worksheet = this.workbook.Worksheets[this.worksheetNumber];
         worksheet.Range[cell].Number = number;
     }
 
@@ -45,14 +43,14 @@ public sealed class SyncfusionWorkbookFacade : IWorkbookFacade, IDisposable
     {
         using var stream = new MemoryStream();
 
-        this.Workbook.SaveAs(stream);
+        this.workbook.SaveAs(stream);
 
         return stream;
     }
 
     public void Dispose()
     {
-        this.Workbook?.Close();
+        this.workbook?.Close();
         this.excelEngine?.Dispose();
         this.fileStream?.Dispose();
     }
