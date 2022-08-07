@@ -35,8 +35,5 @@ public static class InfrastructureExtensions
                 sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
             });
         });
-
-        services.AddScoped<IDbContext, SpaccioContext>();
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
     }
 }
