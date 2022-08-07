@@ -25,7 +25,8 @@ public sealed class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnum
 
         var query = @"select p.Id, p.Vendor, p.Name, p.Description, p.Measures, p.NetPrice, ps.StoreId, ps.Quantity 
                             from Products p inner join ProductStore ps 
-                            on p.Id = ps.ProductId";
+                            on p.Id = ps.ProductId
+                            where p.SoftDeleted = 0";
 
         var products = await connection.QueryAsync<ProductDto, ProductStoreDto, ProductDto>(
             query,
