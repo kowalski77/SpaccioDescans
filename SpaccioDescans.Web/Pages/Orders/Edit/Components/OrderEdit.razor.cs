@@ -21,7 +21,7 @@ public class OrderEditBase : ComponentBase
 
     [CascadingParameter] public MainLayout MainLayout { get; set; } = default!;
 
-    [Inject] private IMediator Mediator { get; set; } = default!;
+    [Inject] private MediatorFacade Mediator { get; set; } = default!;
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
@@ -49,7 +49,7 @@ public class OrderEditBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        var order = await this.Mediator.Send(new GetOrderByIdQuery(this.OrderId));
+        var order = await this.Mediator.SendAsync(new GetOrderByIdQuery(this.OrderId));
         this.OrderViewModel = order.AsOrderViewModel();
     }
 
@@ -58,7 +58,7 @@ public class OrderEditBase : ComponentBase
         this.MainLayout.StartSpinner();
 
         var command = this.OrderViewModel.AsEditCustomerInfoCommand();
-        await this.Mediator.Send(command);
+        await this.Mediator.SendAsync(command);
 
         this.MainLayout.StopSpinner();
 
@@ -76,7 +76,7 @@ public class OrderEditBase : ComponentBase
         this.MainLayout.StartSpinner();
 
         var command = this.OrderViewModel.AsEditPaymentCommand();
-        await this.Mediator.Send(command);
+        await this.Mediator.SendAsync(command);
 
         this.MainLayout.StopSpinner();
 
@@ -100,7 +100,7 @@ public class OrderEditBase : ComponentBase
         this.MainLayout.StartSpinner();
 
         var command = new CancelOrderCommand(this.OrderViewModel.Id);
-        await this.Mediator.Send(command);
+        await this.Mediator.SendAsync(command);
 
         this.MainLayout.StopSpinner();
 

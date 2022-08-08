@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using SpaccioDescans.Web.Pages.Orders.ViewModels;
 using SpaccioDescans.Web.Shared;
+using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor.Notifications;
 
 namespace SpaccioDescans.Web.Pages.Orders.Create.Components;
@@ -12,7 +12,7 @@ public class OrderCreateBase : ComponentBase
 {
     [CascadingParameter] public MainLayout MainLayout { get; set; } = default!;
 
-    [Inject] private IMediator Mediator { get; set; } = default!;
+    [Inject] private MediatorFacade Mediator { get; set; } = default!;
 
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
@@ -56,9 +56,9 @@ public class OrderCreateBase : ComponentBase
 
         var authenticationState = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userName = authenticationState.User.Identity?.Name!;
-        
+
         var command = this.OrderViewModel.AsCreateOrderCommand(userName);
-        var orderId = await this.Mediator.Send(command);
+        var orderId = await this.Mediator.SendAsync(command);
 
         this.MainLayout.StopSpinner();
         this.Clear();
@@ -75,7 +75,7 @@ public class OrderCreateBase : ComponentBase
 
         // TODO: config file
         var url = $"http://winapwbaxwsogtj/Reports/report/SpaccioDescans.Reports/OrderReport?OrderId={orderId}";
-        
+
         //_ = Task.Run(async () =>
         //{
         //    await this.JSRuntime.InvokeAsync<object>("open", url, "_blank");

@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +7,6 @@ using SpaccioDescans.Core.Domain.Products;
 using SpaccioDescans.Core.Domain.Stores;
 using SpaccioDescans.Infrastructure.Persistence;
 using SpaccioDescans.Infrastructure.Persistence.Repositories;
-using SpaccioDescans.SharedKernel.DDD;
 
 namespace SpaccioDescans.Infrastructure;
 

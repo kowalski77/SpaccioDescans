@@ -2,6 +2,7 @@
 @using SpaccioDescans.Web.Pages.Products
 @using MediatR
 @using System.Collections.ObjectModel
+@using SpaccioDescans.Web.Support
 
 <SfBreadcrumb>
     <BreadcrumbItems>
@@ -31,13 +32,13 @@
     [Parameter]
     public EventCallback OnProductSelected { get; set; }
 
-    [Inject] private IMediator Mediator { get; set; } = default!;
+    [Inject] private MediatorFacade Mediator { get; set; } = default!;
 
     private Collection<ProductViewModel>? Products { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var products = await this.Mediator.Send(new GetProductsQuery());
+        var products = await this.Mediator.SendAsync(new GetProductsQuery());
         var viewModels = products.Select(x => (ProductViewModel)x).ToList();
 
         this.Products = new Collection<ProductViewModel>(viewModels);

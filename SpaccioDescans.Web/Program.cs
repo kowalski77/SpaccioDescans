@@ -4,6 +4,7 @@ using SpaccioDescans.Core.Domain.Products.Commands;
 using SpaccioDescans.Infrastructure;
 using SpaccioDescans.Web.Areas.Identity.Support;
 using SpaccioDescans.Web.Invoices;
+using SpaccioDescans.Web.Support;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddScoped<MediatorFacade>();
 
 // BE
 builder.Services.AddInvoiceService(builder.Configuration);
